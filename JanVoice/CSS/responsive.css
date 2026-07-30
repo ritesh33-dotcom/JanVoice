@@ -1,0 +1,410 @@
+﻿/* ======================================
+        TABLET (991px and below)
+====================================== */
+
+@media (max-width:991px) {
+
+    .nav-links {
+        display: none;
+    }
+
+    .nav-buttons {
+        display: none;
+    }
+
+    .hamburger {
+        display: block;
+        color: #ffffff;
+    }
+
+    .footer-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+    .container {
+        width: 94%;
+    }
+}
+
+
+/* ======================================
+        MOBILE
+====================================== */
+
+@media (max-width:768px) {
+
+    .footer-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .social-icons {
+        justify-content: center;
+    }
+
+    .logo span {
+        font-size: 22px;
+    }
+}
+
+
+/* ======================================
+        SMALL MOBILE
+====================================== */
+
+@media (max-width:480px) {
+
+    .navbar .container {
+        height: 70px;
+    }
+
+    .logo i {
+        font-size: 28px;
+    }
+
+    .logo span {
+        font-size: 20px;
+    }
+
+    .copyright {
+        font-size: 13px;
+    }
+}
+
+@media(max-width:991px) {
+
+    .hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero h1 {
+        font-size: 45px;
+    }
+
+    .hero-right img {
+        width: 300px;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+}
+
+@media(max-width:576px) {
+
+    .hero h1 {
+        font-size: 34px;
+    }
+
+    .hero p {
+        font-size: 16px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+}
+
+/*==============================
+        STATISTICS
+==============================*/
+
+@media(max-width:991px) {
+
+    .stats-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:576px) {
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-title h2 {
+        font-size: 30px;
+    }
+}
+
+
+
+/*==============================
+        FEATURES
+===============================*/
+
+@media(max-width:991px) {
+
+    .feature-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:576px) {
+
+    .feature-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/*==================================
+        WORKFLOW
+===================================*/
+
+@media(max-width:991px) {
+
+    .workflow-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+
+        .workflow-grid::before {
+            display: none;
+        }
+}
+
+@media(max-width:576px) {
+
+    .workflow-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/*==================================
+ COMMUNITY FEED
+===================================*/
+
+@media(max-width:991px) {
+
+    .community-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/*==================================
+      ISSUE CATEGORIES
+===================================*/
+
+@media(max-width:991px) {
+
+    .category-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:576px) {
+
+    .category-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/*==================================
+      EMERGENCY CONTACTS
+===================================*/
+
+@media(max-width:991px) {
+
+    .emergency-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:576px) {
+
+    .emergency-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/*==================================
+      CALL TO ACTION
+===================================*/
+
+@media(max-width:768px) {
+
+    .cta-content h2 {
+        font-size: 36px;
+    }
+
+    .cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+        .cta-buttons a {
+            width: 250px;
+            text-align: center;
+        }
+}
+
+
+/*==================================
+        ABOUT HERO
+===================================*/
+
+@media(max-width:991px) {
+
+    .about-hero-content {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+
+    .about-left h1 {
+        font-size: 42px;
+    }
+
+    .about-right img {
+        max-width: 420px;
+    }
+}
+
+@media(max-width:576px) {
+
+    .about-left h1 {
+        font-size: 34px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+        .hero-buttons a {
+            width: 230px;
+            text-align: center;
+        }
+}
+
+
+/*==================================
+        OUR VISION
+===================================*/
+
+@media(max-width:991px) {
+
+    .vision-wrapper {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .vision-content h2 {
+        font-size: 36px;
+    }
+
+    .vision-points {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/*==================================
+        OUR MISSION
+===================================*/
+
+@media(max-width:991px) {
+
+    .mission-flow {
+        flex-direction: column;
+    }
+
+    .arrow {
+        transform: rotate(90deg);
+    }
+
+    .mission-card {
+        width: 100%;
+        max-width: 320px;
+    }
+}
+
+
+/*==================================
+        CORE VALUES
+===================================*/
+
+@media(max-width:991px) {
+
+    .values-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:576px) {
+
+    .values-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/*==================================
+        WHY JANVOICE
+===================================*/
+
+@media(max-width:991px) {
+
+    .comparison-wrapper {
+        flex-direction: column;
+    }
+
+    .vs-circle {
+        margin: 20px 0;
+    }
+
+    .comparison-card {
+        width: 100%;
+    }
+}
+
+/*==================================
+      FEATURES OVERVIEW
+===================================*/
+
+@media(max-width:991px) {
+
+    .features-grid {
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+
+@media(max-width:576px) {
+
+    .features-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+/*==================================
+        ABOUT CTA
+===================================*/
+
+@media(max-width:768px) {
+
+    .about-cta-content h2 {
+        font-size: 36px;
+    }
+
+    .about-cta-buttons {
+        flex-direction: column;
+        align-items: center;
+    }
+
+        .about-cta-buttons a {
+            width: 240px;
+            text-align: center;
+        }
+
+    .cta-stats {
+        flex-direction: column;
+        align-items: center;
+    }
+}

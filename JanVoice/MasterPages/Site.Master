@@ -1,0 +1,199 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site.master.cs" Inherits="JanVoice.MasterPages.Site" %>
+
+<!DOCTYPE html>
+
+<html>
+<head runat="server">
+    <meta charset="utf-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>JanVoice - Your Voice, Your Community</title>
+
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" rel="stylesheet" />
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- CSS -->
+    <link href="~/CSS/style.css" runat="server" rel="stylesheet" />
+<link href="~/CSS/components.css" runat="server" rel="stylesheet" />
+<link href="~/CSS/responsive.css" runat="server" rel="stylesheet" />
+    <asp:ContentPlaceHolder ID="head" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+
+          <header>
+
+            <nav class="navbar">
+
+                <div class="container">
+
+                    <div class="logo">
+
+                        <a href="Home.aspx">
+
+                            <i class="fa-solid fa-bullhorn"></i>
+
+                            <span>JanVoice</span>
+
+                        </a>
+
+                    </div>
+
+                    <ul class="nav-links">
+
+                        <li><a href="Home.aspx">Home</a></li>
+
+                        <li><a href="About.aspx">About</a></li>
+
+                        <li><a href="CommunityFeed.aspx">Community Feed</a></li>
+
+                        <li><a href="IssueMap.aspx">Issue Map</a></li>
+
+                        <li><a href="Contact.aspx">Contact</a></li>
+
+                    </ul>
+
+                    <div class="nav-buttons">
+
+                        <a href="Login.aspx" class="btn-login">
+                            Login
+                        </a>
+
+                        <a href="Register.aspx" class="btn-register">
+                            Register
+                        </a>
+
+                    </div>
+
+                    <div class="hamburger">
+
+                        <i class="fa-solid fa-bars"></i>
+
+                    </div>
+
+                </div>
+
+            </nav>
+
+        </header>
+
+
+
+
+          <main>
+
+        <div>
+            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
+            </asp:ContentPlaceHolder>
+        </div>
+              </main>
+
+
+         <footer class="footer">
+
+            <div class="container">
+
+                <div class="footer-grid">
+
+                    <!-- About -->
+
+                    <div>
+
+                        <h3>JanVoice</h3>
+
+                        <p>
+
+                            JanVoice is a community-driven civic issue reporting platform
+                            where citizens, officers and administrators work together to
+                            improve neighborhoods.
+
+                        </p>
+
+                    </div>
+
+                    <!-- Quick Links -->
+
+                    <div>
+
+                        <h3>Quick Links</h3>
+
+                        <ul>
+
+                            <li><a href="Home.aspx">Home</a></li>
+
+                            <li><a href="CommunityFeed.aspx">Community Feed</a></li>
+
+                            <li><a href="ReportIssue.aspx">Report Issue</a></li>
+
+                            <li><a href="Contact.aspx">Contact</a></li>
+
+                        </ul>
+
+                    </div>
+
+                    <!-- Emergency -->
+
+                    <div>
+
+                        <h3>Emergency</h3>
+
+                        <ul>
+
+                            <li>🚓 Police : 100</li>
+
+                            <li>🚑 Ambulance : 108</li>
+
+                            <li>🚒 Fire : 101</li>
+
+                        </ul>
+
+                    </div>
+
+                    <!-- Social -->
+
+                    <div>
+
+                        <h3>Follow Us</h3>
+
+                        <div class="social-icons">
+
+                            <a href="#"><i class="fab fa-facebook-f"></i></a>
+
+                            <a href="#"><i class="fab fa-instagram"></i></a>
+
+                            <a href="#"><i class="fab fa-x-twitter"></i></a>
+
+                            <a href="#"><i class="fab fa-linkedin-in"></i></a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <hr />
+
+                <div class="copyright">
+
+                    © 2026 JanVoice | Your Voice. Your Community. Your Change.
+
+                </div>
+
+            </div>
+
+        </footer>
+
+
+    </form>
+
+     <!-- JavaScript -->
+
+   <script src="<%= ResolveUrl("~/JS/script.js") %>"></script>
+
+</body>
+</html>

@@ -67,6 +67,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="About.aspx" />
+    <Content Include="CSS\components.css" />
+    <Content Include="CSS\responsive.css" />
+    <Content Include="CSS\style.css" />
     <Content Include="Database\001_CreateRoles.sql" />
     <Content Include="Database\002_CreateWards.sql" />
     <Content Include="Database\003_CreateCategories.sql" />
@@ -82,15 +86,41 @@
     <Content Include="Database\013_CreateContactMessages.sql" />
     <Content Include="Database\014_CreateEmergencyContacts.sql" />
     <Content Include="Global.asax" />
+    <Content Include="Home.aspx" />
+    <Content Include="Images\Logo\Logo.png" />
+    <Content Include="Images\Logo\logoIllustration.png" />
+    <Content Include="JS\script.js" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About.aspx.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="About.aspx.designer.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MasterPages\Site.Master.cs">
+      <DependentUpon>Site.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterPages\Site.Master.designer.cs">
+      <DependentUpon>Site.Master</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="MasterPages\Site.Master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -100,8 +130,15 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Admin\" />
     <Folder Include="App_Data\" />
+    <Folder Include="Citizen\" />
+    <Folder Include="DAL\" />
+    <Folder Include="Helpers\" />
     <Folder Include="Models\" />
+    <Folder Include="NewFolder1\" />
+    <Folder Include="Officer\" />
+    <Folder Include="Uploads\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
