@@ -67,6 +67,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Database\001_CreateRoles.sql" />
+    <Content Include="Database\002_CreateWards.sql" />
+    <Content Include="Database\003_CreateCategories.sql" />
+    <Content Include="Database\004_CreateUsers.sql" />
+    <Content Include="Database\005_CreateComplaints.sql" />
+    <Content Include="Database\006_CreateComplaintImages.sql" />
+    <Content Include="Database\007_CreateComments.sql" />
+    <Content Include="Database\008_CreateSupports.sql" />
+    <Content Include="Database\009_CreateFollowers.sql" />
+    <Content Include="Database\010_CreateNotifications.sql" />
+    <Content Include="Database\011_CreateStatusHistory.sql" />
+    <Content Include="Database\012_CreateFeedback.sql" />
+    <Content Include="Database\013_CreateContactMessages.sql" />
+    <Content Include="Database\014_CreateEmergencyContacts.sql" />
     <Content Include="Global.asax" />
     <Content Include="Web.config" />
   </ItemGroup>
