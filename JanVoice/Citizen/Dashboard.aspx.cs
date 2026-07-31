@@ -5,13 +5,12 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace JanVoice.MasterPages
+namespace JanVoice.Citizen
 {
-    public partial class Citizen : System.Web.UI.MasterPage
+    public partial class Dashboard : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
             if (Session["UserID"] == null)
             {
                 Response.Redirect("~/Login.aspx");
@@ -19,21 +18,8 @@ namespace JanVoice.MasterPages
 
             if (!IsPostBack)
             {
-                lblUserName.Text =
-                    Session["FullName"].ToString();
+                lblName.Text = Session["FullName"].ToString();
             }
-        }
-
-
-        protected void btnLogout_Click(object sender, EventArgs e)
-        {
-            Session.Clear();
-
-            Session.Abandon();
-
-            Response.Redirect("~/Login.aspx");
-
-
         }
     }
 }
