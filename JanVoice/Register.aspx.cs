@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -14,10 +14,58 @@ namespace JanVoice
         protected void Page_Load(object sender, EventArgs e)
         {
 
+
         }
 
         protected void btnRegister_Click(object sender, EventArgs e)
         {
+    
+            // Step 1: Validate Input
+
+            if (string.IsNullOrWhiteSpace(txtName.Text))
+            {
+                ClientScript.RegisterStartupScript(this.GetType(),
+                    "msg",
+                    "alert('Please enter your name.');",
+                    true);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(txtEmail.Text))
+            {
+                ClientScript.RegisterStartupScript(this.GetType(),
+                    "msg",
+                    "alert('Please enter your email.');",
+                    true);
+                return;
+            }
+
+            //if (ddlWard.SelectedIndex == 0)
+            //{
+            //    ClientScript.RegisterStartupScript(this.GetType(),
+            //        "msg",
+            //        "alert('Please select a ward.');",
+            //        true);
+            //    return;
+            //}
+
+            if (!chkTerms.Checked)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(),
+                    "msg",
+                    "alert('Please accept the Terms & Conditions.');",
+                    true);
+                return;
+            }
+
+            if (txtMobile.Text.Trim().Length != 10)
+            {
+                ClientScript.RegisterStartupScript(this.GetType(),
+                    "msg",
+                    "alert('Enter a valid 10-digit mobile number.');",
+                    true);
+                return;
+            }
 
             string connectionString =
                 ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
@@ -51,8 +99,8 @@ namespace JanVoice
                 string query = @"INSERT INTO Users
                         (FullName,
                          Email,
-                         Phone,
-                         Password,
+                         Mobile,
+                         PasswordHash,
                          RoleID,
                          WardID,
                          IsActive)
@@ -79,16 +127,17 @@ namespace JanVoice
 
                 cmd.Parameters.AddWithValue("@RoleID", 1);
 
-                cmd.Parameters.AddWithValue("@WardID", ddlWard.SelectedIndex);
+                cmd.Parameters.AddWithValue("@WardID", Convert.ToInt32(ddlWard.SelectedValue));
 
                 cmd.Parameters.AddWithValue("@IsActive", true);
 
                 cmd.ExecuteNonQuery();
 
-                ClientScript.RegisterStartupScript(this.GetType(),
-                    "success",
-                    "alert('Registration Successful!');window.location='Login.aspx';",
-                    true);
+               
+
+                this.ClientScript.RegisterStartupScript(this.GetType(), "SweetAlert", "swal('Registered Successfully..!','','success');", true);
+
+
             }
         }
     }

@@ -21,7 +21,7 @@
 
                     <span class="section-badge">🚀 Join JanVoice
 
-                </span>
+                    </span>
 
                     <h1>Become Part of a
                    
@@ -50,7 +50,7 @@
 
                     <h2>Create Account
 
-                </h2>
+                    </h2>
 
                     <p>
                         Start your civic journey today.
@@ -71,7 +71,7 @@
 
                         <span>Complete your profile
 
-                    </span>
+                        </span>
 
                     </div>
 
@@ -165,23 +165,14 @@
                             runat="server"
                             CssClass="input-box">
 
-                            <asp:ListItem>
-                            Select Ward
-                        </asp:ListItem>
-
-                            <asp:ListItem>
-                            Ward 1
-                        </asp:ListItem>
-
-                            <asp:ListItem>
-                            Ward 2
-                        </asp:ListItem>
-
-                            <asp:ListItem>
-                            Ward 3
-                        </asp:ListItem>
+                            <asp:ListItem Value="">-- Select Ward --</asp:ListItem>
+                            <asp:ListItem Value="1">Ward 1</asp:ListItem>
+                            <asp:ListItem Value="2">Ward 2</asp:ListItem>
+                            <asp:ListItem Value="3">Ward 3</asp:ListItem>
 
                         </asp:DropDownList>
+
+
 
                     </div>
 
@@ -267,7 +258,7 @@
 
                         <a href="#">Terms & Conditions
 
-                    </a>
+                        </a>
 
                     </div>
 
@@ -278,6 +269,7 @@
                         runat="server"
                         Text="Create Account"
                         CssClass="register-btn"
+                        OnClientClick="return valid()"
                         OnClick="btnRegister_Click" />
 
                     <!-- Login -->
@@ -289,7 +281,7 @@
 
                         <a href="Login.aspx">Sign In
 
-                    </a>
+                        </a>
 
                     </div>
 
@@ -303,276 +295,296 @@
 
     <script>
 
+        function valid() {
+
+            const name = document.getElementById("<%= txtName.ClientID %>");
+            const email = document.getElementById("<%= txtEmail.ClientID %>");
+            const mobile = document.getElementById("<%= txtMobile.ClientID %>");
+            const password = document.getElementById("<%= txtPassword.ClientID %>");
+            const confirm = document.getElementById("<%= txtConfirmPassword.ClientID %>");
+
+            if (name == "" || email == "" || mobile == "" || confirmpassword == "" || password == "") {
+                swal("Please fill all details to proceed..!", "", "warning");
+                return false;
+            }
+
+
+
+
+            return true;
+        }
+
+
         document.addEventListener("DOMContentLoaded", function () {
 
             const name = document.getElementById("<%= txtName.ClientID %>");
-    const email = document.getElementById("<%= txtEmail.ClientID %>");
-    const mobile = document.getElementById("<%= txtMobile.ClientID %>");
-    const password = document.getElementById("<%= txtPassword.ClientID %>");
-    const confirm = document.getElementById("<%= txtConfirmPassword.ClientID %>");
+            const email = document.getElementById("<%= txtEmail.ClientID %>");
+            const mobile = document.getElementById("<%= txtMobile.ClientID %>");
+            const password = document.getElementById("<%= txtPassword.ClientID %>");
+            const confirm = document.getElementById("<%= txtConfirmPassword.ClientID %>");
 
-    const togglePassword = document.getElementById("togglePassword");
-    const toggleConfirm = document.getElementById("toggleConfirm");
+            const togglePassword = document.getElementById("togglePassword");
+            const toggleConfirm = document.getElementById("toggleConfirm");
 
-    const progress = document.getElementById("progressFill");
+            const progress = document.getElementById("progressFill");
 
-    const strength = document.getElementById("passwordStrength");
-    const strengthBar = document.getElementById("strengthBar");
+            const strength = document.getElementById("passwordStrength");
+            const strengthBar = document.getElementById("strengthBar");
 
-    const loader = document.getElementById("loader");
-    const btn = document.getElementById("registerButton");
-    const btnText = document.getElementById("btnText");
+            const loader = document.getElementById("loader");
+            const btn = document.getElementById("registerButton");
+            const btnText = document.getElementById("btnText");
 
-    /*==========================
-    SHOW PASSWORD
-    ==========================*/
+            /*==========================
+            SHOW PASSWORD
+            ==========================*/
 
-    togglePassword.onclick = function () {
+            togglePassword.onclick = function () {
 
-        if (password.type === "password") {
+                if (password.type === "password") {
 
-            password.type = "text";
+                    password.type = "text";
 
-            this.classList.replace("fa-eye", "fa-eye-slash");
+                    this.classList.replace("fa-eye", "fa-eye-slash");
 
-        }
+                }
 
-        else {
+                else {
 
-            password.type = "password";
+                    password.type = "password";
 
-            this.classList.replace("fa-eye-slash", "fa-eye");
+                    this.classList.replace("fa-eye-slash", "fa-eye");
 
-        }
+                }
 
-    };
+            };
 
-    toggleConfirm.onclick = function () {
+            toggleConfirm.onclick = function () {
 
-        if (confirm.type === "password") {
+                if (confirm.type === "password") {
 
-            confirm.type = "text";
+                    confirm.type = "text";
 
-            this.classList.replace("fa-eye", "fa-eye-slash");
+                    this.classList.replace("fa-eye", "fa-eye-slash");
 
-        }
+                }
 
-        else {
+                else {
 
-            confirm.type = "password";
+                    confirm.type = "password";
 
-            this.classList.replace("fa-eye-slash", "fa-eye");
+                    this.classList.replace("fa-eye-slash", "fa-eye");
 
-        }
+                }
 
-    };
+            };
 
-    /*==========================
-    PASSWORD STRENGTH
-    ==========================*/
+            /*==========================
+            PASSWORD STRENGTH
+            ==========================*/
 
-    password.addEventListener("keyup", function () {
+            password.addEventListener("keyup", function () {
 
-        let value = password.value;
+                let value = password.value;
 
-        let score = 0;
+                let score = 0;
 
-        if (value.length >= 8) score++;
+                if (value.length >= 8) score++;
 
-        if (/[A-Z]/.test(value)) score++;
+                if (/[A-Z]/.test(value)) score++;
 
-        if (/[0-9]/.test(value)) score++;
+                if (/[0-9]/.test(value)) score++;
 
-        if (/[^A-Za-z0-9]/.test(value)) score++;
+                if (/[^A-Za-z0-9]/.test(value)) score++;
 
-        if (score == 1) {
+                if (score == 1) {
 
-            strength.innerHTML = "Weak Password";
+                    strength.innerHTML = "Weak Password";
 
-            strength.style.color = "#EF4444";
+                    strength.style.color = "#EF4444";
 
-            strengthBar.style.width = "25%";
+                    strengthBar.style.width = "25%";
 
-            strengthBar.style.background = "#EF4444";
+                    strengthBar.style.background = "#EF4444";
 
-        }
+                }
 
-        else if (score == 2) {
+                else if (score == 2) {
 
-            strength.innerHTML = "Fair Password";
+                    strength.innerHTML = "Fair Password";
 
-            strength.style.color = "#F59E0B";
+                    strength.style.color = "#F59E0B";
 
-            strengthBar.style.width = "50%";
+                    strengthBar.style.width = "50%";
 
-            strengthBar.style.background = "#F59E0B";
+                    strengthBar.style.background = "#F59E0B";
 
-        }
+                }
 
-        else if (score == 3) {
+                else if (score == 3) {
 
-            strength.innerHTML = "Good Password";
+                    strength.innerHTML = "Good Password";
 
-            strength.style.color = "#3B82F6";
+                    strength.style.color = "#3B82F6";
 
-            strengthBar.style.width = "75%";
+                    strengthBar.style.width = "75%";
 
-            strengthBar.style.background = "#3B82F6";
+                    strengthBar.style.background = "#3B82F6";
 
-        }
+                }
 
-        else if (score == 4) {
+                else if (score == 4) {
 
-            strength.innerHTML = "Strong Password";
+                    strength.innerHTML = "Strong Password";
 
-            strength.style.color = "#22C55E";
+                    strength.style.color = "#22C55E";
 
-            strengthBar.style.width = "100%";
+                    strengthBar.style.width = "100%";
 
-            strengthBar.style.background = "#22C55E";
+                    strengthBar.style.background = "#22C55E";
 
-        }
+                }
 
-    });
+            });
 
-    /*==========================
-    CONFIRM PASSWORD
-    ==========================*/
+            /*==========================
+            CONFIRM PASSWORD
+            ==========================*/
 
-    confirm.addEventListener("keyup", function () {
+            confirm.addEventListener("keyup", function () {
 
-        const error = document.getElementById("confirmError");
+                const error = document.getElementById("confirmError");
 
-        if (confirm.value !== password.value) {
+                if (confirm.value !== password.value) {
 
-            error.innerHTML = "Passwords do not match";
+                    error.innerHTML = "Passwords do not match";
 
-        }
+                }
 
-        else {
+                else {
 
-            error.innerHTML = "";
+                    error.innerHTML = "";
 
-        }
+                }
 
-    });
+            });
 
-    /*==========================
-    EMAIL VALIDATION
-    ==========================*/
+            /*==========================
+            EMAIL VALIDATION
+            ==========================*/
 
-    email.addEventListener("blur", function () {
+            email.addEventListener("blur", function () {
 
-        const error = document.getElementById("emailError");
+                const error = document.getElementById("emailError");
 
-        const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                const pattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-        if (email.value != "" && !pattern.test(email.value)) {
+                if (email.value != "" && !pattern.test(email.value)) {
 
-            error.innerHTML = "Invalid email address";
+                    error.innerHTML = "Invalid email address";
 
-        }
+                }
 
-        else {
+                else {
 
-            error.innerHTML = "";
+                    error.innerHTML = "";
 
-        }
+                }
 
-    });
+            });
 
-    /*==========================
-    MOBILE
-    ==========================*/
+            /*==========================
+            MOBILE
+            ==========================*/
 
-    mobile.addEventListener("keyup", function () {
+            mobile.addEventListener("keyup", function () {
 
-        const error = document.getElementById("mobileError");
+                const error = document.getElementById("mobileError");
 
-        if (mobile.value.length > 0 && mobile.value.length < 10) {
+                if (mobile.value.length > 0 && mobile.value.length < 10) {
 
-            error.innerHTML = "Enter 10 digit mobile number";
+                    error.innerHTML = "Enter 10 digit mobile number";
 
-        }
+                }
 
-        else {
+                else {
 
-            error.innerHTML = "";
+                    error.innerHTML = "";
 
-        }
+                }
 
-    });
+            });
 
-    /*==========================
-    PROGRESS BAR
-    ==========================*/
+            /*==========================
+            PROGRESS BAR
+            ==========================*/
 
-    function updateProgress() {
+            function updateProgress() {
 
-        let total = 6;
+                let total = 6;
 
-        let filled = 0;
+                let filled = 0;
 
-        if (name.value != "") filled++;
-        if (email.value != "") filled++;
-        if (mobile.value != "") filled++;
-        if (password.value != "") filled++;
-        if (confirm.value != "") filled++;
-        if (document.getElementById("<%= chkTerms.ClientID %>").checked) filled++;
+                if (name.value != "") filled++;
+                if (email.value != "") filled++;
+                if (mobile.value != "") filled++;
+                if (password.value != "") filled++;
+                if (confirm.value != "") filled++;
+                if (document.getElementById("<%= chkTerms.ClientID %>").checked) filled++;
 
-        progress.style.width = (filled / total * 100) + "%";
+                progress.style.width = (filled / total * 100) + "%";
 
-    }
+            }
 
-    document.querySelectorAll("input").forEach(function (input) {
+            document.querySelectorAll("input").forEach(function (input) {
 
-        input.addEventListener("keyup", updateProgress);
+                input.addEventListener("keyup", updateProgress);
 
-        input.addEventListener("change", updateProgress);
+                input.addEventListener("change", updateProgress);
 
-    });
+            });
 
-    /*==========================
-    REGISTER BUTTON
-    ==========================*/
+            /*==========================
+            REGISTER BUTTON
+            ==========================*/
 
-    btn.onclick = function () {
+            btn.onclick = function () {
 
-        btn.disabled = true;
+                btn.disabled = true;
 
-        btnText.style.display = "none";
+                btnText.style.display = "none";
 
-        loader.style.display = "inline-block";
+                loader.style.display = "inline-block";
 
-        setTimeout(function () {
+                setTimeout(function () {
 
-            loader.style.display = "none";
+                    loader.style.display = "none";
 
-            btnText.style.display = "inline";
+                    btnText.style.display = "inline";
 
-            btn.disabled = false;
+                    btn.disabled = false;
 
-            alert("Registration UI Completed ✅");
+                    alert("Registration UI Completed ✅");
 
-        }, 2000);
+                }, 2000);
 
-    };
+            };
 
-    /*==========================
-    ENTER KEY
-    ==========================*/
+            /*==========================
+            ENTER KEY
+            ==========================*/
 
-    document.addEventListener("keydown", function (e) {
+            document.addEventListener("keydown", function (e) {
 
-        if (e.key === "Enter") {
+                if (e.key === "Enter") {
 
-            btn.click();
+                    btn.click();
 
-        }
+                }
 
-    });
+            });
 
-});
+        });
 
     </script>
 
