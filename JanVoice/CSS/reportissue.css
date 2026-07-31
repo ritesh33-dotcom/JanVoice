@@ -1,0 +1,243 @@
+﻿/*=========================================
+      REPORT ISSUE PAGE - JANVOICE
+=========================================*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.report-container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+/*=========================================
+        PAGE HEADER
+=========================================*/
+
+.page-header {
+    text-align: center;
+    margin-bottom: 35px;
+}
+
+    .page-header h2 {
+        font-size: 34px;
+        font-weight: 700;
+        color: #ffffff;
+        margin-bottom: 10px;
+    }
+
+        .page-header h2 i {
+            color: #38BDF8;
+            margin-right: 10px;
+        }
+
+    .page-header p {
+        color: #94A3B8;
+        font-size: 16px;
+    }
+
+/*=========================================
+          REPORT CARD
+=========================================*/
+
+.report-card {
+    background: rgba(30,41,59,.80);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 20px;
+    padding: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,.35);
+}
+
+    /*=========================================
+             LABEL
+=========================================*/
+
+    .report-card label {
+        color: #F8FAFC;
+        font-weight: 500;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+/*=========================================
+        INPUTS
+=========================================*/
+
+.form-control {
+    background: #0F172A !important;
+    border: 1px solid #334155 !important;
+    color: #ffffff !important;
+    border-radius: 12px;
+    padding: 12px 15px;
+    transition: .3s;
+}
+
+    .form-control::placeholder {
+        color: #94A3B8;
+    }
+
+    .form-control:focus {
+        background: #0F172A !important;
+        border-color: #38BDF8 !important;
+        box-shadow: 0 0 12px rgba(56,189,248,.35);
+        color: #ffffff !important;
+    }
+
+/*=========================================
+        TEXTAREA
+=========================================*/
+
+textarea.form-control {
+    resize: none;
+}
+
+/*=========================================
+      DROPDOWN
+=========================================*/
+
+select.form-control {
+    height: 50px;
+}
+
+/*=========================================
+      FILE UPLOAD
+=========================================*/
+
+input[type=file] {
+    background: #0F172A;
+    color: #CBD5E1;
+    border: 2px dashed #334155;
+    border-radius: 12px;
+    padding: 15px;
+    cursor: pointer;
+}
+
+    input[type=file]:hover {
+        border-color: #38BDF8;
+    }
+
+/*=========================================
+      IMAGE PREVIEW
+=========================================*/
+
+#imagePreview {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+/*=========================================
+        SUBMIT BUTTON
+=========================================*/
+
+.btn-submit {
+    background: linear-gradient(135deg,#2563EB,#38BDF8);
+    color: white;
+    border: none;
+    padding: 15px 45px;
+    border-radius: 12px;
+    font-size: 17px;
+    font-weight: 600;
+    transition: .3s;
+}
+
+    .btn-submit:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(37,99,235,.35);
+    }
+
+/*=========================================
+      BOOTSTRAP ROW GAP
+=========================================*/
+
+.row {
+    row-gap: 5px;
+}
+
+/*=========================================
+        RESPONSIVE
+=========================================*/
+
+@media(max-width:992px) {
+
+    .report-card {
+        padding: 30px;
+    }
+}
+
+@media(max-width:768px) {
+
+    .page-header h2 {
+        font-size: 28px;
+    }
+
+    .report-card {
+        padding: 20px;
+    }
+
+    .btn-submit {
+        width: 100%;
+    }
+}
+
+
+/*====================================
+        UPLOAD AREA
+====================================*/
+
+.upload-box {
+    border: 2px dashed #3B82F6;
+    border-radius: 20px;
+    padding: 45px;
+    text-align: center;
+    cursor: pointer;
+    transition: .3s;
+    background: #0F172A;
+}
+
+    .upload-box:hover {
+        background: #16213d;
+        border-color: #38BDF8;
+    }
+
+.upload-icon {
+    font-size: 60px;
+    color: #38BDF8;
+    margin-bottom: 20px;
+}
+
+.browse-btn {
+    margin-top: 15px;
+    padding: 12px 25px;
+    background: #2563EB;
+    border: none;
+    color: white;
+    border-radius: 10px;
+}
+
+.preview-area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.preview-image {
+    width: 140px;
+    height: 110px;
+    object-fit: cover;
+    border-radius: 10px;
+    border: 2px solid #334155;
+}
+
+#charCount {
+    display: block;
+    margin-top: 10px;
+    color: #94A3B8;
+}
