@@ -121,6 +121,27 @@
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
     </Compile>
+    <Compile Include="MasterPages\Admin.Master.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterPages\Admin.Master.designer.cs">
+      <DependentUpon>Admin.Master</DependentUpon>
+    </Compile>
+    <Compile Include="MasterPages\Citizen.Master.cs">
+      <DependentUpon>Citizen.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterPages\Citizen.Master.designer.cs">
+      <DependentUpon>Citizen.Master</DependentUpon>
+    </Compile>
+    <Compile Include="MasterPages\Officer.Master.cs">
+      <DependentUpon>Officer.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MasterPages\Officer.Master.designer.cs">
+      <DependentUpon>Officer.Master</DependentUpon>
+    </Compile>
     <Compile Include="MasterPages\Site.Master.cs">
       <DependentUpon>Site.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -139,6 +160,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="MasterPages\Site.Master" />
+    <Content Include="MasterPages\Citizen.Master" />
+    <Content Include="MasterPages\Officer.Master" />
+    <Content Include="MasterPages\Admin.Master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>

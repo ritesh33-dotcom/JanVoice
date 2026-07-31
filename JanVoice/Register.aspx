@@ -298,22 +298,62 @@
         function valid() {
 
             const name = document.getElementById("<%= txtName.ClientID %>");
-            const email = document.getElementById("<%= txtEmail.ClientID %>");
-            const mobile = document.getElementById("<%= txtMobile.ClientID %>");
-            const password = document.getElementById("<%= txtPassword.ClientID %>");
-            const confirm = document.getElementById("<%= txtConfirmPassword.ClientID %>");
+           const email = document.getElementById("<%= txtEmail.ClientID %>");
+           const mobile = document.getElementById("<%= txtMobile.ClientID %>");
+           const ward = document.getElementById("<%= ddlWard.ClientID %>");
+    const password = document.getElementById("<%= txtPassword.ClientID %>");
+    const confirm = document.getElementById("<%= txtConfirmPassword.ClientID %>");
+           const terms = document.getElementById("<%= chkTerms.ClientID %>");
 
-            if (name == "" || email == "" || mobile == "" || confirmpassword == "" || password == "") {
-                swal("Please fill all details to proceed..!", "", "warning");
-                return false;
-            }
+           if (name.value.trim() == "") {
+               swal("Oops!", "Please enter your Full Name.", "warning");
+               name.focus();
+               return false;
+           }
 
+           if (email.value.trim() == "") {
+               swal("Oops!", "Please enter your Email Address.", "warning");
+               email.focus();
+               return false;
+           }
 
+           if (mobile.value.trim() == "") {
+               swal("Oops!", "Please enter your Mobile Number.", "warning");
+               mobile.focus();
+               return false;
+           }
 
+           if (ward.value == "") {
+               swal("Oops!", "Please select your Ward.", "warning");
+               ward.focus();
+               return false;
+           }
 
-            return true;
-        }
+           if (password.value.trim() == "") {
+               swal("Oops!", "Please create a Password.", "warning");
+               password.focus();
+               return false;
+           }
 
+           if (confirm.value.trim() == "") {
+               swal("Oops!", "Please confirm your Password.", "warning");
+               confirm.focus();
+               return false;
+           }
+
+           if (password.value != confirm.value) {
+               swal("Oops!", "Passwords do not match.", "error");
+               confirm.focus();
+               return false;
+           }
+
+           if (!terms.checked) {
+               swal("Oops!", "Please accept the Terms & Conditions.", "warning");
+               return false;
+           }
+
+           return true;
+       }
 
         document.addEventListener("DOMContentLoaded", function () {
 
@@ -544,32 +584,8 @@
 
             });
 
-            /*==========================
-            REGISTER BUTTON
-            ==========================*/
 
-            btn.onclick = function () {
-
-                btn.disabled = true;
-
-                btnText.style.display = "none";
-
-                loader.style.display = "inline-block";
-
-                setTimeout(function () {
-
-                    loader.style.display = "none";
-
-                    btnText.style.display = "inline";
-
-                    btn.disabled = false;
-
-                    alert("Registration UI Completed ✅");
-
-                }, 2000);
-
-            };
-
+           
             /*==========================
             ENTER KEY
             ==========================*/

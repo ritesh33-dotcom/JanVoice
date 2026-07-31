@@ -142,25 +142,13 @@
                 </div>
 
                 <!-- Login Button -->
-
-<button
-type="button"
-class="login-btn"
-id="loginButton">
-
-<span id="buttonText">
-
-Sign In
-
-</span>
-
-<span
-id="loader"
-class="loader">
-
-</span>
-
-</button>
+<asp:Button
+    ID="loginButton"
+    runat="server"
+    CssClass="login-btn"
+    Text="Sign In"
+    OnClick="loginButton_Click"
+/>
 
                 <!-- Register -->
 
@@ -271,17 +259,6 @@ button.click();
 
 });
 
-/* Loading Animation */
-
-button.onclick=function(){
-
-if(!validate()) return;
-
-button.disabled=true;
-
-buttonText.style.display="none";
-
-loader.style.display="inline-block";
 
 /* Temporary demo */
 

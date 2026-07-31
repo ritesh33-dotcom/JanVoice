@@ -133,9 +133,16 @@ namespace JanVoice
 
                 cmd.ExecuteNonQuery();
 
-               
+                txtName.Text = "";
+                txtEmail.Text = "";
+                txtMobile.Text = "";
+                ddlWard.SelectedIndex = 0;
 
                 this.ClientScript.RegisterStartupScript(this.GetType(), "SweetAlert", "swal('Registered Successfully..!','','success');", true);
+
+
+
+                
 
 
             }
