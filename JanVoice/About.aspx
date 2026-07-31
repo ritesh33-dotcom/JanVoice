@@ -98,9 +98,8 @@
             <!-- Left -->
 
             <div class="vision-image">
+                <img src="Images/Logo/About1.jpeg" alt="Our Vision" />
 
-                <img src="Assets/Images/vision.png"
-                    alt="Our Vision" />
 
             </div>
 
@@ -750,7 +749,7 @@
 
                 </a>
 
-                <a href="ReportIssue.aspx" class="btn-primary">
+                <a href="ReportIssue.aspx" class="btn-s">
 
                     <i class="fa-solid fa-bullhorn"></i>
 

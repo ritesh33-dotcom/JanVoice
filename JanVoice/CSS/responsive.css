@@ -408,3 +408,52 @@
         align-items: center;
     }
 }
+
+
+
+/*==========================
+REGISTER RESPONSIVE
+===========================*/
+
+@media(max-width:992px) {
+
+    .register-wrapper {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .register-card {
+        width: 100%;
+        max-width: 520px;
+    }
+
+    .register-left p {
+        margin: auto;
+    }
+}
+
+@media(max-width:768px) {
+
+    .register-left h1 {
+        font-size: 38px;
+    }
+
+    .register-card {
+        padding: 35px 25px;
+    }
+}
+
+@media(max-width:576px) {
+
+    .register-left h1 {
+        font-size: 30px;
+    }
+
+    .register-image {
+        max-width: 300px;
+    }
+
+    .register-card {
+        padding: 25px 18px;
+    }
+}
