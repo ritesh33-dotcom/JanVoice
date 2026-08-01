@@ -1,26 +1,55 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
 
+    //=========================================
+    // GET CONTROLS
+    //=========================================
+
     const uploadBox = document.getElementById("uploadBox");
 
     const browseBtn = document.getElementById("browseBtn");
 
-    const fileUpload = document.getElementById("<%= fuComplaintImage.ClientID %>");
+    const fileUpload = document.getElementById(window.reportIssueIds.fileUpload);
 
-    const preview = document.getElementById("imagePreview");
+    const previewContainer = document.getElementById("imagePreview");
 
-    const description = document.getElementById("<%= txtDescription.ClientID %>");
+    const description = document.getElementById(window.reportIssueIds.description);
 
-    const counter = document.getElementById("charCount");
+    const charCount = document.getElementById("charCount");
 
-    /* Browse Button */
+    const locationButton = document.getElementById("btnLocation");
 
-    browseBtn.addEventListener("click", function () {
+    const locationStatus = document.getElementById("locationStatus");
+
+    const latitude = document.getElementById(window.reportIssueIds.latitude);
+
+    const longitude = document.getElementById(window.reportIssueIds.longitude);
+
+    //=========================================
+    // CHARACTER COUNTER
+    //=========================================
+
+    description.addEventListener("input", function () {
+
+        charCount.innerHTML =
+            description.value.length + " / 500 Characters";
+
+    });
+
+    //=========================================
+    // BROWSE BUTTON
+    //=========================================
+
+    browseBtn.addEventListener("click", function (e) {
+
+        e.preventDefault();
 
         fileUpload.click();
 
     });
 
-    /* Click Upload Box */
+    //=========================================
+    // CLICK UPLOAD BOX
+    //=========================================
 
     uploadBox.addEventListener("click", function () {
 
@@ -28,31 +57,68 @@
 
     });
 
-    /* Character Counter */
+    //=========================================
+    // DRAG EVENTS
+    //=========================================
 
-    description.addEventListener("input", function () {
+    uploadBox.addEventListener("dragover", function (e) {
 
-        counter.innerHTML =
+        e.preventDefault();
 
-            description.value.length + " / 500 Characters";
+        uploadBox.style.borderColor = "#60A5FA";
+
+        uploadBox.style.background = "#1E293B";
 
     });
 
-    /* Image Preview */
+    uploadBox.addEventListener("dragleave", function () {
 
-    fileUpload.addEventListener("change", function () {
+        uploadBox.style.borderColor = "#3B82F6";
 
-        preview.innerHTML = "";
+        uploadBox.style.background = "#111827";
 
-        Array.from(fileUpload.files).forEach(file => {
+    });
+
+    uploadBox.addEventListener("drop", function (e) {
+
+        e.preventDefault();
+
+        uploadBox.style.borderColor = "#3B82F6";
+
+        uploadBox.style.background = "#111827";
+
+        fileUpload.files = e.dataTransfer.files;
+
+        previewImages();
+
+    });
+
+    //=========================================
+    // IMAGE SELECTION
+    //=========================================
+
+    fileUpload.addEventListener("change", previewImages);
+
+    function previewImages() {
+
+        previewContainer.innerHTML = "";
+
+        if (fileUpload.files.length === 0)
+            return;
+
+        Array.from(fileUpload.files).forEach(function (file) {
+
+            // File Type
 
             if (!file.type.startsWith("image/")) {
 
-                alert("Only image files are allowed.");
+                alert(file.name + " is not an image.");
 
                 return;
 
             }
+
+            // Max Size 2MB
 
             if (file.size > 2 * 1024 * 1024) {
 
@@ -72,7 +138,7 @@
 
                 img.className = "preview-image";
 
-                preview.appendChild(img);
+                previewContainer.appendChild(img);
 
             };
 
@@ -80,11 +146,113 @@
 
         });
 
+    }
+
+    //=========================================
+    // CURRENT LOCATION
+    //=========================================
+
+    locationButton.addEventListener("click", function () {
+
+        if (!navigator.geolocation) {
+
+            locationStatus.innerHTML =
+                "Geolocation is not supported.";
+
+            return;
+
+        }
+
+        locationStatus.innerHTML =
+            "Getting your location...";
+
+        navigator.geolocation.getCurrentPosition(
+
+            function (position) {
+
+                latitude.value =
+                    position.coords.latitude;
+
+                longitude.value =
+                    position.coords.longitude;
+
+                locationStatus.innerHTML =
+                    "✅ Location Captured Successfully";
+
+            },
+
+            function () {
+
+                locationStatus.innerHTML =
+                    "❌ Unable to fetch location.";
+
+            }
+
+        );
+
     });
 
 });
 
 
+//=========================================
+// CLIENT VALIDATION
+//=========================================
 
-const fileUpload = document.getElementById(window.reportIssueIds.fileUpload);
-const description = document.getElementById(window.reportIssueIds.description);
+function validateComplaint() {
+
+    const title =
+        document.getElementById("<%= txtTitle.ClientID %>");
+
+    const category =
+        document.getElementById("<%= ddlCategory.ClientID %>");
+
+    const ward =
+        document.getElementById("<%= ddlWard.ClientID %>");
+
+    const description =
+        document.getElementById("<%= txtDescription.ClientID %>");
+
+    if (title.value.trim() === "") {
+
+        alert("Please enter Complaint Title.");
+
+        title.focus();
+
+        return false;
+
+    }
+
+    if (category.selectedIndex === 0) {
+
+        alert("Please select Category.");
+
+        category.focus();
+
+        return false;
+
+    }
+
+    if (ward.selectedIndex === 0) {
+
+        alert("Please select Ward.");
+
+        ward.focus();
+
+        return false;
+
+    }
+
+    if (description.value.trim() === "") {
+
+        alert("Please enter Description.");
+
+        description.focus();
+
+        return false;
+
+    }
+
+    return true;
+
+}

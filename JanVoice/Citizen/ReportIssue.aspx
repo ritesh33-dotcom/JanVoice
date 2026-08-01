@@ -1,9 +1,11 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/Citizen.Master" AutoEventWireup="true" CodeBehind="ReportIssue.aspx.cs" Inherits="JanVoice.Citizen.ReportIssue" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
     <link href="../CSS/reportissue.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
+
 
     <div class="report-page">
 
@@ -11,16 +13,12 @@
 
         <div class="page-header">
 
-            <div>
+            <h1>Report a Civic Issue</h1>
 
-                <h1>Report a Civic Issue</h1>
-
-                <p>
-                    Help improve your city by reporting issues in your area.
-           
-                </p>
-
-            </div>
+            <p>
+                Help improve your city by reporting civic issues in your locality.
+       
+            </p>
 
         </div>
 
@@ -42,6 +40,7 @@
                         ID="txtTitle"
                         runat="server"
                         CssClass="form-control"
+                        MaxLength="150"
                         placeholder="Enter complaint title">
                 </asp:TextBox>
 
@@ -58,7 +57,7 @@
                         runat="server"
                         CssClass="form-control">
 
-                        <asp:ListItem>Select Category</asp:ListItem>
+                        <asp:ListItem Value="">-- Select Category --</asp:ListItem>
 
                     </asp:DropDownList>
 
@@ -75,7 +74,7 @@
                         runat="server"
                         CssClass="form-control">
 
-                        <asp:ListItem>Select Ward</asp:ListItem>
+                        <asp:ListItem Value="">-- Select Ward --</asp:ListItem>
 
                     </asp:DropDownList>
 
@@ -91,7 +90,8 @@
                         ID="txtLandmark"
                         runat="server"
                         CssClass="form-control"
-                        placeholder="Example: Near Bus Stand">
+                        MaxLength="150"
+                        placeholder="Example : Near Bus Stand">
                 </asp:TextBox>
 
                 </div>
@@ -100,26 +100,36 @@
 
                 <div class="form-group full">
 
-                    <label>Description</label>
+                    <div class="label-row">
+
+                        <label>Description</label>
+
+                        <span id="charCount">0 / 500 Characters
+
+                    </span>
+
+                    </div>
 
                     <asp:TextBox
                         ID="txtDescription"
                         runat="server"
-                        CssClass="form-control"
+                        CssClass="form-control textarea"
                         TextMode="MultiLine"
                         Rows="6"
+                        MaxLength="500"
                         placeholder="Describe the issue in detail">
                 </asp:TextBox>
 
                 </div>
 
-                <!-- Add Location -->
+                <!-- Location -->
 
                 <div class="form-group full">
 
                     <label>Complaint Location</label>
 
-                    <button type="button"
+                    <button
+                        type="button"
                         id="btnLocation"
                         class="location-btn">
 
@@ -127,41 +137,67 @@
 
                         Use My Current Location
 
+               
                     </button>
 
                     <small id="locationStatus"></small>
 
                 </div>
 
-
-
-
-                <!-- Image -->
+                <!-- Upload Section -->
 
                 <div class="form-group full">
 
-                    <label>Upload Image</label>
+                    <label>Upload Complaint Images</label>
 
-                    <asp:FileUpload
-                        ID="fuComplaintImage"
-                        runat="server"
-                        CssClass="file-upload" />
+                    <div
+                        class="upload-box"
+                        id="uploadBox">
+
+                        <i class="fa-solid fa-cloud-arrow-up upload-icon"></i>
+
+                        <h3>Drag & Drop Images
+
+                    </h3>
+
+                        <p>
+                            JPG, PNG, JPEG (Maximum 2 MB)
+
+                   
+                        </p>
+
+                        <button
+                            type="button"
+                            id="browseBtn"
+                            class="browse-btn">
+                            Browse Files
+
+                   
+                        </button>
+
+                        <asp:FileUpload
+                            ID="fuComplaintImage"
+                            runat="server"
+                            CssClass="hidden-upload" />
+
+                    </div>
 
                 </div>
-
 
                 <!-- Image Preview -->
 
                 <div class="form-group full">
 
-                    <img id="imagePreview"
-                        src=""
-                        style="display: none;"
-                        class="preview-image" />
+                    <label>Preview</label>
+
+                    <div
+                        id="imagePreview"
+                        class="preview-container">
+                    </div>
 
                 </div>
 
-                <!-- Hidden Coordinates -->
+                <!-- Hidden Fields -->
 
                 <asp:HiddenField
                     ID="hfLatitude"
@@ -180,15 +216,16 @@
                 <asp:Button
                     ID="btnSubmit"
                     runat="server"
-                    Text="Submit Complaint"
                     CssClass="btn-submit"
+                    Text="Submit Complaint"
                     OnClientClick="return validateComplaint();" />
 
                 <asp:Button
                     ID="btnReset"
                     runat="server"
-                    Text="Reset"
                     CssClass="btn-reset"
+                    Text="Reset"
+                    CausesValidation="false"
                     OnClientClick="this.form.reset();return false;" />
 
             </div>
@@ -197,144 +234,67 @@
 
     </div>
 
-    <script>
+   <script>
 
-        document.addEventListener("DOMContentLoaded", function () {
+       window.reportIssueIds = {
 
-            //--------------------------
-            // IMAGE PREVIEW
-            //--------------------------
+           title: "<%= txtTitle.ClientID %>",
 
-            const fileUpload =
-                document.getElementById("<%= fuComplaintImage.ClientID %>");
+    category: "<%= ddlCategory.ClientID %>",
 
-            const preview =
-                document.getElementById("imagePreview");
+    ward: "<%= ddlWard.ClientID %>",
 
-            fileUpload.addEventListener("change", function () {
+    description: "<%= txtDescription.ClientID %>",
 
-                if (this.files.length > 0) {
+    fileUpload: "<%= fuComplaintImage.ClientID %>",
 
-                    const reader = new FileReader();
+    latitude: "<%= hfLatitude.ClientID %>",
 
-                    reader.onload = function (e) {
+    longitude: "<%= hfLongitude.ClientID %>"
 
-                        preview.src = e.target.result;
+       };
 
-                        preview.style.display = "block";
+       function validateComplaint() {
 
-                    };
+           const title = document.getElementById(window.reportIssueIds.title);
 
-                    reader.readAsDataURL(this.files[0]);
+           const category = document.getElementById(window.reportIssueIds.category);
 
-                }
+           const ward = document.getElementById(window.reportIssueIds.ward);
 
-            });
+           const description = document.getElementById(window.reportIssueIds.description);
 
-            //--------------------------
-            // CURRENT LOCATION
-            //--------------------------
+           if (title.value.trim() === "") {
+               alert("Please enter Complaint Title.");
+               title.focus();
+               return false;
+           }
 
-            const btn =
-                document.getElementById("btnLocation");
+           if (category.selectedIndex === 0) {
+               alert("Please select Category.");
+               category.focus();
+               return false;
+           }
 
-            const status =
-                document.getElementById("locationStatus");
+           if (ward.selectedIndex === 0) {
+               alert("Please select Ward.");
+               ward.focus();
+               return false;
+           }
 
-            btn.addEventListener("click", function () {
+           if (description.value.trim() === "") {
+               alert("Please enter Description.");
+               description.focus();
+               return false;
+           }
 
-                if (!navigator.geolocation) {
+           return true;
+       }
 
-                    status.innerHTML = "Geolocation not supported.";
+   </script>
+    <script src="../JS/reportissue.js"></script>
 
-                    return;
 
-                }
-
-                status.innerHTML = "Getting location...";
-
-                navigator.geolocation.getCurrentPosition(
-
-                    function (position) {
-
-                        document.getElementById("<%= hfLatitude.ClientID %>").value =
-                            position.coords.latitude;
-
-                        document.getElementById("<%= hfLongitude.ClientID %>").value =
-                            position.coords.longitude;
-
-                        status.innerHTML =
-                            "✅ Location Captured Successfully";
-
-                    },
-
-                    function () {
-
-                        status.innerHTML =
-                            "Unable to fetch location.";
-
-                    }
-
-                );
-
-            });
-
-        });
-
-        function validateComplaint() {
-
-            var title =
-                document.getElementById("<%= txtTitle.ClientID %>");
-
-            var category =
-                document.getElementById("<%= ddlCategory.ClientID %>");
-
-            var ward =
-                document.getElementById("<%= ddlWard.ClientID %>");
-
-            var description =
-                document.getElementById("<%= txtDescription.ClientID %>");
-
-            if (title.value.trim() == "") {
-
-                alert("Enter Complaint Title");
-
-                title.focus();
-
-                return false;
-
-            }
-
-            if (category.selectedIndex == 0) {
-
-                alert("Select Category");
-
-                return false;
-
-            }
-
-            if (ward.selectedIndex == 0) {
-
-                alert("Select Ward");
-
-                return false;
-
-            }
-
-            if (description.value.trim() == "") {
-
-                alert("Enter Description");
-
-                description.focus();
-
-                return false;
-
-            }
-
-            return true;
-
-        }
-    </script>
 
 
 </asp:Content>
