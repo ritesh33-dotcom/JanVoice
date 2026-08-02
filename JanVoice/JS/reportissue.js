@@ -198,61 +198,39 @@
 //=========================================
 // CLIENT VALIDATION
 //=========================================
-
 function validateComplaint() {
 
-    const title =
-        document.getElementById("<%= txtTitle.ClientID %>");
+    const title = document.getElementById(window.reportIssueIds.title);
 
-    const category =
-        document.getElementById("<%= ddlCategory.ClientID %>");
+    const category = document.getElementById(window.reportIssueIds.category);
 
-    const ward =
-        document.getElementById("<%= ddlWard.ClientID %>");
+    const ward = document.getElementById(window.reportIssueIds.ward);
 
-    const description =
-        document.getElementById("<%= txtDescription.ClientID %>");
+    const description = document.getElementById(window.reportIssueIds.description);
 
     if (title.value.trim() === "") {
-
         alert("Please enter Complaint Title.");
-
         title.focus();
-
         return false;
-
     }
 
     if (category.selectedIndex === 0) {
-
         alert("Please select Category.");
-
         category.focus();
-
         return false;
-
     }
 
     if (ward.selectedIndex === 0) {
-
         alert("Please select Ward.");
-
         ward.focus();
-
         return false;
-
     }
 
     if (description.value.trim() === "") {
-
         alert("Please enter Description.");
-
         description.focus();
-
         return false;
-
     }
 
     return true;
-
 }

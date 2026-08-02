@@ -42,7 +42,7 @@
                         CssClass="form-control"
                         MaxLength="150"
                         placeholder="Enter complaint title">
-                </asp:TextBox>
+                    </asp:TextBox>
 
                 </div>
 
@@ -92,7 +92,7 @@
                         CssClass="form-control"
                         MaxLength="150"
                         placeholder="Example : Near Bus Stand">
-                </asp:TextBox>
+                    </asp:TextBox>
 
                 </div>
 
@@ -106,7 +106,7 @@
 
                         <span id="charCount">0 / 500 Characters
 
-                    </span>
+                        </span>
 
                     </div>
 
@@ -118,7 +118,7 @@
                         Rows="6"
                         MaxLength="500"
                         placeholder="Describe the issue in detail">
-                </asp:TextBox>
+                    </asp:TextBox>
 
                 </div>
 
@@ -158,7 +158,7 @@
 
                         <h3>Drag & Drop Images
 
-                    </h3>
+                        </h3>
 
                         <p>
                             JPG, PNG, JPEG (Maximum 2 MB)
@@ -218,15 +218,16 @@
                     runat="server"
                     CssClass="btn-submit"
                     Text="Submit Complaint"
+                    OnClick="btnSubmitComplaint_Click"
                     OnClientClick="return validateComplaint();" />
 
                 <asp:Button
                     ID="btnReset"
                     runat="server"
-                    CssClass="btn-reset"
                     Text="Reset"
+                    CssClass="btn-reset"
                     CausesValidation="false"
-                    OnClientClick="this.form.reset();return false;" />
+                    OnClick="btnReset_Click" />
 
             </div>
 
@@ -234,66 +235,32 @@
 
     </div>
 
-   <script>
+    <script>
 
-       window.reportIssueIds = {
+        window.reportIssueIds = {
 
-           title: "<%= txtTitle.ClientID %>",
+            title: "<%= txtTitle.ClientID %>",
 
-    category: "<%= ddlCategory.ClientID %>",
+            category: "<%= ddlCategory.ClientID %>",
 
-    ward: "<%= ddlWard.ClientID %>",
+            ward: "<%= ddlWard.ClientID %>",
 
-    description: "<%= txtDescription.ClientID %>",
+            description: "<%= txtDescription.ClientID %>",
 
-    fileUpload: "<%= fuComplaintImage.ClientID %>",
+            fileUpload: "<%= fuComplaintImage.ClientID %>",
 
-    latitude: "<%= hfLatitude.ClientID %>",
+            latitude: "<%= hfLatitude.ClientID %>",
 
-    longitude: "<%= hfLongitude.ClientID %>"
+            longitude: "<%= hfLongitude.ClientID %>"
 
-       };
+        };
 
-       function validateComplaint() {
+    </script>
 
-           const title = document.getElementById(window.reportIssueIds.title);
 
-           const category = document.getElementById(window.reportIssueIds.category);
 
-           const ward = document.getElementById(window.reportIssueIds.ward);
 
-           const description = document.getElementById(window.reportIssueIds.description);
-
-           if (title.value.trim() === "") {
-               alert("Please enter Complaint Title.");
-               title.focus();
-               return false;
-           }
-
-           if (category.selectedIndex === 0) {
-               alert("Please select Category.");
-               category.focus();
-               return false;
-           }
-
-           if (ward.selectedIndex === 0) {
-               alert("Please select Ward.");
-               ward.focus();
-               return false;
-           }
-
-           if (description.value.trim() === "") {
-               alert("Please enter Description.");
-               description.focus();
-               return false;
-           }
-
-           return true;
-       }
-
-   </script>
     <script src="../JS/reportissue.js"></script>
-
 
 
 

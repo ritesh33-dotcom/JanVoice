@@ -209,7 +209,7 @@
     <Folder Include="Models\" />
     <Folder Include="NewFolder1\" />
     <Folder Include="Officer\" />
-    <Folder Include="Uploads\" />
+    <Folder Include="Uploads\ComplaintImages\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
