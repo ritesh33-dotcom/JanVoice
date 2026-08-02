@@ -12,57 +12,94 @@ namespace JanVoice
 {
     public partial class CommunityFeed : System.Web.UI.Page
     {
-        if (!IsPostBack)
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            if (!IsPostBack)
             {
                 LoadFeed();
             }
-    }
 
-private void LoadFeed()
-{
-    string cs = ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
+        }
 
-    using (SqlConnection con = new SqlConnection(cs))
+
+
+
+
+
+
+
+
+
+
+
+
+
+        private void LoadFeed()
         {
-        string query = @"
+            string cs = ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
 
-                        SELECT
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                string query = @"
 
+                                            SELECT
                         C.ComplaintID,
                         C.Title,
                         C.Description,
                         C.Status,
+
                         U.FullName,
                         W.WardName,
                         CAT.CategoryName,
 
-                        ISNULL(CI.ImagePath,'Assets/Images/demo1.jpg') AS ImagePath
+                        ISNULL(CI.ImagePath,'Uploads/ComplaintImages/rimage.jpg') AS ImagePath,
 
-                        FROM Complaints C
+                        ISNULL(S.SupportCount,0) AS SupportCount,
+                        ISNULL(COM.CommentCount,0) AS CommentCount
 
-                        INNER JOIN Users U
-                        ON C.UserID=U.UserID
+                    FROM Complaints C
 
-                        INNER JOIN Categories CAT
-                        ON C.CategoryID=CAT.CategoryID
+                    INNER JOIN Users U
+                        ON C.UserID = U.UserID
 
-                        INNER JOIN Wards W
-                        ON C.WardID=W.WardID
+                    INNER JOIN Categories CAT
+                        ON C.CategoryID = CAT.CategoryID
 
-                        LEFT JOIN ComplaintImages CI
-                        ON C.ComplaintID=CI.ComplaintID
+                    INNER JOIN Wards W
+                        ON C.WardID = W.WardID
 
-                        ORDER BY C.CreatedDate DESC";
+                    LEFT JOIN ComplaintImages CI
+                        ON C.ComplaintID = CI.ComplaintID
 
-                        SqlDataAdapter da = new SqlDataAdapter(query, con);
+                    LEFT JOIN
+                    (
+                        SELECT ComplaintID, COUNT(*) AS SupportCount
+                        FROM Supports
+                        GROUP BY ComplaintID
+                    ) S
+                    ON C.ComplaintID = S.ComplaintID
 
-                                    DataTable dt = new DataTable();
+                    LEFT JOIN
+                    (
+                        SELECT ComplaintID, COUNT(*) AS CommentCount
+                        FROM Comments
+                        GROUP BY ComplaintID
+                    ) COM
+                    ON C.ComplaintID = COM.ComplaintID
 
-                                    da.Fill(dt);
+                    ORDER BY C.CreatedDate DESC";
 
-                                    rptComplaints.DataSource = dt;
+                SqlDataAdapter da = new SqlDataAdapter(query, con);
 
-                                    rptComplaints.DataBind();
-         }
-     }
+                DataTable dt = new DataTable();
+
+                da.Fill(dt);
+
+                rptComplaints.DataSource = dt;
+
+                rptComplaints.DataBind();
+            }
+        }
+    }
 }
