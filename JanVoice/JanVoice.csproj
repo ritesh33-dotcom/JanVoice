@@ -71,7 +71,9 @@
     <Content Include="Citizen\Dashboard.aspx" />
     <Content Include="Citizen\MyComplaints.aspx" />
     <Content Include="Citizen\ReportIssue.aspx" />
+    <Content Include="CommunityFeed.aspx" />
     <Content Include="CSS\citizen.css" />
+    <Content Include="CSS\CommunityFeed.css" />
     <Content Include="CSS\components.css" />
     <Content Include="CSS\mycomplaints.css" />
     <Content Include="CSS\reportissue.css" />
@@ -133,6 +135,13 @@
     </Compile>
     <Compile Include="Citizen\ReportIssue.aspx.designer.cs">
       <DependentUpon>ReportIssue.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="CommunityFeed.aspx.cs">
+      <DependentUpon>CommunityFeed.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="CommunityFeed.aspx.designer.cs">
+      <DependentUpon>CommunityFeed.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

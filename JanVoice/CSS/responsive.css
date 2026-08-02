@@ -457,3 +457,29 @@ REGISTER RESPONSIVE
         padding: 25px 18px;
     }
 }
+
+
+@media(max-width:768px) {
+
+    .issue-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .issue-buttons {
+        flex-direction: column;
+    }
+
+    .filter-box {
+        flex-direction: column;
+    }
+
+    .filter-dropdown {
+        width: 100%;
+    }
+
+    .hero-content h1 {
+        font-size: 40px;
+    }
+}
