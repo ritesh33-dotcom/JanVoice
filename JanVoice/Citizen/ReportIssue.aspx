@@ -227,7 +227,7 @@
                     Text="Reset"
                     CssClass="btn-reset"
                     CausesValidation="false"
-                    OnClick="btnReset_Click" />
+                    />
 
             </div>
 

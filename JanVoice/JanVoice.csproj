@@ -75,6 +75,7 @@
     <Content Include="CSS\citizen.css" />
     <Content Include="CSS\CommunityFeed.css" />
     <Content Include="CSS\components.css" />
+    <Content Include="CSS\IssueMap.css" />
     <Content Include="CSS\mycomplaints.css" />
     <Content Include="CSS\reportissue.css" />
     <Content Include="CSS\responsive.css" />
@@ -98,6 +99,7 @@
     <Content Include="Images\Logo\About1.jpeg" />
     <Content Include="Images\Logo\Logo.png" />
     <Content Include="Images\Logo\logoIllustration.png" />
+    <Content Include="IssueMap.aspx" />
     <Content Include="JS\citizen.js" />
     <Content Include="JS\Login.js" />
     <Content Include="JS\mycomplaints.js" />
@@ -152,6 +154,13 @@
     </Compile>
     <Compile Include="Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="IssueMap.aspx.cs">
+      <DependentUpon>IssueMap.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="IssueMap.aspx.designer.cs">
+      <DependentUpon>IssueMap.aspx</DependentUpon>
     </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
