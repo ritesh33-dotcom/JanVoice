@@ -749,9 +749,9 @@
 
                 </a>
 
-                <a href="ReportIssue.aspx" class="btn-s">
+                <a href="ReportIssue.aspx" class="btn-primary">
 
-                    <i class="fa-solid fa-bullhorn"></i>
+                    <i class="fa-solid fa-user-plus"></i>
 
                     Report an Issue
 
