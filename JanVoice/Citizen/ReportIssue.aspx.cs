@@ -230,13 +230,13 @@ namespace JanVoice.Citizen
                     imageCmd.Parameters.AddWithValue(
                         "@ComplaintID",
                         complaintID);
-
+                    imageCmd.Parameters.AddWithValue(
+                            "@UploadedBy",
+                            Session["UserID"]);
                     imageCmd.Parameters.AddWithValue(
                         "@ImagePath",
                         imagePath);
-                    imageCmd.Parameters.AddWithValue(
-                 "@UploadedBy",
-                 Session["UserID"]);
+                   
 
                     imageCmd.Parameters.AddWithValue(
                         "@ImageType",
@@ -245,33 +245,40 @@ namespace JanVoice.Citizen
                     imageCmd.ExecuteNonQuery();
 
 
-                    string historyQuery = @"
-                                            INSERT INTO StatusHistory
-                                            (
-                                            ComplaintID,
-                                            Status,
-                                            Remarks,
-                                            UpdatedBy,
-                                            UpdatedDate
-                                            )
-                                            VALUES
-                                            (
-                                            @ComplaintID,
-                                            @Status,
-                                            @Remarks,
-                                            @UpdatedBy,
-                                            GETDATE()
-                                            )";
+                 string historyQuery = @"
+                            INSERT INTO StatusHistory
+                            (
+                                ComplaintID,
+                                OldStatus,
+                                NewStatus,
+                                ChangedBy,
+                                Remarks,
+                                ChangeDate
+                            )
+                            VALUES
+                            (
+                                @ComplaintID,
+                                @OldStatus,
+                                @NewStatus,
+                                @ChangedBy,
+                                @Remarks,
+                                GETDATE()
+                            )";
 
                     SqlCommand historyCmd = new SqlCommand(historyQuery, con);
 
                     historyCmd.Parameters.AddWithValue("@ComplaintID", complaintID);
-                    historyCmd.Parameters.AddWithValue("@Status", "Pending");
-                    historyCmd.Parameters.AddWithValue("@Remarks", "Complaint Submitted Successfully");
-                    historyCmd.Parameters.AddWithValue("@UpdatedBy", "Citizen");
+
+                    historyCmd.Parameters.AddWithValue("@OldStatus", DBNull.Value);
+
+                    historyCmd.Parameters.AddWithValue("@NewStatus", "Pending");
+
+                    historyCmd.Parameters.AddWithValue("@ChangedBy", Session["UserID"]);
+
+                    historyCmd.Parameters.AddWithValue("@Remarks",
+                        "Complaint submitted successfully.");
 
                     historyCmd.ExecuteNonQuery();
-
                     ClientScript.RegisterStartupScript(
     this.GetType(),
     "success",
