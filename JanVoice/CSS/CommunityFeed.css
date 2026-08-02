@@ -387,6 +387,7 @@
     color: white;
     border-radius: 12px;
     cursor: pointer;
+    transition: .3s;
 }
 
 .btn-share {
@@ -397,6 +398,7 @@
     color: white;
     border-radius: 12px;
     cursor: pointer;
+    transition: .3s;
 }
 
 
