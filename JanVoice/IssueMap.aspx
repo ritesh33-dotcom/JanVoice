@@ -63,11 +63,11 @@
                     placeholder="Search location, landmark or complaint...">
             </asp:TextBox>
 
-                <button class="search-btn">
-                    Search
-
-           
-                </button>
+                <asp:Button ID="btnSearch"
+                    runat="server"
+                    Text="Search"
+                    CssClass="search-btn"
+                    OnClick="btnSearch_Click" />
 
             </div>
 
@@ -85,68 +85,53 @@
 
                     <hr />
 
-                    <label>
-
-                        <input type="checkbox" checked />
-
-                        Garbage
-
-               
-                    </label>
-
-                    <label>
-
-                        <input type="checkbox" checked />
-
-                        Road Damage
-
-               
-                    </label>
-
-                    <label>
-
-                        <input type="checkbox" checked />
-
-                        Water Leakage
-
-               
-                    </label>
-
-                    <label>
-
-                        <input type="checkbox" checked />
-
-                        Street Light
-
-               
-                    </label>
-
-                    <label>
-
-                        <input type="checkbox" checked />
-
-                        Drainage
-
-               
-                    </label>
+                    <h3>Filters</h3>
 
                     <hr />
 
-                    <h3>Statistics
+                    <asp:DropDownList ID="ddlCategory"
+                        runat="server"
+                        CssClass="search-box">
+                    </asp:DropDownList>
 
-                </h3>
+                    <br />
+                    <br />
+
+                    <asp:DropDownList ID="ddlStatus"
+                        runat="server"
+                        CssClass="search-box">
+
+                        <asp:ListItem Text="All Status" Value=""></asp:ListItem>
+                        <asp:ListItem Text="Pending" Value="Pending"></asp:ListItem>
+                        <asp:ListItem Text="In Progress" Value="In Progress"></asp:ListItem>
+                        <asp:ListItem Text="Resolved" Value="Resolved"></asp:ListItem>
+
+                    </asp:DropDownList>
+
+                    <br />
+                    <br />
+
+                    <asp:Button
+                        ID="btnFilter"
+                        runat="server"
+                        Text="Apply Filter"
+                        CssClass="search-btn"
+                        OnClick="btnFilter_Click" />
 
                     <div class="stat-card">
 
-                        <h2>250</h2>
-
+                        <h2>
+                            <asp:Label ID="lblTotalIssues" runat="server" Text="0"></asp:Label>
+                        </h2>
                         <p>Total Issues</p>
 
                     </div>
 
                     <div class="stat-card">
 
-                        <h2>110</h2>
+                        <h2>
+                            <asp:Label ID="lblResolved" runat="server" Text="0"></asp:Label>
+                        </h2>
 
                         <p>Resolved</p>
 
@@ -154,7 +139,9 @@
 
                     <div class="stat-card">
 
-                        <h2>70</h2>
+                        <h2>
+                            <asp:Label ID="lblProgress" runat="server" Text="0"></asp:Label>
+                        </h2>
 
                         <p>In Progress</p>
 
@@ -162,7 +149,9 @@
 
                     <div class="stat-card">
 
-                        <h2>70</h2>
+                        <h2>
+                            <asp:Label ID="lblPending" runat="server" Text="0"></asp:Label>
+                        </h2>
 
                         <p>Pending</p>
 
@@ -185,7 +174,6 @@
                 </div>
 
             </div>
-
         </div>
 
     </section>
@@ -198,6 +186,7 @@
             // Pune Location
 
             var map = L.map('map').setView([18.5204, 73.8567], 12);
+            var complaints =<%=ComplaintJson%>;
 
             // OpenStreetMap
 
@@ -212,187 +201,53 @@
 
             // Garbage Issue
 
-            L.marker([18.5204, 73.8567])
 
-                .addTo(map)
-
-                .bindPopup(`
-
-<div class="issue-popup">
-
-<img src="https://picsum.photos/300/200?1">
-
-<span class="status pending">
-
-Pending
-
-</span>
-
-<h4>
-
-Garbage Overflow
-
-</h4>
-
-<p>
-
-📍 Shivaji Nagar
-
-</p>
-
-<p>
-
-👤 Reported by Rahul
-
-</p>
-
-<p>
-
-📅 02 Aug 2026
-
-</p>
-
-<a href="#" class="popup-btn">
-
-View Details
-
-</a>
-
-</div>
-
-`);
-
-            // Road Issue
-
-            L.marker([18.5350, 73.8470])
-
-                .addTo(map)
-
-                .bindPopup(`
-
-<div class="issue-popup">
-
-<img src="https://picsum.photos/300/200?2">
-
-<span class="status progress">
-
-In Progress
-
-</span>
-
-<h4>
-
-Road Damage
-
-</h4>
-
-<p>
-
-📍 JM Road
-
-</p>
-
-<p>
-
-👤 Reported by Sneha
-
-</p>
-
-<p>
-
-📅 01 Aug 2026
-
-</p>
-
-<a href="#" class="popup-btn">
-
-View Details
-
-</a>
-
-</div>
-
-`);
-
-            // Street Light
-
-            L.marker([18.5100, 73.8650])
-
-                .addTo(map)
-
-                .bindPopup(`
-
-<div class="issue-popup">
-
-<img src="https://picsum.photos/300/200?3">
-
-<span class="status resolved">
-
-Resolved
-
-</span>
-
-<h4>
-
-Street Light Fixed
-
-</h4>
-
-<p>
-
-📍 Kothrud
-
-</p>
-
-<p>
-
-👤 Reported by Amit
-
-</p>
-
-<p>
-
-📅 30 Jul 2026
-
-</p>
-
-<a href="#" class="popup-btn">
-
-View Details
-
-</a>
-
-</div>
-
-`);
 
             // Sample Markers
+            // Dynamic Complaint Markers
 
-            L.marker([18.5204, 73.8567])
+            complaints.forEach(function (issue) {
 
-                .addTo(map)
 
-                .bindPopup("<b>Garbage Issue</b><br>Pending");
 
-            L.marker([18.5350, 73.8470])
+                if (issue.Latitude != null && issue.Longitude != null) {
 
-                .addTo(map)
+                    L.marker([
+                        parseFloat(issue.Latitude),
+                        parseFloat(issue.Longitude)
+                    ])
+                        .addTo(map)
+                        .bindPopup(`
 
-                .bindPopup("<b>Road Damage</b><br>In Progress");
+<div class="issue-popup">
 
-            L.marker([18.5100, 73.8650])
+    <span class="status ${getStatusClass(issue.Status)}">
 
-                .addTo(map)
+        ${issue.Status}
 
-                .bindPopup("<b>Street Light</b><br>Resolved");
+    </span>
 
-            L.marker([18.5000, 73.8800])
+    <h4>${issue.Title}</h4>
 
-                .addTo(map)
+    <p>📍 ${issue.Landmark}</p>
 
-                .bindPopup("<b>Water Leakage</b><br>Pending");
+    <p>${issue.Description}</p>
 
-        });
+    <p>📅 ${formatDate(issue.CreatedDate)}</p>
+
+    <a href="#" class="popup-btn">
+
+        View Details
+
+    </a>
+
+</div>
+
+`);
+
+                }
+
+            });
 
     </script>
 
