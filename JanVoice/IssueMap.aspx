@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/Site.Master" AutoEventWireup="true" CodeBehind="IssueMap.aspx.cs" Inherits="JanVoice.IssueMap" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="CSS/IssueMap.css" rel="stylesheet" />
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -217,21 +219,7 @@
 
                             </ul>
 
-                            <div class="glass-card mt-4">
 
-                                <h3>🗺 Map Legend
-
-                                </h3>
-
-                                <ul>
-
-                                    <li>🔴 High Priority</li>
-
-                                    <li>🟠 Medium Priority</li>
-
-                                    <li>🟢 Resolved Issue</li>
-
-                                    <li>🔵 Your Location</li>
 
                                 </ul>
 
