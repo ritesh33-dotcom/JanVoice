@@ -15,6 +15,42 @@ namespace JanVoice.Citizen
     {
 
         /// <summary>
+        /// lblSupports control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSupports;
+
+        /// <summary>
+        /// lblComments control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblComments;
+
+        /// <summary>
+        /// lblImages control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblImages;
+
+        /// <summary>
+        /// lblFollowers control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFollowers;
+
+        /// <summary>
         /// imgComplaint control.
         /// </summary>
         /// <remarks>
@@ -96,22 +132,13 @@ namespace JanVoice.Citizen
         protected global::System.Web.UI.WebControls.Label lblDescription;
 
         /// <summary>
-        /// lblLatitude control.
+        /// mapFrame control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblLatitude;
-
-        /// <summary>
-        /// lblLongitude control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblLongitude;
+        protected global::System.Web.UI.HtmlControls.HtmlIframe mapFrame;
 
         /// <summary>
         /// rptTimeline control.

@@ -20,6 +20,83 @@
 
         </div>
 
+        <div class="stats-container">
+
+            <div class="stat-card">
+
+                <div class="stat-number">
+
+                    <asp:Label
+                        ID="lblSupports"
+                        runat="server"
+                        Text="0" />
+
+                </div>
+
+                <div class="stat-title">
+                    Supports
+
+                </div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-number">
+
+                    <asp:Label
+                        ID="lblComments"
+                        runat="server"
+                        Text="0" />
+
+                </div>
+
+                <div class="stat-title">
+                    Comments
+
+                </div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-number">
+
+                    <asp:Label
+                        ID="lblImages"
+                        runat="server"
+                        Text="0" />
+
+                </div>
+
+                <div class="stat-title">
+                    Images
+
+                </div>
+
+            </div>
+
+            <div class="stat-card">
+
+                <div class="stat-number">
+
+                    <asp:Label
+                        ID="lblFollowers"
+                        runat="server"
+                        Text="0" />
+
+                </div>
+
+                <div class="stat-title">
+                    Followers
+
+                </div>
+
+            </div>
+
+        </div>
+
+
         <!-- Main Card -->
 
         <div class="details-card">
@@ -128,29 +205,20 @@
 
         </div>
 
+
         <div class="location-card">
 
-            <h3>Location</h3>
+            <h3>Complaint Location</h3>
 
-            <p>
-                Latitude :
-
-        <asp:Label
-            ID="lblLatitude"
-            runat="server" />
-
-            </p>
-
-            <p>
-                Longitude :
-
-        <asp:Label
-            ID="lblLongitude"
-            runat="server" />
-
-            </p>
+            <iframe
+                id="mapFrame"
+                runat="server"
+                class="location-map"
+                loading="lazy"></iframe>
 
         </div>
+
+
         <div class="timeline-card">
 
             <h3>Status History</h3>
@@ -206,29 +274,29 @@
             </asp:Repeater>
 
         </div>
-   <div class="comments-card">
+        <div class="comments-card">
 
-    <h3>Comments</h3>
+            <h3>Comments</h3>
 
-    <asp:Repeater
-        ID="rptComments"
-        runat="server">
+            <asp:Repeater
+                ID="rptComments"
+                runat="server">
 
-        <ItemTemplate>
+                <ItemTemplate>
 
-            <div class="comment-item">
+                    <div class="comment-item">
 
-                <div class="comment-header">
+                        <div class="comment-header">
 
-                    <div class="comment-user">
+                            <div class="comment-user">
 
-                        <span class='<%# Eval("RoleName").ToString().ToLower() %>'>
+                                <span class='<%# Eval("RoleName").ToString().ToLower() %>'>
 
-                            <%# Eval("RoleName") %>
+                                    <%# Eval("RoleName") %>
 
-                        </span>
+                                </span>
 
-                        •
+                                •
 
                         <strong>
 
@@ -236,29 +304,28 @@
 
                         </strong>
 
+                            </div>
+
+                            <span class="comment-date">
+
+                                <%# Eval("CommentDate","{0:dd MMM yyyy hh:mm tt}") %>
+
+                            </span>
+
+                        </div>
+
+                        <div class="comment-text">
+
+                            <%# Eval("Comment") %>
+                        </div>
+
                     </div>
 
-                    <span class="comment-date">
+                </ItemTemplate>
 
-                        <%# Eval("CommentDate","{0:dd MMM yyyy hh:mm tt}") %>
+            </asp:Repeater>
 
-                    </span>
-
-                </div>
-
-                <div class="comment-text">
-
-                    <%# Eval("Comment") %>
-
-                </div>
-
-            </div>
-
-        </ItemTemplate>
-
-    </asp:Repeater>
-
-</div>
+        </div>
 
 
 
@@ -273,6 +340,6 @@
             <p>
                 The complaint you are looking for does not exist.
             </p>
-
         </div>
+    </div>
 </asp:Content>

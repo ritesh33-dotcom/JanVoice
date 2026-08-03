@@ -31,6 +31,7 @@ ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
                     LoadComplaintDetails(complaintID);
                     LoadTimeline(complaintID);
                     LoadComments(complaintID);
+                    LoadStatistics(complaintID);
                 }
                 else
                 {
@@ -132,11 +133,20 @@ ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
                     lblLandmark.Text =
                     dr["Landmark"].ToString();
 
-                    lblLatitude.Text =
-                    dr["Latitude"].ToString();
+                    string latitude = dr["Latitude"].ToString().Trim();
+                    string longitude = dr["Longitude"].ToString().Trim();
 
-                    lblLongitude.Text =
-                    dr["Longitude"].ToString();
+                    if (!string.IsNullOrEmpty(latitude) &&
+                        !string.IsNullOrEmpty(longitude))
+                    {
+                        mapFrame.Attributes["src"] =
+                            $"https://maps.google.com/maps?q={latitude},{longitude}&z=16&output=embed";
+                    }
+                    else
+                    {
+                        mapFrame.Visible = false;
+                    }
+
 
                     lblCreatedDate.Text =
                     Convert.ToDateTime(
@@ -245,6 +255,53 @@ ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
                 rptComments.DataSource = dt;
 
                 rptComments.DataBind();
+            }
+        }
+
+        private void LoadStatistics(int complaintID)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = @"
+
+                            SELECT
+
+                            (SELECT COUNT(*)
+                             FROM Supports
+                             WHERE ComplaintID = @ComplaintID) AS SupportCount,
+
+                            (SELECT COUNT(*)
+                             FROM Comments
+                             WHERE ComplaintID = @ComplaintID) AS CommentCount,
+
+                            (SELECT COUNT(*)
+                             FROM ComplaintImages
+                             WHERE ComplaintID = @ComplaintID) AS ImageCount,
+
+                            (SELECT COUNT(*)
+                             FROM Followers
+                             WHERE ComplaintID = @ComplaintID) AS FollowerCount";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                cmd.Parameters.AddWithValue("@ComplaintID", complaintID);
+
+                con.Open();
+
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.Read())
+                {
+                    lblSupports.Text = dr["SupportCount"].ToString();
+
+                    lblComments.Text = dr["CommentCount"].ToString();
+
+                    lblImages.Text = dr["ImageCount"].ToString();
+
+                    lblFollowers.Text = dr["FollowerCount"].ToString();
+                }
+
+                dr.Close();
             }
         }
 
