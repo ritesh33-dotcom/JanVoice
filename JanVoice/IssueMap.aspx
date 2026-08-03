@@ -3,510 +3,184 @@
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="CSS/IssueMap.css" rel="stylesheet" />
 
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 
+    <!--==================================
+        ISSUE MAP
+===================================-->
 
-    <!-- ========================================= -->
-<!-- ISSUE MAP PAGE -->
-<!-- ========================================= -->
+    <section class="issue-map-section">
 
-<section id="issueMapPage">
+        <div class="container-fluid">
 
-    <!-- ========================================= -->
-    <!-- HERO SECTION -->
-    <!-- ========================================= -->
+            <!-- Header -->
 
-    <section id="heroSection">
+            <div class="map-header">
 
-        <div class="container">
+                <div>
 
-            <div class="heroContent">
+                    <span class="section-badge">📍 Live Issue Map
 
-                <div class="heroText">
+                </span>
 
-                    <span class="heroBadge">
-                        📍 Smart City Monitoring
-                    </span>
+                    <h1>Explore Civic Issues Across
+                   
+                        <span>Your City</span>
 
-                    <h1>
-                        Explore Issues Across Your City
                     </h1>
 
                     <p>
-                        Track civic complaints, discover nearby issues,
-                        and monitor their current status in real time.
+                        View complaints submitted by citizens,
+                    track their status and help improve
+                    your neighbourhood.
+
+               
                     </p>
-
-                    <div class="heroButtons">
-
-                        <a href="CommunityFeed.aspx">
-                            View Community Feed
-                        </a>
-
-                        <a href="ReportIssue.aspx">
-                            Report Issue
-                        </a>
-
-                    </div>
 
                 </div>
 
-                <div class="heroImage">
+                <div class="header-buttons">
 
-                    <img src="Assets/Images/map-hero.png"
-                        alt="Issue Map" />
+                    <a href="ReportIssue.aspx" class="primary-btn">+ Report Issue
+
+                </a>
 
                 </div>
 
             </div>
 
-        </div>
+            <!-- Search -->
 
-    </section>
+            <div class="search-panel">
 
-    <!-- ========================================= -->
-<!-- FLOATING SEARCH SECTION -->
-<!-- ========================================= -->
+                <asp:TextBox
+                    ID="txtSearch"
+                    runat="server"
+                    CssClass="search-box"
+                    placeholder="Search location, landmark or complaint...">
+            </asp:TextBox>
 
-<section id="searchSection">
-
-    <div class="container">
-
-        <div class="searchWrapper">
-
-            <div class="searchBar">
-
-                <div class="searchItem">
-
-                    <i class="fa-solid fa-magnifying-glass"></i>
-
-                    <input
-                        type="text"
-                        placeholder="Search Issue..." />
-
-                </div>
-
-                <div class="searchItem">
-
-                    <i class="fa-solid fa-layer-group"></i>
-
-                    <select>
-
-                        <option>Category</option>
-
-                    </select>
-
-                </div>
-
-                <div class="searchItem">
-
-                    <i class="fa-solid fa-location-dot"></i>
-
-                    <select>
-
-                        <option>Ward</option>
-
-                    </select>
-
-                </div>
-
-                <div class="searchItem">
-
-                    <i class="fa-solid fa-circle-info"></i>
-
-                    <select>
-
-                        <option>Status</option>
-
-                    </select>
-
-                </div>
-
-                <button class="searchBtn">
-
-                    <i class="fa-solid fa-magnifying-glass"></i>
-
+                <button class="search-btn">
                     Search
 
+           
                 </button>
 
             </div>
 
-        </div>
+            <!-- Main Layout -->
 
-    </div>
+            <div class="map-layout">
 
-</section>
-    <!-- ========================================= -->
-<!-- LIVE STATISTICS -->
-<!-- ========================================= -->
+                <!-- Left Sidebar -->
 
-<section id="statisticsSection">
+                <aside class="map-sidebar">
 
-    <div class="container">
+                    <h3>Filters
 
-        <div class="statisticsGrid">
+                </h3>
 
-            <div class="statCard">
+                    <hr />
 
-                <i class="fa-solid fa-map-location-dot"></i>
+                    <label>
 
-                <h2>0</h2>
+                        <input type="checkbox" checked />
 
-                <p>Total Issues</p>
+                        Garbage
 
-            </div>
+               
+                    </label>
 
-            <div class="statCard">
+                    <label>
 
-                <i class="fa-solid fa-hourglass-half"></i>
+                        <input type="checkbox" checked />
 
-                <h2>0</h2>
+                        Road Damage
 
-                <p>Pending</p>
+               
+                    </label>
 
-            </div>
+                    <label>
 
-            <div class="statCard">
+                        <input type="checkbox" checked />
 
-                <i class="fa-solid fa-circle-check"></i>
+                        Water Leakage
 
-                <h2>0</h2>
+               
+                    </label>
 
-                <p>Resolved</p>
+                    <label>
 
-            </div>
+                        <input type="checkbox" checked />
 
-            <div class="statCard">
+                        Street Light
 
-                <i class="fa-solid fa-triangle-exclamation"></i>
+               
+                    </label>
 
-                <h2>0</h2>
+                    <label>
 
-                <p>Critical</p>
+                        <input type="checkbox" checked />
 
-            </div>
+                        Drainage
 
-        </div>
+               
+                    </label>
 
-    </div>
+                    <hr />
 
-</section>
+                    <h3>Statistics
 
+                </h3>
 
-    <!-- ========================================= -->
-<!-- LATEST ISSUES SECTION -->
-<!-- ========================================= -->
+                    <div class="stat-card">
 
-<section id="latestIssuesSection">
+                        <h2>250</h2>
 
-    <div class="container">
-
-        <div class="sectionHeader">
-
-            <h2>Latest Reported Issues</h2>
-
-            <p>
-                Recently reported complaints by citizens.
-            </p>
-
-        </div>
-
-        <div class="issueGrid">
-
-            <asp:Repeater ID="rptLatestIssues" runat="server">
-
-                <ItemTemplate>
-
-                    <div class="issueCard">
-
-                        <div class="issueImage">
-
-                            <img src='<%# Eval("ImagePath") %>'
-                                alt="Issue Image" />
-
-                        </div>
-
-                        <div class="issueBody">
-
-                            <span class="issueCategory">
-
-                                <%# Eval("CategoryName") %>
-
-                            </span>
-
-                            <h3>
-
-                                <%# Eval("Title") %>
-
-                            </h3>
-
-                            <p>
-
-                                <%# Eval("Description") %>
-
-                            </p>
-
-                            <div class="issueFooter">
-
-                                <span>
-
-                                    📍 <%# Eval("WardName") %>
-
-                                </span>
-
-                                <span>
-
-                                    <%# Eval("Status") %>
-
-                                </span>
-
-                            </div>
-
-                        </div>
+                        <p>Total Issues</p>
 
                     </div>
 
-                </ItemTemplate>
+                    <div class="stat-card">
 
-            </asp:Repeater>
+                        <h2>110</h2>
 
-        </div>
+                        <p>Resolved</p>
 
-    </div>
+                    </div>
 
-</section>
+                    <div class="stat-card">
 
+                        <h2>70</h2>
 
-    <!-- ========================================= -->
-<!-- TRENDING AREAS -->
-<!-- ========================================= -->
+                        <p>In Progress</p>
 
-<section id="trendingSection">
+                    </div>
 
-    <div class="container">
+                    <div class="stat-card">
 
-        <div class="sectionHeader">
+                        <h2>70</h2>
 
-            <h2>Trending Areas</h2>
+                        <p>Pending</p>
 
-            <p>
+                    </div>
 
-                Areas with highest number of complaints.
+                </aside>
 
-            </p>
+                <!-- Map Area -->
 
-        </div>
+                <div class="map-container">
 
-        <div class="trendingGrid">
+                    <div id="map">
 
-            <div class="trendCard">
+                        <!-- Leaflet Map will come here -->
 
-                <h3>Ward 01</h3>
 
-                <span>24 Issues</span>
 
-            </div>
-
-            <div class="trendCard">
-
-                <h3>Ward 02</h3>
-
-                <span>18 Issues</span>
-
-            </div>
-
-            <div class="trendCard">
-
-                <h3>Ward 03</h3>
-
-                <span>15 Issues</span>
-
-            </div>
-
-            <div class="trendCard">
-
-                <h3>Ward 04</h3>
-
-                <span>12 Issues</span>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-
-    <!-- ========================================= -->
-<!-- MAP LEGEND -->
-<!-- ========================================= -->
-
-<section id="legendSection">
-
-    <div class="container">
-
-        <div class="sectionHeader">
-
-            <h2>Map Legend</h2>
-
-        </div>
-
-        <div class="legendGrid">
-
-            <div class="legendItem">
-
-                🔴 Pending
-
-            </div>
-
-            <div class="legendItem">
-
-                🟠 In Progress
-
-            </div>
-
-            <div class="legendItem">
-
-                🟢 Resolved
-
-            </div>
-
-            <div class="legendItem">
-
-                🔵 Verified
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-    <!-- ========================================= -->
-<!-- CALL TO ACTION -->
-<!-- ========================================= -->
-
-<section id="ctaSection">
-
-    <div class="container">
-
-        <div class="ctaBox">
-
-            <h2>
-
-                Found a Civic Issue?
-
-            </h2>
-
-            <p>
-
-                Help your city become better by reporting issues.
-
-            </p>
-
-            <asp:Button
-
-                ID="btnReport"
-
-                runat="server"
-
-                CssClass="ctaButton"
-
-                Text="Report New Issue"
-
-                PostBackUrl="~/ReportIssue.aspx" />
-
-        </div>
-
-    </div>
-
-</section>
-
-
-    <!-- ========================================= -->
-<!-- MAP SECTION -->
-<!-- ========================================= -->
-
-<section id="mapSection">
-
-    <div class="container">
-
-        <div class="mapCard">
-
-            <div class="mapHeader">
-
-                <div>
-
-                    <h2>Live Issue Map</h2>
-
-                    <p>Explore reported civic issues across the city.</p>
-
-                </div>
-
-                <div class="mapActions">
-
-                    <button>
-
-                        <i class="fa-solid fa-location-crosshairs"></i>
-
-                    </button>
-
-                    <button>
-
-                        <i class="fa-solid fa-expand"></i>
-
-                    </button>
-
-                </div>
-
-            </div>
-
-            <div id="googleMap">
-
-                Google Maps Integration Here
-
-            </div>
-
-        </div>
-
-    </div>
-
-</section>
-
-    <!-- ========================================= -->
-    <!-- LATEST ISSUES -->
-    <!-- ========================================= -->
-
-    <section id="latestIssuesSection">
-
-        <div class="container">
-
-            <h2>
-                Latest Reported Issues
-            </h2>
-
-            <div class="issueCards">
-
-                <div class="issueCard">
-
-                    Issue Card 1
-
-                </div>
-
-                <div class="issueCard">
-
-                    Issue Card 2
-
-                </div>
-
-                <div class="issueCard">
-
-                    Issue Card 3
+                    </div>
 
                 </div>
 
@@ -516,53 +190,210 @@
 
     </section>
 
-    <!-- ========================================= -->
-    <!-- MAP LEGEND -->
-    <!-- ========================================= -->
 
-    <section id="legendSection">
+    <script>
 
-        <div class="container">
+        document.addEventListener("DOMContentLoaded", function () {
 
-            <h2>
+            // Pune Location
 
-                Map Legend
+            var map = L.map('map').setView([18.5204, 73.8567], 12);
 
-            </h2>
+            // OpenStreetMap
 
-            <div class="legendGrid">
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
-                <div>
+                maxZoom: 19,
 
-                    🔴 Pending
+                attribution: '© OpenStreetMap'
 
-                </div>
+            }).addTo(map);
 
-                <div>
 
-                    🟠 In Progress
+            // Garbage Issue
 
-                </div>
+            L.marker([18.5204, 73.8567])
 
-                <div>
+                .addTo(map)
 
-                    🟢 Resolved
+                .bindPopup(`
 
-                </div>
+<div class="issue-popup">
 
-                <div>
+<img src="https://picsum.photos/300/200?1">
 
-                    🔵 Verified
+<span class="status pending">
 
-                </div>
+Pending
 
-            </div>
+</span>
 
-        </div>
+<h4>
 
-    </section>
+Garbage Overflow
 
-</section>
+</h4>
 
+<p>
+
+📍 Shivaji Nagar
+
+</p>
+
+<p>
+
+👤 Reported by Rahul
+
+</p>
+
+<p>
+
+📅 02 Aug 2026
+
+</p>
+
+<a href="#" class="popup-btn">
+
+View Details
+
+</a>
+
+</div>
+
+`);
+
+            // Road Issue
+
+            L.marker([18.5350, 73.8470])
+
+                .addTo(map)
+
+                .bindPopup(`
+
+<div class="issue-popup">
+
+<img src="https://picsum.photos/300/200?2">
+
+<span class="status progress">
+
+In Progress
+
+</span>
+
+<h4>
+
+Road Damage
+
+</h4>
+
+<p>
+
+📍 JM Road
+
+</p>
+
+<p>
+
+👤 Reported by Sneha
+
+</p>
+
+<p>
+
+📅 01 Aug 2026
+
+</p>
+
+<a href="#" class="popup-btn">
+
+View Details
+
+</a>
+
+</div>
+
+`);
+
+            // Street Light
+
+            L.marker([18.5100, 73.8650])
+
+                .addTo(map)
+
+                .bindPopup(`
+
+<div class="issue-popup">
+
+<img src="https://picsum.photos/300/200?3">
+
+<span class="status resolved">
+
+Resolved
+
+</span>
+
+<h4>
+
+Street Light Fixed
+
+</h4>
+
+<p>
+
+📍 Kothrud
+
+</p>
+
+<p>
+
+👤 Reported by Amit
+
+</p>
+
+<p>
+
+📅 30 Jul 2026
+
+</p>
+
+<a href="#" class="popup-btn">
+
+View Details
+
+</a>
+
+</div>
+
+`);
+
+            // Sample Markers
+
+            L.marker([18.5204, 73.8567])
+
+                .addTo(map)
+
+                .bindPopup("<b>Garbage Issue</b><br>Pending");
+
+            L.marker([18.5350, 73.8470])
+
+                .addTo(map)
+
+                .bindPopup("<b>Road Damage</b><br>In Progress");
+
+            L.marker([18.5100, 73.8650])
+
+                .addTo(map)
+
+                .bindPopup("<b>Street Light</b><br>Resolved");
+
+            L.marker([18.5000, 73.8800])
+
+                .addTo(map)
+
+                .bindPopup("<b>Water Leakage</b><br>Pending");
+
+        });
+
+    </script>
 
 </asp:Content>

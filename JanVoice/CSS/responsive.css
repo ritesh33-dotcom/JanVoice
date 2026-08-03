@@ -749,3 +749,121 @@ REGISTER RESPONSIVE
         padding: 16px;
     }
 }
+
+
+
+
+/*==================================
+    ISSUE MAP RESPONSIVE
+===================================*/
+
+/* Large Laptop */
+
+@media (max-width:1200px) {
+
+    .map-header h1 {
+        font-size: 48px;
+    }
+
+    .map-layout {
+        grid-template-columns: 280px 1fr;
+    }
+}
+
+/* Tablet */
+
+@media (max-width:992px) {
+
+    .map-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 25px;
+    }
+
+    .search-panel {
+        flex-direction: column;
+    }
+
+    .search-btn {
+        width: 100%;
+    }
+
+    .map-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .map-sidebar {
+        order: 2;
+    }
+
+    .map-container {
+        order: 1;
+    }
+
+    #map {
+        height: 600px;
+    }
+}
+
+/* Mobile */
+
+@media (max-width:768px) {
+
+    .issue-map-section {
+        padding: 70px 0;
+    }
+
+    .map-header h1 {
+        font-size: 38px;
+    }
+
+    .map-header p {
+        font-size: 16px;
+    }
+
+    .primary-btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    .map-sidebar {
+        padding: 25px;
+    }
+
+    .stat-card h2 {
+        font-size: 28px;
+    }
+
+    #map {
+        height: 450px;
+    }
+}
+
+/* Small Mobile */
+
+@media (max-width:576px) {
+
+    .map-header h1 {
+        font-size: 30px;
+    }
+
+    .section-badge {
+        font-size: 13px;
+    }
+
+    .search-box {
+        padding: 15px;
+    }
+
+    .search-btn {
+        padding: 15px;
+    }
+
+    .map-sidebar {
+        padding: 20px;
+    }
+
+    #map {
+        height: 350px;
+    }
+}

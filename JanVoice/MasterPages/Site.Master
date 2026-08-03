@@ -21,6 +21,10 @@
     <!-- Google Font -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
+    <!-- Leaflet CSS -->
+<link rel="stylesheet"
+href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+
     <!-- CSS -->
     <link href="~/CSS/style.css" runat="server" rel="stylesheet" />
 <link href="~/CSS/components.css" runat="server" rel="stylesheet" />
@@ -199,6 +203,10 @@
      <!-- JavaScript -->
 
    <script src="<%= ResolveUrl("~/JS/script.js") %>"></script>
+
+
+    <!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 </body>
 </html>
