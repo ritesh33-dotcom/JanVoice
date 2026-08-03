@@ -6,23 +6,59 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <!-- =========================
-      ISSUE MAP HERO
-========================== -->
 
-    <section class="issue-map-hero">
+
+    <!-- ========================================= -->
+<!-- ISSUE MAP PAGE -->
+<!-- ========================================= -->
+
+<section id="issueMapPage">
+
+    <!-- ========================================= -->
+    <!-- HERO SECTION -->
+    <!-- ========================================= -->
+
+    <section id="heroSection">
 
         <div class="container">
 
-            <div class="map-header">
+            <div class="heroContent">
 
-                <h1>Smart <span>Issue Map</span>
-                </h1>
+                <div class="heroText">
 
-                <p>
-                    Explore reported civic issues across your city.
-                Find nearby complaints, monitor issue status and help build a better community with JanVoice.
-                </p>
+                    <span class="heroBadge">
+                        📍 Smart City Monitoring
+                    </span>
+
+                    <h1>
+                        Explore Issues Across Your City
+                    </h1>
+
+                    <p>
+                        Track civic complaints, discover nearby issues,
+                        and monitor their current status in real time.
+                    </p>
+
+                    <div class="heroButtons">
+
+                        <a href="CommunityFeed.aspx">
+                            View Community Feed
+                        </a>
+
+                        <a href="ReportIssue.aspx">
+                            Report Issue
+                        </a>
+
+                    </div>
+
+                </div>
+
+                <div class="heroImage">
+
+                    <img src="Assets/Images/map-hero.png"
+                        alt="Issue Map" />
+
+                </div>
 
             </div>
 
@@ -30,51 +66,68 @@
 
     </section>
 
+    <!-- ========================================= -->
+<!-- FLOATING SEARCH SECTION -->
+<!-- ========================================= -->
 
+<section id="searchSection">
 
-    <!-- =========================
-        FILTER BAR
-========================== -->
+    <div class="container">
 
-    <section class="map-filter-section">
+        <div class="searchWrapper">
 
-        <div class="container">
+            <div class="searchBar">
 
-            <div class="map-filter">
+                <div class="searchItem">
 
-                <input type="text"
-                    class="search-location"
-                    placeholder="🔍 Search Area..." />
+                    <i class="fa-solid fa-magnifying-glass"></i>
 
-                <select class="filter-select">
+                    <input
+                        type="text"
+                        placeholder="Search Issue..." />
 
-                    <option>All Categories</option>
+                </div>
 
-                    <option>Garbage</option>
+                <div class="searchItem">
 
-                    <option>Road Damage</option>
+                    <i class="fa-solid fa-layer-group"></i>
 
-                    <option>Water Supply</option>
+                    <select>
 
-                    <option>Street Light</option>
+                        <option>Category</option>
 
-                    <option>Drainage</option>
+                    </select>
 
-                </select>
+                </div>
 
-                <select class="filter-select">
+                <div class="searchItem">
 
-                    <option>All Status</option>
+                    <i class="fa-solid fa-location-dot"></i>
 
-                    <option>Pending</option>
+                    <select>
 
-                    <option>In Progress</option>
+                        <option>Ward</option>
 
-                    <option>Resolved</option>
+                    </select>
 
-                </select>
+                </div>
 
-                <button class="filter-btn">
+                <div class="searchItem">
+
+                    <i class="fa-solid fa-circle-info"></i>
+
+                    <select>
+
+                        <option>Status</option>
+
+                    </select>
+
+                </div>
+
+                <button class="searchBtn">
+
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
                     Search
 
                 </button>
@@ -83,180 +136,433 @@
 
         </div>
 
-    </section>
+    </div>
+
+</section>
+    <!-- ========================================= -->
+<!-- LIVE STATISTICS -->
+<!-- ========================================= -->
+
+<section id="statisticsSection">
+
+    <div class="container">
+
+        <div class="statisticsGrid">
+
+            <div class="statCard">
+
+                <i class="fa-solid fa-map-location-dot"></i>
+
+                <h2>0</h2>
+
+                <p>Total Issues</p>
+
+            </div>
+
+            <div class="statCard">
+
+                <i class="fa-solid fa-hourglass-half"></i>
+
+                <h2>0</h2>
+
+                <p>Pending</p>
+
+            </div>
+
+            <div class="statCard">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                <h2>0</h2>
+
+                <p>Resolved</p>
+
+            </div>
+
+            <div class="statCard">
+
+                <i class="fa-solid fa-triangle-exclamation"></i>
+
+                <h2>0</h2>
+
+                <p>Critical</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
 
+    <!-- ========================================= -->
+<!-- LATEST ISSUES SECTION -->
+<!-- ========================================= -->
 
-    <!-- =========================
-        MAP SECTION
-========================== -->
+<section id="latestIssuesSection">
 
-    <section class="map-section">
+    <div class="container">
 
-        <div class="container">
+        <div class="sectionHeader">
 
-            <div class="map-layout">
+            <h2>Latest Reported Issues</h2>
 
+            <p>
+                Recently reported complaints by citizens.
+            </p>
 
-                <!-- LEFT -->
+        </div>
 
-                <div class="map-box">
+        <div class="issueGrid">
 
-                    <div class="map-placeholder">
+            <asp:Repeater ID="rptLatestIssues" runat="server">
 
-                        <div class="location-btn">
-                            📍 My Location
+                <ItemTemplate>
 
-                        </div>
+                    <div class="issueCard">
 
-                        <div class="map-pin pin1"></div>
+                        <div class="issueImage">
 
-                        <div class="map-pin pin2"></div>
-
-                        <div class="map-pin pin3"></div>
-
-                        <div class="map-pin pin4"></div>
-
-                        <div class="map-pin pin5"></div>
-
-                        <h2>Smart Civic Map
-
-                        </h2>
-
-                        <p>
-                            Google Maps integration will display
-        live complaint locations here.
-
-                        </p>
-
-                    </div>
-
-
-
-                    <!-- RIGHT -->
-
-                    <div class="side-panel">
-
-                        <div class="glass-card">
-
-                            <h3>📊 City Overview
-
-                            </h3>
-
-                            <ul>
-
-                                <li>🔴 Pending :
-                                    <span class="counter">48
-
-                                    </span>
-
-                                </li>
-
-                                <li>🟡 In Progress :
-                                    <span class="counter">16
-
-                                    </span>
-
-                                </li>
-
-                                <li>🟢 Resolved :
-                                    <span class="counter">82
-
-                                    </span>
-
-                                </li>
-
-                                <li>📍 Total :
-                                    <span class="counter">146
-
-                                    </span>
-
-                                </li>
-
-                            </ul>
-
-                        </div>
-
-
-
-                        <div class="glass-card mt-4">
-
-                            <h3>🔥 Trending Areas
-
-                            </h3>
-
-                            <ul>
-
-                                <li>Ward 1</li>
-
-                                <li>Ward 3</li>
-
-                                <li>Ward 6</li>
-
-                                <li>Ward 10</li>
-
-                            </ul>
+                            <img src='<%# Eval("ImagePath") %>'
+                                alt="Issue Image" />
 
                         </div>
 
+                        <div class="issueBody">
 
+                            <span class="issueCategory">
 
-                        <div class="glass-card mt-4">
+                                <%# Eval("CategoryName") %>
 
-                            <h3>📢 Latest Reports
+                            </span>
+
+                            <h3>
+
+                                <%# Eval("Title") %>
 
                             </h3>
 
-                            <ul>
+                            <p>
 
-                                <li>Garbage Overflow</li>
+                                <%# Eval("Description") %>
 
-                                <li>Water Leakage</li>
+                            </p>
 
-                                <li>Broken Road</li>
+                            <div class="issueFooter">
 
-                                <li>Street Light Off</li>
+                                <span>
 
-                            </ul>
+                                    📍 <%# Eval("WardName") %>
 
+                                </span>
 
+                                <span>
 
-                                </ul>
+                                    <%# Eval("Status") %>
+
+                                </span>
 
                             </div>
 
                         </div>
 
-
                     </div>
+
+                </ItemTemplate>
+
+            </asp:Repeater>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+    <!-- ========================================= -->
+<!-- TRENDING AREAS -->
+<!-- ========================================= -->
+
+<section id="trendingSection">
+
+    <div class="container">
+
+        <div class="sectionHeader">
+
+            <h2>Trending Areas</h2>
+
+            <p>
+
+                Areas with highest number of complaints.
+
+            </p>
+
+        </div>
+
+        <div class="trendingGrid">
+
+            <div class="trendCard">
+
+                <h3>Ward 01</h3>
+
+                <span>24 Issues</span>
+
+            </div>
+
+            <div class="trendCard">
+
+                <h3>Ward 02</h3>
+
+                <span>18 Issues</span>
+
+            </div>
+
+            <div class="trendCard">
+
+                <h3>Ward 03</h3>
+
+                <span>15 Issues</span>
+
+            </div>
+
+            <div class="trendCard">
+
+                <h3>Ward 04</h3>
+
+                <span>12 Issues</span>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+    <!-- ========================================= -->
+<!-- MAP LEGEND -->
+<!-- ========================================= -->
+
+<section id="legendSection">
+
+    <div class="container">
+
+        <div class="sectionHeader">
+
+            <h2>Map Legend</h2>
+
+        </div>
+
+        <div class="legendGrid">
+
+            <div class="legendItem">
+
+                🔴 Pending
+
+            </div>
+
+            <div class="legendItem">
+
+                🟠 In Progress
+
+            </div>
+
+            <div class="legendItem">
+
+                🟢 Resolved
+
+            </div>
+
+            <div class="legendItem">
+
+                🔵 Verified
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+    <!-- ========================================= -->
+<!-- CALL TO ACTION -->
+<!-- ========================================= -->
+
+<section id="ctaSection">
+
+    <div class="container">
+
+        <div class="ctaBox">
+
+            <h2>
+
+                Found a Civic Issue?
+
+            </h2>
+
+            <p>
+
+                Help your city become better by reporting issues.
+
+            </p>
+
+            <asp:Button
+
+                ID="btnReport"
+
+                runat="server"
+
+                CssClass="ctaButton"
+
+                Text="Report New Issue"
+
+                PostBackUrl="~/ReportIssue.aspx" />
+
+        </div>
+
+    </div>
+
+</section>
+
+
+    <!-- ========================================= -->
+<!-- MAP SECTION -->
+<!-- ========================================= -->
+
+<section id="mapSection">
+
+    <div class="container">
+
+        <div class="mapCard">
+
+            <div class="mapHeader">
+
+                <div>
+
+                    <h2>Live Issue Map</h2>
+
+                    <p>Explore reported civic issues across the city.</p>
+
+                </div>
+
+                <div class="mapActions">
+
+                    <button>
+
+                        <i class="fa-solid fa-location-crosshairs"></i>
+
+                    </button>
+
+                    <button>
+
+                        <i class="fa-solid fa-expand"></i>
+
+                    </button>
 
                 </div>
 
             </div>
+
+            <div id="googleMap">
+
+                Google Maps Integration Here
+
             </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+    <!-- ========================================= -->
+    <!-- LATEST ISSUES -->
+    <!-- ========================================= -->
+
+    <section id="latestIssuesSection">
+
+        <div class="container">
+
+            <h2>
+                Latest Reported Issues
+            </h2>
+
+            <div class="issueCards">
+
+                <div class="issueCard">
+
+                    Issue Card 1
+
+                </div>
+
+                <div class="issueCard">
+
+                    Issue Card 2
+
+                </div>
+
+                <div class="issueCard">
+
+                    Issue Card 3
+
+                </div>
+
+            </div>
+
+        </div>
+
     </section>
 
+    <!-- ========================================= -->
+    <!-- MAP LEGEND -->
+    <!-- ========================================= -->
 
+    <section id="legendSection">
 
+        <div class="container">
 
-    <script>
+            <h2>
 
-        document.querySelectorAll(".glass-card").forEach(function (card) {
+                Map Legend
 
-            card.addEventListener("mouseenter", function () {
+            </h2>
 
-                this.style.transform = "translateY(-8px)";
+            <div class="legendGrid">
 
-            });
+                <div>
 
-            card.addEventListener("mouseleave", function () {
+                    🔴 Pending
 
-                this.style.transform = "translateY(0px)";
+                </div>
 
-            });
+                <div>
 
-        });
+                    🟠 In Progress
 
-    </script>
+                </div>
+
+                <div>
+
+                    🟢 Resolved
+
+                </div>
+
+                <div>
+
+                    🔵 Verified
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</section>
+
 
 </asp:Content>

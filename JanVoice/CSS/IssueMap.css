@@ -1,339 +1,848 @@
-﻿/*==================================
-        ISSUE MAP HERO
-==================================*/
+﻿/*=========================================================
+            JANVOICE UI KIT v2.0
+            Main Theme File
+=========================================================*/
 
-.issue-map-hero {
-    padding: 120px 0 60px;
-    position: relative;
-    overflow: hidden;
+
+/*=========================================================
+                GOOGLE FONT
+=========================================================*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
+
+
+/*=========================================================
+                    ROOT VARIABLES
+=========================================================*/
+
+:root {
+    /* Primary */
+
+    --primary: #2563EB;
+    --primary-dark: #1D4ED8;
+    --primary-light: #60A5FA;
+    /* Accent */
+
+    --success: #22C55E;
+    --warning: #F59E0B;
+    --danger: #EF4444;
+    /* Background */
+
+    --bg: #F8FAFC;
+    --surface: #FFFFFF;
+    /* Text */
+
+    --text: #0F172A;
+    --text-light: #64748B;
+    /* Border */
+
+    --border: #E2E8F0;
+    /* Radius */
+
+    --radius-sm: 10px;
+    --radius: 20px;
+    --radius-lg: 30px;
+    /* Shadow */
+
+    --shadow-sm: 0 5px 20px rgba(0,0,0,.05);
+    --shadow: 0 10px 35px rgba(15,23,42,.08);
+    --shadow-lg: 0 25px 60px rgba(15,23,42,.12);
+    /* Transition */
+
+    --transition: .35s ease;
 }
 
-    .issue-map-hero::before {
-        content: "";
-        position: absolute;
-        width: 550px;
-        height: 550px;
-        background: rgba(59,130,246,.10);
-        border-radius: 50%;
-        filter: blur(140px);
-        top: -220px;
-        left: -220px;
-    }
 
-    .issue-map-hero::after {
-        content: "";
-        position: absolute;
-        width: 450px;
-        height: 450px;
-        background: rgba(139,92,246,.08);
-        border-radius: 50%;
-        filter: blur(130px);
-        bottom: -180px;
-        right: -180px;
-    }
 
-.map-header {
+/*=========================================================
+                    RESET
+=========================================================*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Poppins',sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow-x: hidden;
+}
+
+
+
+/*=========================================================
+                COMMON CONTAINER
+=========================================================*/
+
+.container {
+    width: 90%;
+    max-width: 1300px;
+    margin: auto;
+}
+
+
+
+/*=========================================================
+                    SECTION
+=========================================================*/
+
+section {
+    padding: 90px 0;
+}
+
+
+
+/*=========================================================
+                TYPOGRAPHY
+=========================================================*/
+
+h1 {
+    font-size: 60px;
+    font-weight: 800;
+    line-height: 1.2;
+}
+
+h2 {
+    font-size: 42px;
+    font-weight: 700;
+}
+
+h3 {
+    font-size: 24px;
+    font-weight: 600;
+}
+
+p {
+    font-size: 17px;
+    line-height: 1.8;
+    color: var(--text-light);
+}
+
+
+
+/*=========================================================
+                LINKS
+=========================================================*/
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+
+
+/*=========================================================
+                IMAGES
+=========================================================*/
+
+img {
+    max-width: 100%;
+    display: block;
+}
+
+
+
+/*=========================================================
+                BUTTON RESET
+=========================================================*/
+
+button {
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-family: 'Poppins',sans-serif;
+}
+
+
+
+/*=========================================================
+            SECTION HEADER
+=========================================================*/
+
+.sectionHeader {
     text-align: center;
-    position: relative;
-    z-index: 2;
+    margin-bottom: 70px;
 }
 
-    .map-header h1 {
-        font-size: 60px;
+    .sectionHeader h2 {
+        margin-bottom: 15px;
+    }
+
+    .sectionHeader p {
+        max-width: 700px;
+        margin: auto;
+    }
+
+
+
+/*=========================================================
+            SPACING HELPERS
+=========================================================*/
+
+.mt-1 {
+    margin-top: 10px;
+}
+
+.mt-2 {
+    margin-top: 20px;
+}
+
+.mt-3 {
+    margin-top: 30px;
+}
+
+.mt-4 {
+    margin-top: 40px;
+}
+
+.mt-5 {
+    margin-top: 50px;
+}
+
+
+
+/*=========================================================
+            TEXT HELPERS
+=========================================================*/
+
+.text-center {
+    text-align: center;
+}
+
+.text-primary {
+    color: var(--primary);
+}
+
+.text-success {
+    color: var(--success);
+}
+
+.text-danger {
+    color: var(--danger);
+}
+
+
+
+/*=========================================================
+                END
+=========================================================*/
+
+
+/*=========================================================
+                JANVOICE COMPONENTS
+=========================================================*/
+
+
+/*=========================================================
+                    BUTTONS
+=========================================================*/
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 15px 35px;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg,#2563EB,#3B82F6);
+    color: #fff;
+    box-shadow: 0 12px 30px rgba(37,99,235,.25);
+}
+
+    .btn-primary:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 20px 40px rgba(37,99,235,.35);
+    }
+
+.btn-outline {
+    background: #fff;
+    color: var(--primary);
+    border: 2px solid var(--primary);
+}
+
+    .btn-outline:hover {
+        background: var(--primary);
         color: #fff;
+    }
+
+
+/*=========================================================
+                    CARDS
+=========================================================*/
+
+.card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    transition: var(--transition);
+}
+
+    .card:hover {
+        transform: translateY(-8px);
+        box-shadow: var(--shadow-lg);
+    }
+
+
+/*=========================================================
+                GLASS CARD
+=========================================================*/
+
+.glass {
+    background: rgba(255,255,255,.75);
+    backdrop-filter: blur(18px);
+    border: 1px solid rgba(255,255,255,.4);
+}
+
+
+/*=========================================================
+                HERO SECTION
+=========================================================*/
+
+.hero {
+    padding: 120px 0;
+}
+
+.hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+}
+
+.hero-left {
+    flex: 1;
+}
+
+.hero-right {
+    flex: 1;
+    text-align: center;
+}
+
+.hero-badge {
+    display: inline-block;
+    background: #DBEAFE;
+    color: var(--primary);
+    padding: 10px 20px;
+    border-radius: 50px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 25px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    margin-top: 35px;
+}
+
+
+/*=========================================================
+                SEARCH BAR
+=========================================================*/
+
+.search-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 25px;
+    box-shadow: var(--shadow);
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr auto;
+    gap: 15px;
+}
+
+.search-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 0 18px;
+}
+
+    .search-item input {
+        width: 100%;
+        height: 58px;
+        border: none;
+        outline: none;
+        background: none;
+        font-size: 15px;
+    }
+
+    .search-item select {
+        width: 100%;
+        height: 58px;
+        border: none;
+        outline: none;
+        background: none;
+        font-size: 15px;
+    }
+
+
+/*=========================================================
+                FORM CONTROLS
+=========================================================*/
+
+.input-control {
+    width: 100%;
+    height: 55px;
+    border: 1px solid var(--border);
+    border-radius: 15px;
+    padding: 0 18px;
+    font-size: 15px;
+    transition: var(--transition);
+}
+
+    .input-control:focus {
+        border-color: var(--primary);
+        box-shadow: 0 0 0 4px rgba(37,99,235,.08);
+    }
+
+
+/*=========================================================
+                    BADGES
+=========================================================*/
+
+.badge {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.badge-success {
+    background: #DCFCE7;
+    color: #15803D;
+}
+
+.badge-warning {
+    background: #FEF3C7;
+    color: #B45309;
+}
+
+.badge-danger {
+    background: #FEE2E2;
+    color: #DC2626;
+}
+
+
+/*=========================================================
+                STAT CARD
+=========================================================*/
+
+.stat-card {
+    background: #fff;
+    border-radius: 20px;
+    padding: 35px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    transition: .35s;
+}
+
+    .stat-card:hover {
+        transform: translateY(-8px);
+    }
+
+    .stat-card i {
+        font-size: 40px;
+        color: var(--primary);
         margin-bottom: 20px;
     }
 
-    .map-header span {
-        color: #3B82F6;
-    }
-
-    .map-header p {
-        color: #CBD5E1;
-        font-size: 19px;
-        max-width: 750px;
-        margin: auto;
-        line-height: 1.8;
+    .stat-card h2 {
+        font-size: 42px;
+        margin-bottom: 10px;
     }
 
 
-/*==================================
-        FILTER BAR
-==================================*/
+/*=========================================================
+                IMAGE
+=========================================================*/
 
-.map-filter-section {
-    padding: 25px 0 50px;
+.image-fluid {
+    width: 100%;
+    height: auto;
 }
 
-.map-filter {
-    display: flex;
-    gap: 20px;
-    padding: 25px;
-    border-radius: 20px;
-    background: rgba(30,41,59,.75);
-    backdrop-filter: blur(18px);
-    border: 1px solid rgba(255,255,255,.08);
-}
 
-.search-location {
-    flex: 1;
-    padding: 15px 20px;
-    border: none;
-    border-radius: 12px;
-    background: #0F172A;
-    color: #fff;
-    outline: none;
-}
+/*=========================================================
+                GRID
+=========================================================*/
 
-.filter-select {
-    width: 210px;
-    padding: 15px;
-    border: none;
-    border-radius: 12px;
-    background: #0F172A;
-    color: #fff;
-}
-
-.filter-btn {
-    padding: 15px 35px;
-    border: none;
-    border-radius: 12px;
-    background: #3B82F6;
-    color: #fff;
-    transition: .3s;
-}
-
-    .filter-btn:hover {
-        background: #2563EB;
-    }
-
-
-
-
-/*==================================
-        MAP LAYOUT
-==================================*/
-
-.map-section {
-    padding-bottom: 100px;
-}
-
-.map-layout {
+.grid-2 {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: repeat(2,1fr);
     gap: 30px;
 }
 
-.map-box {
-    background: rgba(30,41,59,.70);
-    border-radius: 25px;
+.grid-3 {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 30px;
+}
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 25px;
+}
+
+
+/*=========================================================
+                JANVOICE ANIMATIONS
+=========================================================*/
+
+
+/*=========================================================
+                    TRANSITIONS
+=========================================================*/
+
+* {
+    transition: all .35s ease;
+}
+
+
+/*=========================================================
+                    FADE UP
+=========================================================*/
+
+@keyframes fadeUp {
+
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-up {
+    animation: fadeUp .8s ease forwards;
+}
+
+
+
+/*=========================================================
+                    FADE DOWN
+=========================================================*/
+
+@keyframes fadeDown {
+
+    from {
+        opacity: 0;
+        transform: translateY(-40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.fade-down {
+    animation: fadeDown .8s ease forwards;
+}
+
+
+
+/*=========================================================
+                    FADE LEFT
+=========================================================*/
+
+@keyframes fadeLeft {
+
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.fade-left {
+    animation: fadeLeft .8s ease forwards;
+}
+
+
+
+/*=========================================================
+                    FADE RIGHT
+=========================================================*/
+
+@keyframes fadeRight {
+
+    from {
+        opacity: 0;
+        transform: translateX(50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.fade-right {
+    animation: fadeRight .8s ease forwards;
+}
+
+
+
+/*=========================================================
+                FLOATING EFFECT
+=========================================================*/
+
+@keyframes floating {
+
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.float {
+    animation: floating 4s ease-in-out infinite;
+}
+
+
+
+/*=========================================================
+                    ZOOM IN
+=========================================================*/
+
+@keyframes zoomIn {
+
+    from {
+        opacity: 0;
+        transform: scale(.90);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.zoom-in {
+    animation: zoomIn .6s ease forwards;
+}
+
+
+
+/*=========================================================
+                BUTTON RIPPLE
+=========================================================*/
+
+.jv-btn {
+    position: relative;
     overflow: hidden;
-    border: 1px solid rgba(255,255,255,.08);
-    min-height: 650px;
 }
 
-
-.map-placeholder {
-    height: 650px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    color: white;
-}
-
-.map-placeholder {
-    font-size: 80px;
-}
-
-    .map-placeholder h2 {
-        margin-top: 25px;
-        font-size: 34px;
+    .jv-btn::before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-radius: 50%;
+        background: rgba(255,255,255,.25);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        transition: .6s;
     }
 
-    .map-placeholder p {
-        color: #CBD5E1;
-        margin-top: 15px;
-        font-size: 18px;
+    .jv-btn:hover::before {
+        width: 320px;
+        height: 320px;
     }
 
 
 
-/*==================================
-        SIDE PANEL
-==================================*/
+/*=========================================================
+                CARD HOVER
+=========================================================*/
 
-.side-panel {
-    display: flex;
-    flex-direction: column;
+.jv-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 25px 60px rgba(15,23,42,.15);
 }
 
-.glass-card {
-    background: rgba(30,41,59,.75);
+
+
+/*=========================================================
+                IMAGE ZOOM
+=========================================================*/
+
+.image-hover {
+    overflow: hidden;
     border-radius: 20px;
-    padding: 28px;
-    border: 1px solid rgba(255,255,255,.08);
+}
+
+    .image-hover img {
+        transition: .5s;
+    }
+
+    .image-hover:hover img {
+        transform: scale(1.08);
+    }
+
+
+
+/*=========================================================
+                ROTATE ICON
+=========================================================*/
+
+.rotate-icon {
     transition: .4s;
 }
 
-    .glass-card:hover {
-        transform: translateY(-6px);
-        box-shadow: 0 15px 40px rgba(59,130,246,.20);
+    .rotate-icon:hover {
+        transform: rotate(360deg);
     }
 
-    .glass-card h3 {
-        color: white;
-        margin-bottom: 20px;
-    }
-
-    .glass-card ul {
-        list-style: none;
-        padding: 0;
-        margin: 0;
-    }
-
-        .glass-card ul li {
-            color: #CBD5E1;
-            padding: 10px 0;
-            border-bottom: 1px solid rgba(255,255,255,.05);
-        }
-
-            .glass-card ul li:last-child {
-                border: none;
-            }
 
 
-
-
-/*==================================
-        RESPONSIVE
-==================================*/
-
-@media(max-width:992px) {
-
-    .map-layout {
-        grid-template-columns: 1fr;
-    }
-
-    .map-filter {
-        flex-direction: column;
-    }
-
-    .filter-select {
-        width: 100%;
-    }
-
-    .map-header h1 {
-        font-size: 45px;
-    }
-}
-
-@media(max-width:768px) {
-
-    .map-placeholder {
-        height: 450px;
-    }
-
-    .map-box {
-        min-height: 450px;
-    }
-
-    .map-header h1 {
-        font-size: 38px;
-    }
-
-    .map-header p {
-        font-size: 16px;
-    }
-}
-
-
-
-/*==================================
-        MAP PINS
-==================================*/
-
-.location-btn {
-    position: absolute;
-    top: 25px;
-    right: 25px;
-    background: #3B82F6;
-    color: white;
-    padding: 12px 18px;
-    border-radius: 30px;
-    font-size: 14px;
-    cursor: pointer;
-    transition: .3s;
-}
-
-    .location-btn:hover {
-        background: #2563EB;
-    }
-
-.map-placeholder {
-    position: relative;
-}
-
-.map-pin {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    position: absolute;
-    animation: pulse 2s infinite;
-}
-
-.pin1 {
-    background: #EF4444;
-    top: 25%;
-    left: 20%;
-}
-
-.pin2 {
-    background: #F59E0B;
-    top: 55%;
-    left: 45%;
-}
-
-.pin3 {
-    background: #22C55E;
-    top: 38%;
-    right: 18%;
-}
-
-.pin4 {
-    background: #EF4444;
-    bottom: 22%;
-    left: 30%;
-}
-
-.pin5 {
-    background: #3B82F6;
-    bottom: 30%;
-    right: 25%;
-}
+/*=========================================================
+                PULSE EFFECT
+=========================================================*/
 
 @keyframes pulse {
 
     0% {
-        transform: scale(.9);
-        box-shadow: 0 0 0 0 rgba(59,130,246,.6);
+        box-shadow: 0 0 0 0 rgba(37,99,235,.4);
     }
 
     70% {
-        transform: scale(1.3);
-        box-shadow: 0 0 0 20px rgba(59,130,246,0);
+        box-shadow: 0 0 0 18px rgba(37,99,235,0);
     }
 
     100% {
-        transform: scale(.9);
+        box-shadow: 0 0 0 0 rgba(37,99,235,0);
+    }
+}
+
+.pulse {
+    animation: pulse 2s infinite;
+}
+
+
+
+/*=========================================================
+                SHINE EFFECT
+=========================================================*/
+
+.shine {
+    position: relative;
+    overflow: hidden;
+}
+
+    .shine::after {
+        content: "";
+        position: absolute;
+        top: -120%;
+        left: -60%;
+        width: 60px;
+        height: 250%;
+        background: rgba(255,255,255,.45);
+        transform: rotate(25deg);
+        transition: 1s;
+    }
+
+    .shine:hover::after {
+        left: 140%;
+    }
+
+
+
+/*=========================================================
+                LOADING SPINNER
+=========================================================*/
+
+.loader {
+    width: 55px;
+    height: 55px;
+    border: 5px solid #E2E8F0;
+    border-top: 5px solid #2563EB;
+    border-radius: 50%;
+    animation: spin .8s linear infinite;
+    margin: auto;
+}
+
+@keyframes spin {
+
+    100% {
+        transform: rotate(360deg);
     }
 }
 
 
-.counter {
-    float: right;
-    color: #3B82F6;
-    font-weight: 700;
-    font-size: 18px;
+
+/*=========================================================
+                BOUNCE
+=========================================================*/
+
+@keyframes bounce {
+
+    0%,100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-12px);
+    }
+}
+
+.bounce {
+    animation: bounce 1.8s infinite;
+}
+
+
+
+/*=========================================================
+                DELAY HELPERS
+=========================================================*/
+
+.delay-1 {
+    animation-delay: .2s;
+}
+
+.delay-2 {
+    animation-delay: .4s;
+}
+
+.delay-3 {
+    animation-delay: .6s;
+}
+
+.delay-4 {
+    animation-delay: .8s;
 }
