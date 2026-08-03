@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JanVoice.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -279,6 +280,19 @@ namespace JanVoice.Citizen
                         "Complaint submitted successfully.");
 
                     historyCmd.ExecuteNonQuery();
+
+                    
+
+                    NotificationHelper.AddNotification(
+                        Convert.ToInt32(Session["UserID"]),
+                        complaintID,
+                        "Complaint Submitted",
+                        "Your complaint has been submitted successfully.",
+                        "Complaint");
+
+
+
+
                     ClientScript.RegisterStartupScript(
     this.GetType(),
     "success",

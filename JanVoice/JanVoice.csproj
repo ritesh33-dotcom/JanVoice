@@ -71,6 +71,7 @@
     <Content Include="Citizen\ComplaintDetails.aspx" />
     <Content Include="Citizen\Dashboard.aspx" />
     <Content Include="Citizen\MyComplaints.aspx" />
+    <Content Include="Citizen\Notifications.aspx" />
     <Content Include="Citizen\ReportIssue.aspx" />
     <Content Include="CommunityFeed.aspx" />
     <Content Include="CSS\citizen.css" />
@@ -79,6 +80,7 @@
     <Content Include="CSS\components.css" />
     <Content Include="CSS\IssueMap.css" />
     <Content Include="CSS\mycomplaints.css" />
+    <Content Include="CSS\notifications.css" />
     <Content Include="CSS\reportissue.css" />
     <Content Include="CSS\responsive.css" />
     <Content Include="CSS\style.css" />
@@ -147,6 +149,13 @@
     <Compile Include="Citizen\MyComplaints.aspx.designer.cs">
       <DependentUpon>MyComplaints.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Citizen\Notifications.aspx.cs">
+      <DependentUpon>Notifications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Citizen\Notifications.aspx.designer.cs">
+      <DependentUpon>Notifications.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Citizen\ReportIssue.aspx.cs">
       <DependentUpon>ReportIssue.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -164,6 +173,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\NotificationHelper.cs" />
     <Compile Include="Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -239,7 +249,6 @@
     <Folder Include="Admin\" />
     <Folder Include="App_Data\" />
     <Folder Include="DAL\" />
-    <Folder Include="Helpers\" />
     <Folder Include="Models\" />
     <Folder Include="NewFolder1\" />
     <Folder Include="Officer\" />
