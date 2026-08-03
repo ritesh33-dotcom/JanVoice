@@ -30,6 +30,7 @@ ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
 
                     LoadComplaintDetails(complaintID);
                     LoadTimeline(complaintID);
+                    LoadComments(complaintID);
                 }
                 else
                 {
@@ -159,27 +160,27 @@ ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
             {
                 string query = @"
 
-                                SELECT
+                            SELECT
 
-                                SH.OldStatus,
-                                SH.NewStatus,
-                                SH.Remarks,
-                                SH.ChangeDate,
+                            SH.OldStatus,
+                            SH.NewStatus,
+                            SH.Remarks,
+                            SH.ChangeDate,
 
-                                U.FullName,
-                                R.RoleName
+                            U.FullName,
+                            R.RoleName
 
-                                FROM StatusHistory SH
+                            FROM StatusHistory SH
 
-                                INNER JOIN Users U
-                                ON SH.ChangedBy = U.UserID
+                            INNER JOIN Users U
+                            ON SH.ChangedBy = U.UserID
 
-                                INNER JOIN Roles R
-                                ON U.RoleID = R.RoleID
+                            INNER JOIN Roles R
+                            ON U.RoleID = R.RoleID
 
-                                WHERE SH.ComplaintID = @ComplaintID
+                            WHERE SH.ComplaintID = @ComplaintID
 
-                                ORDER BY SH.ChangeDate ASC";
+                            ORDER BY SH.ChangeDate ASC";
 
                 SqlCommand cmd =
                     new SqlCommand(query, con);
@@ -199,6 +200,51 @@ ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
                 rptTimeline.DataSource = dt;
 
                 rptTimeline.DataBind();
+            }
+        }
+
+
+        private void LoadComments(int complaintID)
+        {
+            using (SqlConnection con = new SqlConnection(connectionString))
+            {
+                string query = @"
+
+                            SELECT
+
+                        C.CommentID,
+                        C.Comment,
+                        C.CommentDate,
+                        C.IsEdited,
+
+                        U.FullName,
+                        R.RoleName
+
+                    FROM Comments C
+
+                    INNER JOIN Users U
+                    ON C.UserID = U.UserID
+
+                    INNER JOIN Roles R
+                    ON U.RoleID = R.RoleID
+
+                    WHERE C.ComplaintID = @ComplaintID
+
+                    ORDER BY C.CommentDate ASC";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                cmd.Parameters.AddWithValue("@ComplaintID", complaintID);
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+
+                DataTable dt = new DataTable();
+
+                da.Fill(dt);
+
+                rptComments.DataSource = dt;
+
+                rptComments.DataBind();
             }
         }
 

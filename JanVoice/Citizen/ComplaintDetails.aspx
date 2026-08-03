@@ -163,17 +163,17 @@
                         <div class="timeline-dot"></div>
 
                         <div class="timeline-content">
-                           <div class="timeline-status">
+                            <div class="timeline-status">
 
-    <strong>
-        <%#
-        Convert.IsDBNull(Eval("OldStatus"))
-        ? "Complaint Submitted"
-        : Eval("OldStatus") + " → " + Eval("NewStatus")
-        %>
-    </strong>
+                                <strong>
+                                    <%#
+                                Convert.IsDBNull(Eval("OldStatus"))
+                                ? "Complaint Submitted"
+                                : Eval("OldStatus") + " → " + Eval("NewStatus")
+                                    %>
+                                </strong>
 
-</div>
+                            </div>
 
                             <p>
 
@@ -181,16 +181,15 @@
                             </p>
 
                             <small>Changed By :
+                                <strong>
 
-    <strong>
+                                    <%# Eval("RoleName") %>
 
-        <%# Eval("RoleName") %>
-
-    </strong>
+                                </strong>
 
                                 -
 
-    <%# Eval("FullName") %>
+                                <%# Eval("FullName") %>
 
                                 <br />
 
@@ -207,16 +206,62 @@
             </asp:Repeater>
 
         </div>
-        <div
-            id="commentsCard"
-            runat="server"
-            class="comments-card">
+   <div class="comments-card">
 
-            <h3>Comments</h3>
+    <h3>Comments</h3>
 
-            <!-- Repeater will come later -->
+    <asp:Repeater
+        ID="rptComments"
+        runat="server">
 
-        </div>
+        <ItemTemplate>
+
+            <div class="comment-item">
+
+                <div class="comment-header">
+
+                    <div class="comment-user">
+
+                        <span class='<%# Eval("RoleName").ToString().ToLower() %>'>
+
+                            <%# Eval("RoleName") %>
+
+                        </span>
+
+                        •
+
+                        <strong>
+
+                            <%# Eval("FullName") %>
+
+                        </strong>
+
+                    </div>
+
+                    <span class="comment-date">
+
+                        <%# Eval("CommentDate","{0:dd MMM yyyy hh:mm tt}") %>
+
+                    </span>
+
+                </div>
+
+                <div class="comment-text">
+
+                    <%# Eval("Comment") %>
+
+                </div>
+
+            </div>
+
+        </ItemTemplate>
+
+    </asp:Repeater>
+
+</div>
+
+
+
         <div
             id="divNoData"
             runat="server"
