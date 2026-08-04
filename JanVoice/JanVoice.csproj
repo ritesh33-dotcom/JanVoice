@@ -82,6 +82,7 @@
     <Content Include="CSS\CommunityFeed.css" />
     <Content Include="CSS\complaintdetails.css" />
     <Content Include="CSS\components.css" />
+    <Content Include="CSS\dashboard.css" />
     <Content Include="CSS\forgotpassword.css" />
     <Content Include="CSS\IssueMap.css" />
     <Content Include="CSS\mycomplaints.css" />
