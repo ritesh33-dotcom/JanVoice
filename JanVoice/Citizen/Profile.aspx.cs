@@ -22,8 +22,7 @@ namespace JanVoice.Citizen
 
             if (!IsPostBack)
             {
-                LoadProfile();
-                LoadStatistics();
+               
             }
 
         }

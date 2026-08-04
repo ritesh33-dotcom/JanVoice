@@ -116,7 +116,7 @@
                         runat="server"
                         Text="Apply Filter"
                         CssClass="search-btn"
-                        OnClick="btnFilter_Click" />
+                        OnClick="btnFilter_Click" /><br /><br />
 
                     <div class="stat-card">
 
@@ -179,76 +179,46 @@
     </section>
 
 
-    <script>
+   <script>
 
-        document.addEventListener("DOMContentLoaded", function () {
+       document.addEventListener("DOMContentLoaded", function () {
 
-            // Pune Location
+           // Pune Default Location
+           var map = L.map('map').setView([18.5204, 73.8567], 13);
 
-            var map = L.map('map').setView([18.5204, 73.8567], 12);
-            var complaints =<%=ComplaintJson %>;
+           // OpenStreetMap
+           L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+               maxZoom: 19,
+               attribution: '© OpenStreetMap'
+           }).addTo(map);
 
-            // OpenStreetMap
+           // Complaint JSON from Backend
+           var complaints = <%= string.IsNullOrEmpty(ComplaintJson) ? "[]" : ComplaintJson %>;
 
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    // Add Markers
+    complaints.forEach(function (issue) {
 
-                maxZoom: 19,
+        if (issue.Latitude && issue.Longitude) {
 
-                attribution: '© OpenStreetMap'
+            L.marker([
+                parseFloat(issue.Latitude),
+                parseFloat(issue.Longitude)
+            ])
+                .addTo(map)
+                .bindPopup(
+                    "<b>" + issue.Title + "</b><br/>" +
+                    issue.Description + "<br/><br/>" +
+                    "<b>Status :</b> " + issue.Status + "<br/>" +
+                    "<b>Location :</b> " + issue.Landmark
+                );
 
-            }).addTo(map);
+        }
 
+    });
 
-            // Garbage Issue
+});
 
+       
 
-
-            // Sample Markers
-            // Dynamic Complaint Markers
-
-            complaints.forEach(function (issue) {
-
-
-
-                if (issue.Latitude != null && issue.Longitude != null) {
-
-                    L.marker([
-                        parseFloat(issue.Latitude),
-                        parseFloat(issue.Longitude)
-                    ])
-                        .addTo(map)
-                        .bindPopup(`
-
-<div class="issue-popup">
-
-    <span class="status ${getStatusClass(issue.Status)}">
-
-        ${issue.Status}
-
-    </span>
-
-    <h4>${issue.Title}</h4>
-
-    <p>📍 ${issue.Landmark}</p>
-
-    <p>${issue.Description}</p>
-
-    <p>📅 ${formatDate(issue.CreatedDate)}</p>
-
-    <a href="#" class="popup-btn">
-
-        View Details
-
-    </a>
-
-</div>
-
-`);
-
-                }
-
-            });
-
-    </script>
 
 </asp:Content>
