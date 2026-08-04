@@ -76,6 +76,15 @@ namespace JanVoice
 
                     reader.Close();
 
+                    if (Session["ReturnUrl"] != null)
+                    {
+                        string returnUrl = Session["ReturnUrl"].ToString();
+
+                        Session.Remove("ReturnUrl");
+
+                        Response.Redirect(returnUrl);
+                    }
+
                     if (roleID == 1)
                     {
                         Response.Redirect("~/Citizen/Dashboard.aspx");

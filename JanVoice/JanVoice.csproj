@@ -109,8 +109,11 @@
     <Content Include="Global.asax" />
     <Content Include="Home.aspx" />
     <Content Include="Images\Logo\About1.jpeg" />
+    <Content Include="Images\empty-feed.png" />
     <Content Include="Images\Logo\Logo.png" />
     <Content Include="Images\Logo\logoIllustration.png" />
+    <Content Include="Images\no-image.png" />
+    <Content Include="Images\user.png" />
     <Content Include="IssueMap.aspx" />
     <Content Include="JS\citizen.js" />
     <Content Include="JS\Login.js" />
