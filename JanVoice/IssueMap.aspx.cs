@@ -129,12 +129,6 @@ namespace JanVoice
             LoadComplaints(keyword, category, status);
         }
 
-        protected void btnSearch_Click1(object sender, EventArgs e)
-        {
-            
-
-        }
-
         protected void btnSearch_Click(object sender, EventArgs e)
         {
             LoadComplaints(txtSearch.Text.Trim());

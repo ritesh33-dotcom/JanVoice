@@ -186,7 +186,7 @@
             // Pune Location
 
             var map = L.map('map').setView([18.5204, 73.8567], 12);
-            var complaints =<%=ComplaintJson%>;
+            var complaints =<%=ComplaintJson %>;
 
             // OpenStreetMap
 
