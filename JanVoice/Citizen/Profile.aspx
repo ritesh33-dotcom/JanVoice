@@ -1,6 +1,8 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/Citizen.Master" AutoEventWireup="true" CodeBehind="Profile.aspx.cs" Inherits="JanVoice.Citizen.Profile" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <link href="../CSS/profile.css" rel="stylesheet" />
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
@@ -258,11 +260,150 @@
                 Text="Edit Profile"
                 CssClass="primary-btn" />
 
+
+
+        </div>
+
+        <div class="edit-profile-card">
+
+            <h3>Edit Profile</h3>
+
+            <div class="edit-grid">
+
+                <div>
+
+                    <label>Full Name</label>
+
+                    <asp:TextBox
+                        ID="txtFullName"
+                        runat="server"
+                        CssClass="form-control" />
+
+                </div>
+
+                <div>
+
+                    <label>Mobile</label>
+
+                    <asp:TextBox
+                        ID="txtMobile"
+                        runat="server"
+                        CssClass="form-control" />
+
+                </div>
+
+                <div class="full-width">
+
+                    <label>Address</label>
+
+                    <asp:TextBox
+                        ID="txtAddress"
+                        runat="server"
+                        TextMode="MultiLine"
+                        Rows="3"
+                        CssClass="form-control" />
+
+                </div>
+
+                <div>
+
+                    <label>Ward</label>
+
+                    <asp:DropDownList
+                        ID="ddlWard"
+                        runat="server"
+                        CssClass="form-control">
+                    </asp:DropDownList>
+
+                </div>
+
+                <div>
+
+                    <label>Profile Photo</label>
+
+                    <asp:FileUpload
+                        ID="fuProfile"
+                        runat="server"
+                        CssClass="form-control" />
+
+                </div>
+
+            </div>
+
+            <div class="edit-buttons">
+
+                <asp:Button
+                    ID="btnSaveProfile"
+                    runat="server"
+                    Text="Save Changes"
+                    CssClass="primary-btn"
+                    OnClick="btnSaveProfile_Click" />
+
+            </div>
+
+        </div>
+
+        <div class="action-buttons">
             <asp:Button
-                ID="btnChangePassword"
+                ID="Button2"
                 runat="server"
                 Text="Change Password"
-                CssClass="secondary-btn" />
+                CssClass="secondary-btn btn-primary mt-10" />
+        </div>
+        <div class="password-card">
+
+            <h3>Change Password</h3>
+
+            <div class="password-grid">
+
+                <div>
+
+                    <label>Current Password</label>
+
+                    <asp:TextBox
+                        ID="txtCurrentPassword"
+                        runat="server"
+                        TextMode="Password"
+                        CssClass="form-control" />
+
+                </div>
+
+                <div>
+
+                    <label>New Password</label>
+
+                    <asp:TextBox
+                        ID="txtNewPassword"
+                        runat="server"
+                        TextMode="Password"
+                        CssClass="form-control" />
+
+                </div>
+
+                <div>
+
+                    <label>Confirm Password</label>
+
+                    <asp:TextBox
+                        ID="txtConfirmPassword"
+                        runat="server"
+                        TextMode="Password"
+                        CssClass="form-control" />
+
+                </div>
+
+            </div>
+
+            <div class="edit-buttons">
+
+                <asp:Button
+                    ID="Button1"
+                    runat="server"
+                    Text="Update Password"
+                    CssClass="primary-btn"
+                    OnClick="btnChangePassword_Click" />
+
+            </div>
 
         </div>
 
