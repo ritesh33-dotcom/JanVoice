@@ -82,6 +82,7 @@
     <Content Include="CSS\CommunityFeed.css" />
     <Content Include="CSS\complaintdetails.css" />
     <Content Include="CSS\components.css" />
+    <Content Include="CSS\forgotpassword.css" />
     <Content Include="CSS\IssueMap.css" />
     <Content Include="CSS\mycomplaints.css" />
     <Content Include="CSS\notifications.css" />
@@ -103,6 +104,7 @@
     <Content Include="Database\012_CreateFeedback.sql" />
     <Content Include="Database\013_CreateContactMessages.sql" />
     <Content Include="Database\014_CreateEmergencyContacts.sql" />
+    <Content Include="ForgotPassword.aspx" />
     <Content Include="Global.asax" />
     <Content Include="Home.aspx" />
     <Content Include="Images\Logo\About1.jpeg" />
@@ -181,6 +183,13 @@
     </Compile>
     <Compile Include="CommunityFeed.aspx.designer.cs">
       <DependentUpon>CommunityFeed.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ForgotPassword.aspx.cs">
+      <DependentUpon>ForgotPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ForgotPassword.aspx.designer.cs">
+      <DependentUpon>ForgotPassword.aspx</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
