@@ -1,0 +1,289 @@
+﻿/* ==========================================
+   PROFILE PAGE
+========================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.profile-page {
+    min-height: 100vh;
+    padding: 35px;
+    background: #0F172A;
+}
+
+/* ==========================================
+   PAGE HEADER
+========================================== */
+
+.page-header {
+    margin-bottom: 35px;
+}
+
+    .page-header h1 {
+        color: #FFFFFF;
+        font-size: 34px;
+        font-weight: 700;
+        margin-bottom: 10px;
+    }
+
+    .page-header p {
+        color: #94A3B8;
+        font-size: 16px;
+    }
+
+/* ==========================================
+   COMMON CARD
+========================================== */
+
+.profile-card,
+.info-card,
+.account-card {
+    background: rgba(30,41,59,.75);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 18px;
+    padding: 30px;
+    backdrop-filter: blur(16px);
+    margin-bottom: 28px;
+    box-shadow: 0 12px 30px rgba(0,0,0,.35);
+    transition: .3s;
+}
+
+    .profile-card:hover,
+    .info-card:hover,
+    .account-card:hover {
+        border-color: #3B82F6;
+        transform: translateY(-4px);
+    }
+
+/* ==========================================
+   PROFILE HEADER
+========================================== */
+
+.profile-card {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.profile-image {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #3B82F6;
+    background: #1E293B;
+}
+
+.profile-right h2 {
+    color: white;
+    font-size: 32px;
+    margin-bottom: 12px;
+}
+
+.role-badge {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 25px;
+    background: #2563EB;
+    color: white;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.joined-date {
+    margin-top: 18px;
+    color: #94A3B8;
+}
+
+/* ==========================================
+   PERSONAL INFORMATION
+========================================== */
+
+.info-card h3,
+.account-card h3 {
+    color: white;
+    margin-bottom: 25px;
+    font-size: 22px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+}
+
+    .info-grid div {
+        background: #111827;
+        padding: 18px;
+        border-radius: 12px;
+    }
+
+    .info-grid strong {
+        display: block;
+        margin-bottom: 8px;
+        color: #60A5FA;
+    }
+
+    .info-grid span {
+        color: white;
+    }
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* ==========================================
+   ACCOUNT DETAILS
+========================================== */
+
+.account-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 20px;
+}
+
+.account-box {
+    background: #111827;
+    border-radius: 12px;
+    padding: 22px;
+    text-align: center;
+}
+
+    .account-box h4 {
+        color: #60A5FA;
+        margin-bottom: 12px;
+    }
+
+    .account-box span {
+        color: white;
+    }
+
+.active-status {
+    color: #22C55E;
+    font-weight: bold;
+}
+
+/* ==========================================
+   STATISTICS
+========================================== */
+
+.stats-section {
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    gap: 22px;
+    margin-bottom: 35px;
+}
+
+.stat-card {
+    background: rgba(30,41,59,.75);
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 18px;
+    padding: 30px;
+    text-align: center;
+    transition: .3s;
+}
+
+    .stat-card:hover {
+        border-color: #3B82F6;
+        transform: translateY(-4px);
+    }
+
+    .stat-card h2 {
+        color: #3B82F6;
+        font-size: 38px;
+        margin-bottom: 10px;
+    }
+
+    .stat-card p {
+        color: white;
+        font-size: 15px;
+    }
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.action-buttons {
+    display: flex;
+    gap: 18px;
+}
+
+.primary-btn,
+.secondary-btn {
+    padding: 14px 30px;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    font-size: 15px;
+    font-weight: 600;
+    transition: .3s;
+}
+
+.primary-btn {
+    background: #2563EB;
+    color: white;
+}
+
+    .primary-btn:hover {
+        background: #1D4ED8;
+    }
+
+.secondary-btn {
+    background: transparent;
+    color: white;
+    border: 1px solid #475569;
+}
+
+    .secondary-btn:hover {
+        background: #334155;
+    }
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media(max-width:992px) {
+
+    .profile-card {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .info-grid,
+    .account-grid,
+    .stats-section {
+        grid-template-columns: 1fr;
+    }
+
+    .action-buttons {
+        flex-direction: column;
+    }
+
+    .primary-btn,
+    .secondary-btn {
+        width: 100%;
+    }
+}
+
+@media(max-width:600px) {
+
+    .profile-page {
+        padding: 20px;
+    }
+
+    .page-header h1 {
+        font-size: 28px;
+    }
+
+    .profile-right h2 {
+        font-size: 26px;
+    }
+
+    .profile-image {
+        width: 110px;
+        height: 110px;
+    }
+}
