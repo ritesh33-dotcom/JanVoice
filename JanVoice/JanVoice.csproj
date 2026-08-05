@@ -89,6 +89,7 @@
     <Content Include="CSS\IssueMap.css" />
     <Content Include="CSS\mycomplaints.css" />
     <Content Include="CSS\notifications.css" />
+    <Content Include="CSS\Officer.css" />
     <Content Include="CSS\profile.css" />
     <Content Include="CSS\reportissue.css" />
     <Content Include="CSS\responsive.css" />

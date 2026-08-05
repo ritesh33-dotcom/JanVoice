@@ -1,0 +1,413 @@
+﻿/*=========================================
+        OFFICER MASTER PAGE
+=========================================*/
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins',sans-serif;
+}
+
+body {
+    background: #020617;
+    overflow-x: hidden;
+}
+
+/*=========================================
+        WRAPPER
+=========================================*/
+
+.wrapper {
+    display: flex;
+    min-height: 100vh;
+}
+
+/*=========================================
+        SIDEBAR
+=========================================*/
+
+.sidebar {
+    width: 280px;
+    background: linear-gradient(180deg,#0F172A,#020617);
+    border-right: 1px solid rgba(255,255,255,.08);
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    padding: 30px 22px;
+    overflow-y: auto;
+    transition: .35s;
+}
+
+/*=========================================
+        LOGO
+=========================================*/
+
+.logo {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+    .logo h2 {
+        color: #3B82F6;
+        font-size: 32px;
+        font-weight: 700;
+    }
+
+    .logo span {
+        color: #CBD5E1;
+        font-size: 15px;
+        letter-spacing: 1px;
+    }
+
+/*=========================================
+        MENU
+=========================================*/
+
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .menu li {
+        margin-bottom: 12px;
+    }
+
+        .menu li a {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 16px 18px;
+            text-decoration: none;
+            color: #CBD5E1;
+            border-radius: 14px;
+            transition: .35s;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+            .menu li a i {
+                font-size: 20px;
+                width: 28px;
+            }
+
+            .menu li a:hover {
+                background: linear-gradient(135deg,#2563EB,#3B82F6);
+                color: white;
+                transform: translateX(6px);
+                box-shadow: 0 12px 25px rgba(59,130,246,.25);
+            }
+
+/*=========================================
+        MAIN AREA
+=========================================*/
+
+.main {
+    margin-left: 280px;
+    width: calc(100% - 280px);
+    min-height: 100vh;
+}
+
+/*=========================================
+        TOPBAR
+=========================================*/
+
+.topbar {
+    height: 80px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 35px;
+    background: rgba(15,23,42,.85);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid rgba(255,255,255,.08);
+    position: sticky;
+    top: 0;
+    z-index: 999;
+}
+
+    .topbar h3 {
+        color: white;
+        font-size: 26px;
+        font-weight: 600;
+    }
+
+/*=========================================
+        RIGHT AREA
+=========================================*/
+
+.top-right {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+}
+
+/*=========================================
+        NOTIFICATION
+=========================================*/
+
+.notify-btn {
+    width: 48px;
+    height: 48px;
+    border: none;
+    border-radius: 50%;
+    background: #0F172A;
+    color: white;
+    font-size: 20px;
+    transition: .35s;
+    cursor: pointer;
+}
+
+    .notify-btn:hover {
+        background: #2563EB;
+        transform: rotate(15deg);
+    }
+
+/*=========================================
+        PROFILE
+=========================================*/
+
+.profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+    .profile img {
+        width: 46px;
+        height: 46px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 2px solid #3B82F6;
+    }
+
+    .profile span {
+        color: white;
+        font-weight: 600;
+    }
+
+/*=========================================
+        LOGOUT BUTTON
+=========================================*/
+
+.logout-btn {
+    border: none;
+    background: #EF4444;
+    color: white;
+    padding: 12px 22px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: .35s;
+    font-weight: 600;
+}
+
+    .logout-btn:hover {
+        background: #DC2626;
+        transform: translateY(-2px);
+    }
+
+/*=========================================
+        CONTENT
+=========================================*/
+
+.content {
+    padding: 35px;
+}
+
+/*=========================================
+        SCROLLBAR
+=========================================*/
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #2563EB;
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: #020617;
+}
+
+/*=========================================
+        GLASS CARD
+=========================================*/
+
+.glass-card {
+    background: rgba(30,41,59,.65);
+    border: 1px solid rgba(255,255,255,.08);
+    backdrop-filter: blur(20px);
+    border-radius: 20px;
+    padding: 25px;
+    color: white;
+}
+
+/*=========================================
+        ANIMATION
+=========================================*/
+
+@keyframes fadeUp {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.content {
+    animation: fadeUp .6s ease;
+}
+
+
+
+/*=========================================
+        RESPONSIVE DESIGN
+=========================================*/
+
+/* Laptop */
+
+@media(max-width:1200px) {
+
+    .sidebar {
+        width: 240px;
+    }
+
+    .main {
+        margin-left: 240px;
+        width: calc(100% - 240px);
+    }
+
+    .topbar {
+        padding: 0 25px;
+    }
+}
+
+/* Tablet */
+
+@media(max-width:992px) {
+
+    .sidebar {
+        width: 90px;
+        padding: 20px 10px;
+    }
+
+    .logo h2 {
+        font-size: 22px;
+    }
+
+    .logo span {
+        display: none;
+    }
+
+    .menu li a {
+        justify-content: center;
+    }
+
+        .menu li a span {
+            display: none;
+        }
+
+        .menu li a i {
+            font-size: 24px;
+        }
+
+    .main {
+        margin-left: 90px;
+        width: calc(100% - 90px);
+    }
+
+    .topbar h3 {
+        font-size: 22px;
+    }
+}
+
+/* Mobile */
+
+@media(max-width:768px) {
+
+    .sidebar {
+        left: -280px;
+        width: 280px;
+        z-index: 2000;
+    }
+
+        .sidebar.active {
+            left: 0;
+        }
+
+    .main {
+        margin-left: 0;
+        width: 100%;
+    }
+
+    .topbar {
+        padding: 15px;
+    }
+
+    .top-right {
+        gap: 12px;
+    }
+
+    .profile span {
+        display: none;
+    }
+
+    .logout-btn {
+        padding: 10px 15px;
+        font-size: 14px;
+    }
+
+    .content {
+        padding: 20px;
+    }
+}
+
+/* Small Mobile */
+
+@media(max-width:576px) {
+
+    .topbar {
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+        padding: 20px;
+    }
+
+    .top-right {
+        width: 100%;
+        justify-content: space-between;
+        margin-top: 15px;
+    }
+
+    .profile img {
+        width: 40px;
+        height: 40px;
+    }
+
+    .notify-btn {
+        width: 42px;
+        height: 42px;
+    }
+
+    .content {
+        padding: 15px;
+    }
+}
+
+
+.profile-image {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3B82F6;
+}
