@@ -1,10 +1,17 @@
-﻿/*=========================================
-        COMMUNITY HERO
-=========================================*/
+﻿/*==========================================
+            COMMUNITY PAGE
+==========================================*/
+
+.community-page {
+    width: 100%;
+}
+
+/*==========================================
+            HERO SECTION
+==========================================*/
 
 .community-hero {
-    padding: 120px 0 70px;
-    text-align: center;
+    padding: 120px 0 80px;
     position: relative;
     overflow: hidden;
 }
@@ -18,7 +25,7 @@
         border-radius: 50%;
         filter: blur(130px);
         top: -220px;
-        left: -180px;
+        left: -220px;
     }
 
     .community-hero::after {
@@ -35,22 +42,25 @@
 
 .hero-content {
     position: relative;
-    z-index: 2;
+    z-index: 10;
+    text-align: center;
 }
 
 .hero-badge {
     display: inline-block;
     padding: 8px 18px;
-    border-radius: 50px;
+    border-radius: 30px;
     background: rgba(59,130,246,.15);
     color: #38BDF8;
+    font-size: 14px;
     font-weight: 600;
 }
 
 .hero-content h1 {
-    font-size: 60px;
     margin: 25px 0;
+    font-size: 58px;
     color: white;
+    line-height: 1.2;
 }
 
     .hero-content h1 span {
@@ -61,52 +71,54 @@
     max-width: 760px;
     margin: auto;
     color: #CBD5E1;
-    line-height: 1.8;
+    line-height: 1.9;
     font-size: 18px;
 }
 
-/*=========================================
-        SEARCH
-=========================================*/
+/*==========================================
+            SEARCH
+==========================================*/
 
-.search-section {
-    padding-bottom: 60px;
+.community-search {
+    padding-bottom: 70px;
 }
 
-.search-box {
+.search-wrapper {
     display: flex;
     gap: 18px;
-    padding: 25px;
     background: #1E293B;
+    padding: 25px;
     border-radius: 20px;
     border: 1px solid rgba(255,255,255,.08);
     flex-wrap: wrap;
 }
 
-.search-input {
+.search-box {
     flex: 1;
     min-width: 260px;
-    padding: 15px;
-    border-radius: 12px;
+    padding: 15px 18px;
     border: none;
+    border-radius: 12px;
     background: #0F172A;
     color: white;
+    outline: none;
 }
 
-.dropdown {
+.filter-box {
     min-width: 180px;
     padding: 15px;
+    border: none;
     border-radius: 12px;
     background: #0F172A;
     color: white;
-    border: none;
+    outline: none;
 }
 
 .search-btn {
-    padding: 15px 30px;
-    border: none;
+    padding: 15px 28px;
     background: #2563EB;
     color: white;
+    border: none;
     border-radius: 12px;
     cursor: pointer;
     transition: .3s;
@@ -116,23 +128,92 @@
         background: #1D4ED8;
     }
 
-/*=========================================
-        FEED
-=========================================*/
+/*==========================================
+            FEED GRID
+==========================================*/
 
-.feed-section {
+.community-feed {
     padding-bottom: 100px;
 }
 
-    .feed-section .container {
-        display: grid;
-        grid-template-columns: repeat(auto-fit,minmax(360px,1fr));
-        gap: 35px;
+.feed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(360px,1fr));
+    gap: 30px;
+}
+
+/*==========================================
+        FLOATING BUTTON
+==========================================*/
+
+.floating-report {
+    position: fixed;
+    bottom: 35px;
+    right: 35px;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    background: linear-gradient(135deg,#3B82F6,#2563EB);
+    color: white;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    box-shadow: 0 15px 35px rgba(59,130,246,.35);
+    transition: .3s;
+    z-index: 999;
+}
+
+    .floating-report:hover {
+        transform: scale(1.1) rotate(90deg);
     }
+
+/*==========================================
+            RESPONSIVE
+==========================================*/
+
+@media(max-width:992px) {
+
+    .hero-content h1 {
+        font-size: 44px;
+    }
+
+    .search-wrapper {
+        flex-direction: column;
+    }
+
+    .search-box,
+    .filter-box,
+    .search-btn {
+        width: 100%;
+    }
+}
+
+@media(max-width:576px) {
+
+    .hero-content h1 {
+        font-size: 34px;
+    }
+
+    .hero-content p {
+        font-size: 16px;
+    }
+
+    .floating-report {
+        width: 60px;
+        height: 60px;
+        font-size: 32px;
+    }
+}
+
+/*==========================================
+            COMPLAINT CARD
+==========================================*/
 
 .issue-card {
     background: #1E293B;
-    border-radius: 22px;
+    border-radius: 20px;
     overflow: hidden;
     border: 1px solid rgba(255,255,255,.08);
     transition: .35s;
@@ -140,23 +221,23 @@
 
     .issue-card:hover {
         transform: translateY(-8px);
-        box-shadow: 0 20px 45px rgba(59,130,246,.18);
+        box-shadow: 0 20px 40px rgba(59,130,246,.18);
     }
 
 .issue-header {
-    padding: 22px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 20px;
 }
 
 .user-info {
     display: flex;
-    gap: 15px;
     align-items: center;
+    gap: 15px;
 }
 
-.user-photo {
+.user-avatar {
     width: 55px;
     height: 55px;
     border-radius: 50%;
@@ -165,8 +246,8 @@
 }
 
 .user-info h4 {
-    margin: 0;
     color: white;
+    margin-bottom: 4px;
 }
 
 .user-info span {
@@ -177,33 +258,38 @@
 .status {
     padding: 7px 16px;
     border-radius: 30px;
-    background: #F59E0B;
     color: white;
     font-size: 13px;
+    font-weight: 600;
 }
 
-.complaint-image {
+.pending {
+    background: #F59E0B;
+}
+.issue-image {
     width: 100%;
     height: 240px;
-    object-fit: cover;
+    object-fit: contain;
+    background: #0F172A;
 }
 
 .issue-body {
-    padding: 25px;
+    padding: 22px;
 }
 
 .category {
     display: inline-block;
-    padding: 6px 14px;
-    border-radius: 30px;
     background: #2563EB;
     color: white;
+    padding: 6px 14px;
+    border-radius: 30px;
     font-size: 13px;
+    margin-bottom: 15px;
 }
 
 .issue-body h3 {
-    margin: 18px 0;
     color: white;
+    margin-bottom: 12px;
 }
 
 .issue-body p {
@@ -211,30 +297,27 @@
     line-height: 1.7;
 }
 
-.issue-stats {
+.issue-footer {
     display: flex;
-    justify-content: space-around;
-    padding: 18px 25px;
-    border-top: 1px solid rgba(255,255,255,.08);
+    justify-content: space-between;
+    padding: 0 22px 20px;
     color: #CBD5E1;
+    font-size: 14px;
 }
 
-.issue-actions {
-    display: grid;
-    grid-template-columns: repeat(3,1fr);
+.issue-buttons {
+    display: flex;
     gap: 12px;
-    padding: 25px;
+    padding: 0 22px 22px;
 }
 
-    .issue-actions .btn-support,
-    .issue-actions .btn-comment,
-    .issue-actions .btn-details {
-        padding: 14px;
+    .issue-buttons button {
+        flex: 1;
+        padding: 13px;
         border: none;
-        border-radius: 12px;
+        border-radius: 10px;
         cursor: pointer;
         transition: .3s;
-        font-weight: 600;
     }
 
 .btn-support {
@@ -256,64 +339,10 @@
     }
 
 .btn-details {
-    background: transparent;
-    border: 1px solid #2563EB !important;
-    color: #3B82F6;
+    background: #14B8A6;
+    color: white;
 }
 
     .btn-details:hover {
-        background: #2563EB;
-        color: white;
+        background: #0F766E;
     }
-
-/*=========================================
-        FLOAT BUTTON
-=========================================*/
-
-.floating-report {
-    position: fixed;
-    bottom: 35px;
-    right: 35px;
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: linear-gradient(135deg,#3B82F6,#2563EB);
-    color: white;
-    text-decoration: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 38px;
-    box-shadow: 0 15px 35px rgba(59,130,246,.35);
-    transition: .3s;
-    z-index: 999;
-}
-
-    .floating-report:hover {
-        transform: scale(1.1) rotate(90deg);
-    }
-
-/*=========================================
-        RESPONSIVE
-=========================================*/
-
-@media(max-width:768px) {
-
-    .hero-content h1 {
-        font-size: 38px;
-    }
-
-    .issue-actions {
-        grid-template-columns: 1fr;
-    }
-
-    .search-box {
-        flex-direction: column;
-    }
-
-    .dropdown,
-    .search-input,
-    .search-btn {
-        width: 100%;
-    }
-}

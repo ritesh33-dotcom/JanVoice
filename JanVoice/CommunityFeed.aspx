@@ -7,210 +7,223 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
-    <!-- HERO -->
+    <div class="community-page">
 
-    <section class="community-hero">
+        <!-- Hero Section -->
+        <section class="community-hero">
 
-        <div class="container">
+            <div class="container">
 
-            <div class="hero-content">
+                <div class="hero-content">
 
-                <span class="hero-badge">
-                    🌍 Community Driven Platform
-                </span>
+                    <span class="hero-badge">🌍 Community Driven Platform
+                    </span>
 
-                <h1>
-                    Together We Build
+                    <h1>Together We Build
                     <span>Better Cities</span>
-                </h1>
+                    </h1>
 
-                <p>
-
-                    Browse civic issues reported by citizens,
+                    <p>
+                        Explore civic issues reported by citizens,
                     support important problems,
-                    comment,
-                    and track progress together.
-
-                </p>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- SEARCH -->
-
-    <section class="search-section">
-
-        <div class="container">
-
-            <div class="search-box">
-
-                <asp:TextBox
-                    ID="txtSearch"
-                    runat="server"
-                    CssClass="search-input"
-                    placeholder="Search complaints...">
-                </asp:TextBox>
-
-                <asp:DropDownList
-                    ID="ddlCategory"
-                    runat="server"
-                    CssClass="dropdown">
-                </asp:DropDownList>
-
-                <asp:DropDownList
-                    ID="ddlStatus"
-                    runat="server"
-                    CssClass="dropdown">
-                </asp:DropDownList>
-
-                <asp:Button
-                    ID="btnSearch"
-                    runat="server"
-                    Text="Search"
-                    CssClass="search-btn" />
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!-- FEED -->
-
-    <section class="feed-section">
-
-        <div class="container">
-
-           <asp:Repeater ID="rptComplaints" runat="server">
-
-    <ItemTemplate>
-
-        <div class="issue-card">
-
-            <!-- User Header -->
-
-            <div class="issue-header">
-
-                <div class="user-info">
-
-                    <img src='<%# Eval("ProfilePhoto") %>'
-                        class="user-avatar"
-                        alt="User" />
-
-                    <div>
-
-                        <h5><%# Eval("FullName") %></h5>
-
-                        <span>
-                            📍 <%# Eval("WardName") %>
-                        </span>
-
-                    </div>
-
-                </div>
-
-                <span class="status pending">
-
-                    <%# Eval("Status") %>
-
-                </span>
-
-            </div>
-
-            <!-- Complaint Image -->
-
-            <img src='<%# Eval("ImagePath") %>'
-                class="issue-image"
-                alt="Complaint Image" />
-
-            <!-- Body -->
-
-            <div class="issue-body">
-
-                <div class="issue-top">
-
-                    <span class="category">
-
-                        <%# Eval("CategoryName") %>
-
-                    </span>
-
-                </div>
-
-                <h3>
-
-                    <%# Eval("Title") %>
-
-                </h3>
-
-                <p>
-
-                    <%# Eval("Description") %>
-
-                </p>
-
-                <div class="issue-footer">
-
-                    <span>
-
-                        ❤️ <%# Eval("SupportCount") %>
-
-                    </span>
-
-                    <span>
-
-                        💬 <%# Eval("CommentCount") %>
-
-                    </span>
-
-                </div>
-
-                <div class="issue-buttons">
-
-                    <button class="btn-support">
-
-                        ❤️ Support
-
-                    </button>
-
-                    <button class="btn-comment">
-
-                        💬 Comment
-
-                    </button>
-
-                    <a href='ComplaintDetails.aspx?id=<%# Eval("ComplaintID") %>'
-                        class="btn-details">
-
-                        View Details
-
-                    </a>
+                    comment on discussions,
+                    and track complaint progress together.
+                    </p>
 
                 </div>
 
             </div>
 
-        </div>
+        </section>
 
-    </ItemTemplate>
+        <!-- Search & Filter -->
 
-</asp:Repeater>
+        <section class="community-search">
 
-        </div>
+            <div class="container">
 
-    </section>
+                <div class="search-wrapper">
 
-    <!-- Floating Button -->
+                    <asp:TextBox
+                        ID="txtSearch"
+                        runat="server"
+                        CssClass="search-box"
+                        placeholder="Search complaints...">
+                    </asp:TextBox>
 
-    <a href="ReportIssue.aspx"
-        class="floating-report">
+                    <asp:DropDownList
+                        ID="ddlCategory"
+                        runat="server"
+                        CssClass="filter-box">
+                    </asp:DropDownList>
 
-        +
+                    <asp:DropDownList
+                        ID="ddlWard"
+                        runat="server"
+                        CssClass="filter-box">
+                    </asp:DropDownList>
 
-    </a>
+                    <asp:DropDownList
+                        ID="ddlStatus"
+                        runat="server"
+                        CssClass="filter-box">
+                    </asp:DropDownList>
+
+                    <asp:Button
+                        ID="btnSearch"
+                        runat="server"
+                        Text="Search"
+                        CssClass="search-btn" />
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Complaint Feed -->
+
+        <section class="community-feed">
+
+            <div class="container">
+
+                <div class="feed-grid">
+
+                    <!-- Complaint Cards will come here -->
+
+                    <asp:Repeater
+                        ID="rptComplaints"
+                        runat="server">
+
+                        <ItemTemplate>
+
+                            <div class="issue-card">
+
+                                <!-- Header -->
+
+                                <div class="issue-header">
+
+                                    <div class="user-info">
+
+                                        <img
+                                            src='<%# Eval("ProfilePhoto") %>'
+                                            class="user-avatar"
+                                            alt="User" />
+
+                                        <div>
+
+                                            <h4>
+                                                <%# Eval("FullName") %>
+                                            </h4>
+
+                                            <span>📍 <%# Eval("WardName") %>
+                                            </span>
+
+                                        </div>
+
+                                    </div>
+
+                                    <span class="status pending">
+                                        <%# Eval("Status") %>
+                                    </span>
+
+                                </div>
+
+                                <!-- Complaint Image -->
+
+                                <asp:Image
+                                    ID="imgComplaint"
+                                    runat="server"
+                                    CssClass="complaint-image"
+                                    ImageUrl='<%# Eval("ImagePath") %>'
+                                    AlternateText="Complaint Image" />
+
+                                <!-- Body -->
+
+                                <div class="issue-body">
+
+                                    <span class="category">
+                                        <%# Eval("CategoryName") %>
+                                    </span>
+
+                                    <h3>
+                                        <%# Eval("Title") %>
+                                    </h3>
+
+                                    <p>
+                                        <%# Eval("Description") %>
+                                    </p>
+
+                                </div>
+
+                                <!-- Footer -->
+
+                                <div class="issue-footer">
+
+                                    <span>❤️ <%# Eval("SupportCount") %> Supports
+                                    </span>
+
+                                    <span>💬 <%# Eval("CommentCount") %> Comments
+                                    </span>
+
+                                    <span>🕒 <%# Eval("CreatedDate") %>
+                                    </span>
+
+                                </div>
+
+                                <!-- Buttons -->
+
+                                <div class="issue-buttons">
+
+                                    <asp:Button
+                                        ID="btnSupport"
+                                        runat="server"
+                                        Text="❤️ Support"
+                                        CssClass="btn-support"
+                                        CommandName="Support"
+                                        CommandArgument='<%# Eval("ComplaintID") %>' />
+
+                                    <asp:Button
+                                        ID="btnComment"
+                                        runat="server"
+                                        Text="💬 Comment"
+                                        CssClass="btn-comment"
+                                        CommandName="Comment"
+                                        CommandArgument='<%# Eval("ComplaintID") %>' />
+
+                                    <asp:HyperLink
+                                        ID="lnkDetails"
+                                        runat="server"
+                                        CssClass="btn-details"
+                                        NavigateUrl='<%# "~/ComplaintDetails.aspx?id=" + Eval("ComplaintID") %>'>
+
+                    👁 View Details
+
+                                    </asp:HyperLink>
+
+                                </div>
+
+                            </div>
+
+                        </ItemTemplate>
+
+                    </asp:Repeater>
+
+
+                </div>
+
+            </div>
+
+        </section>
+
+        <!-- Floating Report Button -->
+
+        <a href="Citizen/ReportIssue.aspx"
+            class="floating-report">+
+
+        </a>
+
+    </div>
 
 
 
