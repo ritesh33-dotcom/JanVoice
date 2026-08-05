@@ -25,7 +25,7 @@ namespace JanVoice.MasterPages
         {
             if (Session["OfficerID"] == null)
             {
-                Response.Redirect("~/OfficerLogin.aspx");
+                Response.Redirect("~/Login.aspx");
             }
         }
 
