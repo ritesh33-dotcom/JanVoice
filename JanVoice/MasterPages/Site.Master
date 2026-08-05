@@ -35,6 +35,11 @@ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 <body>
     <form id="form1" runat="server">
 
+        <asp:ScriptManager
+    ID="ScriptManager1"
+    runat="server">
+</asp:ScriptManager>
+
           <header>
 
             <nav class="navbar">

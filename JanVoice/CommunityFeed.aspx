@@ -36,6 +36,79 @@
 
         </section>
 
+
+        <!-- Community Statistics -->
+
+<section class="community-stats">
+
+    <div class="container">
+
+        <div class="stats-grid">
+
+            <div class="stat-card">
+
+                <h2>
+                    <asp:Label
+                        ID="lblComplaints"
+                        runat="server"
+                        Text="0">
+                    </asp:Label>
+                </h2>
+
+                <p>📄 Complaints</p>
+
+            </div>
+
+            <div class="stat-card">
+
+                <h2>
+                    <asp:Label
+                        ID="lblSupports"
+                        runat="server"
+                        Text="0">
+                    </asp:Label>
+                </h2>
+
+                <p>❤️ Supports</p>
+
+            </div>
+
+            <div class="stat-card">
+
+                <h2>
+                    <asp:Label
+                        ID="lblComments"
+                        runat="server"
+                        Text="0">
+                    </asp:Label>
+                </h2>
+
+                <p>💬 Comments</p>
+
+            </div>
+
+            <div class="stat-card">
+
+                <h2>
+                    <asp:Label
+                        ID="lblCitizens"
+                        runat="server"
+                        Text="0">
+                    </asp:Label>
+                </h2>
+
+                <p>👥 Citizens</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
         <!-- Search & Filter -->
 
         <section class="community-search">
@@ -158,7 +231,7 @@
                                     </h3>
 
                                     <p>
-                                        <%# Eval("Description") %>
+                                        <%# ShortDescription(Eval("Description")) %>
                                     </p>
 
                                 </div>
@@ -173,7 +246,7 @@
                                     <span>💬 <%# Eval("CommentCount") %> Comments
                                     </span>
 
-                                    <span>🕒 <%# Eval("CreatedDate") %>
+                                    <span>🕒 <%# GetTimeAgo(Eval("CreatedDate")) %>
                                     </span>
 
                                 </div>
@@ -185,10 +258,11 @@
                                     <asp:Button
                                         ID="btnSupport"
                                         runat="server"
-                                        Text="❤️ Support"
-                                        CssClass="btn-support"
+                                        CssClass='<%# GetSupportClass(Eval("IsSupported")) %>'
+                                        Text='<%# GetSupportText(Eval("IsSupported")) %>'
                                         CommandName="Support"
                                         CommandArgument='<%# Eval("ComplaintID") %>' />
+
 
                                     <asp:Button
                                         ID="btnComment"
@@ -197,6 +271,7 @@
                                         CssClass="btn-comment"
                                         CommandName="Comment"
                                         CommandArgument='<%# Eval("ComplaintID") %>' />
+
 
                                     <asp:HyperLink
                                         ID="lnkDetails"
@@ -216,6 +291,24 @@
 
                     </asp:Repeater>
 
+                    <asp:Panel
+                        ID="pnlNoData"
+                        runat="server"
+                        CssClass="no-data"
+                        Visible="false">
+
+                        <img
+                            src="Images/no-data.png"
+                            alt="No Data" />
+
+                        <h2>No Complaints Found</h2>
+
+                        <p>
+                            We couldn't find any complaints matching your search.
+                            Try changing the filters or be the first to report an issue.
+                        </p>
+
+                    </asp:Panel>
 
                 </div>
 
@@ -232,6 +325,128 @@
 
     </div>
 
+
+
+    <!--==========================================
+            COMMENT MODAL
+===========================================-->
+
+    <div id="commentModal" class="comment-modal">
+
+        <div class="comment-container">
+
+            <div class="comment-header">
+
+                <h2>💬 Comments</h2>
+
+                <button
+                    type="button"
+                    class="close-modal"
+                    onclick="closeCommentModal()">
+                    &times;
+
+                </button>
+
+            </div>
+
+            <!-- Comments -->
+            <div class="comment-list">
+
+                <asp:Repeater
+                    ID="rptComments"
+                    runat="server">
+
+                    <ItemTemplate>
+
+                        <div class="comment-item">
+
+                            <div class="comment-user">
+
+                                <img
+                                    src='<%# Eval("ProfilePhoto") %>'
+                                    class="comment-avatar" />
+
+                                <div>
+
+                                    <h5>
+
+                                        <%# Eval("FullName") %>
+
+                                    </h5>
+
+                                    <span>🕒 <%# GetTimeAgo(Eval("CommentDate")) %>
+
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+                            <p class="comment-text">
+
+                                <%# Eval("Comment") %>
+                            </p>
+
+                        </div>
+
+                    </ItemTemplate>
+
+                </asp:Repeater>
+
+            </div>
+
+            <!-- Write Comment -->
+            <div class="comment-input-area">
+
+                <asp:TextBox
+                    ID="txtComment"
+                    runat="server"
+                    CssClass="comment-input"
+                    TextMode="MultiLine"
+                    Rows="3"
+                    placeholder="Write your comment...">
+                </asp:TextBox>
+
+
+
+                <asp:HiddenField
+                    ID="hfComplaintID"
+                    runat="server" />
+                <asp:Button
+                    ID="Button1"
+                    runat="server"
+                    Text="Post Comment"
+                    CssClass="btn-post-comment"
+                    OnClick="btnPostComment_Click" />
+
+            </div>
+
+
+
+
+        </div>
+
+    </div>
+
+    <script>
+
+        function openCommentModal() {
+
+            document
+                .getElementById("commentModal")
+                .style.display = "flex";
+
+        }
+
+        function closeCommentModal() {
+
+            document
+                .getElementById("commentModal")
+                .style.display = "none";
+
+        }
+
+    </script>
 
 
 </asp:Content>

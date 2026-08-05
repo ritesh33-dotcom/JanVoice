@@ -76,13 +76,12 @@ namespace JanVoice
 
                     reader.Close();
 
-                    if (Session["ReturnUrl"] != null)
+                    string returnUrl = Request.QueryString["ReturnUrl"];
+
+                    if (!string.IsNullOrEmpty(returnUrl))
                     {
-                        string returnUrl = Session["ReturnUrl"].ToString();
-
-                        Session.Remove("ReturnUrl");
-
                         Response.Redirect(returnUrl);
+                        return;
                     }
 
                     if (roleID == 1)
