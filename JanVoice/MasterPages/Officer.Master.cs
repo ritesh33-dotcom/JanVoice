@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -23,9 +24,15 @@ namespace JanVoice.MasterPages
 
         private void CheckOfficerLogin()
         {
-            if (Session["OfficerID"] == null)
+            if (Session["UserID"] == null)
             {
                 Response.Redirect("~/Login.aspx");
+                return;
+            }
+            if (Convert.ToInt32(Session["RoleID"]) != 2)
+            {
+                Response.Redirect("~/Login.aspx");
+                return;
             }
         }
 
@@ -37,30 +44,43 @@ namespace JanVoice.MasterPages
 
                 using (SqlConnection con = new SqlConnection(cs))
                 {
-                    string query = @"SELECT FullName
-                                     FROM Users
-                                     WHERE UserID=@UserID";
+                    string query = @"
+            SELECT
+                U.FullName,
+                U.Email,
+                U.Mobile,
+                W.WardName
+            FROM Users U
+            INNER JOIN Wards W
+            ON U.WardID = W.WardID
+            WHERE U.UserID = @UserID";
 
                     SqlCommand cmd = new SqlCommand(query, con);
 
-                    cmd.Parameters.AddWithValue("@UserID",
-                        Session["OfficerID"]);
+                    cmd.Parameters.AddWithValue("@UserID", Session["UserID"]);
 
                     con.Open();
 
-                    SqlDataReader dr = cmd.ExecuteReader();
-
-                    if (dr.Read())
+                    using (SqlDataReader dr = cmd.ExecuteReader())
                     {
-                        lblOfficerName.Text = dr["FullName"].ToString();
-                    }
 
-                    dr.Close();
+                        if (dr.Read())
+                        {
+                            lblOfficerName.Text = dr["FullName"].ToString();
+
+                            // Optional labels
+                            // lblOfficerEmail.Text = dr["Email"].ToString();
+                            // lblOfficerWard.Text = dr["WardName"].ToString();
+                        }
+
+
+                        dr.Close();
+                    }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                lblOfficerName.Text = "Officer";
+                Response.Write("<script>alert('" + ex.Message.Replace("'", "") + "');</script>");
             }
         }
 

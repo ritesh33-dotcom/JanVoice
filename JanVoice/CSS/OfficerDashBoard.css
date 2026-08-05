@@ -1,0 +1,493 @@
+﻿/*==================================
+      OFFICER DASHBOARD
+==================================*/
+
+.dashboard-section {
+    min-height: 100vh;
+    background: #0F172A;
+    padding: 35px;
+}
+
+/*==================================
+        HEADER
+==================================*/
+
+.dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 35px;
+}
+
+.dashboard-badge {
+    display: inline-block;
+    padding: 8px 18px;
+    border-radius: 30px;
+    background: rgba(59,130,246,.15);
+    color: #3B82F6;
+    font-weight: 600;
+    margin-bottom: 15px;
+}
+
+.dashboard-header h1 {
+    color: #fff;
+    font-size: 38px;
+    font-weight: 700;
+}
+
+.dashboard-header p {
+    color: #94A3B8;
+    font-size: 17px;
+    margin-top: 10px;
+}
+
+/*==================================
+        DASHBOARD CARD
+==================================*/
+
+.dashboard-card {
+    background: #111827;
+    border: 1px solid rgba(255,255,255,.06);
+    border-radius: 20px;
+    padding: 30px;
+    text-align: center;
+    transition: .35s;
+    overflow: hidden;
+    position: relative;
+}
+
+    .dashboard-card:hover {
+        transform: translateY(-8px);
+        border-color: #3B82F6;
+        box-shadow: 0 20px 45px rgba(59,130,246,.20);
+    }
+
+.card-icon {
+    font-size: 38px;
+    color: #3B82F6;
+    margin-bottom: 18px;
+}
+
+.pending {
+    color: #F59E0B;
+}
+
+.progress {
+    color: #2563EB;
+}
+
+.resolved {
+    color: #22C55E;
+}
+
+.high {
+    color: #EF4444;
+}
+
+.today {
+    color: #A855F7;
+}
+
+.dashboard-card h2 {
+    color: #fff;
+    font-size: 38px;
+    margin-bottom: 8px;
+}
+
+.dashboard-card p {
+    color: #CBD5E1;
+    margin: 0;
+}
+
+/*==================================
+        COMMON BOX
+==================================*/
+
+.dashboard-box {
+    background: #111827;
+    border-radius: 20px;
+    border: 1px solid rgba(255,255,255,.06);
+    padding: 25px;
+    margin-bottom: 25px;
+}
+
+    .dashboard-box:hover {
+        border-color: #3B82F6;
+    }
+
+.box-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+    .box-header h3 {
+        color: #fff;
+        font-size: 22px;
+    }
+
+    .box-header i {
+        color: #3B82F6;
+        margin-right: 10px;
+    }
+
+
+
+/*==================================
+        CHART AREA
+==================================*/
+
+.chart-area {
+    width: 100%;
+    height: 380px;
+    position: relative;
+}
+
+/*==================================
+        OFFICER PROFILE CARD
+==================================*/
+
+.officer-card {
+    text-align: center;
+}
+
+.officer-photo {
+    width: 110px;
+    height: 110px;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg,#2563EB,#3B82F6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 15px 35px rgba(59,130,246,.35);
+}
+
+    .officer-photo i {
+        font-size: 52px;
+        color: #fff;
+    }
+
+.officer-card h4 {
+    color: #fff;
+    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: 600;
+}
+
+.officer-card p {
+    color: #94A3B8;
+    margin-bottom: 20px;
+}
+
+.officer-card hr {
+    border-color: rgba(255,255,255,.08);
+}
+
+.officer-info {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+    .officer-info div {
+        flex: 1;
+    }
+
+    .officer-info span {
+        display: block;
+        color: #94A3B8;
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+    .officer-info strong {
+        color: #fff;
+        font-size: 20px;
+    }
+
+/*==================================
+        TABLE
+==================================*/
+
+.table {
+    margin-bottom: 0;
+}
+
+    .table thead {
+        background: #1E293B;
+    }
+
+        .table thead th {
+            color: #3B82F6;
+            border: none;
+            padding: 16px;
+        }
+
+    .table tbody td {
+        color: #CBD5E1;
+        border-color: rgba(255,255,255,.06);
+        padding: 16px;
+    }
+
+    .table tbody tr {
+        transition: .35s;
+    }
+
+        .table tbody tr:hover {
+            background: #1E293B;
+        }
+
+/*==================================
+        QUICK ACTIONS
+==================================*/
+
+.action-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    background: #1E293B;
+    border-radius: 18px;
+    padding: 30px 15px;
+    transition: .35s;
+    border: 1px solid rgba(255,255,255,.05);
+}
+
+    .action-card:hover {
+        transform: translateY(-8px);
+        border-color: #3B82F6;
+        box-shadow: 0 20px 35px rgba(59,130,246,.25);
+    }
+
+    .action-card i {
+        font-size: 34px;
+        color: #3B82F6;
+        margin-bottom: 18px;
+    }
+
+    .action-card h5 {
+        color: #fff;
+        text-align: center;
+        font-size: 17px;
+    }
+
+/*==================================
+        NOTIFICATION LIST
+==================================*/
+
+.notification-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+    .notification-list li {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #CBD5E1;
+        padding: 16px 0;
+        border-bottom: 1px solid rgba(255,255,255,.06);
+    }
+
+        .notification-list li:last-child {
+            border-bottom: none;
+        }
+
+    .notification-list i {
+        color: #3B82F6;
+        font-size: 10px;
+    }
+
+
+
+/*==================================
+        ACTIVITY TIMELINE
+==================================*/
+
+.timeline {
+    position: relative;
+    margin-top: 15px;
+}
+
+    .timeline::before {
+        content: "";
+        position: absolute;
+        left: 18px;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        background: #3B82F6;
+    }
+
+.timeline-item {
+    position: relative;
+    display: flex;
+    gap: 20px;
+    margin-bottom: 30px;
+    padding-left: 10px;
+}
+
+.timeline-dot {
+    width: 18px;
+    height: 18px;
+    background: #3B82F6;
+    border-radius: 50%;
+    border: 4px solid #0F172A;
+    position: relative;
+    z-index: 2;
+    margin-top: 5px;
+}
+
+.timeline-item h5 {
+    color: #FFFFFF;
+    font-size: 18px;
+    margin-bottom: 6px;
+}
+
+.timeline-item p {
+    color: #CBD5E1;
+    margin-bottom: 6px;
+}
+
+.timeline-item small {
+    color: #94A3B8;
+}
+
+/*==================================
+        GLASS EFFECT
+==================================*/
+
+.dashboard-card,
+.dashboard-box {
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+/*==================================
+        HOVER EFFECTS
+==================================*/
+
+.dashboard-card,
+.dashboard-box,
+.action-card,
+.table tbody tr {
+    transition: all .35s ease;
+}
+
+    /*==================================
+        SCROLLBAR
+==================================*/
+
+    .dashboard-box::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .dashboard-box::-webkit-scrollbar-thumb {
+        background: #3B82F6;
+        border-radius: 20px;
+    }
+
+    .dashboard-box::-webkit-scrollbar-track {
+        background: #111827;
+    }
+
+/*==================================
+        RESPONSIVE
+==================================*/
+
+@media(max-width:1200px) {
+
+    .dashboard-card {
+        margin-bottom: 20px;
+    }
+}
+
+@media(max-width:992px) {
+
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 20px;
+    }
+
+    .officer-info {
+        flex-direction: column;
+        gap: 20px;
+    }
+}
+
+@media(max-width:768px) {
+
+    .dashboard-section {
+        padding: 20px;
+    }
+
+    .dashboard-header h1 {
+        font-size: 30px;
+    }
+
+    .dashboard-card {
+        padding: 25px;
+    }
+
+    .chart-area {
+        height: 280px;
+    }
+
+    .action-card {
+        margin-bottom: 20px;
+    }
+}
+
+@media(max-width:576px) {
+
+    .dashboard-header h1 {
+        font-size: 26px;
+    }
+
+    .dashboard-box {
+        padding: 18px;
+    }
+
+    .dashboard-card h2 {
+        font-size: 30px;
+    }
+
+    .officer-photo {
+        width: 90px;
+        height: 90px;
+    }
+
+        .officer-photo i {
+            font-size: 42px;
+        }
+}
+
+/*==================================
+        FADE ANIMATION
+==================================*/
+
+@keyframes fadeUp {
+
+    from {
+        opacity: 0;
+        transform: translateY(25px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dashboard-section {
+    animation: fadeUp .5s ease;
+}
+
+/*==================================
+        END OF FILE
+==================================*/
