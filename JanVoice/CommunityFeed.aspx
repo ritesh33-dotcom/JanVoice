@@ -73,7 +73,8 @@
                         ID="btnSearch"
                         runat="server"
                         Text="Search"
-                        CssClass="search-btn" />
+                        CssClass="search-btn"
+                        OnClick="btnSearch_Click" />
 
                 </div>
 
@@ -93,7 +94,8 @@
 
                     <asp:Repeater
                         ID="rptComplaints"
-                        runat="server">
+                        runat="server"
+                        OnItemCommand="rptComplaints_ItemCommand">
 
                         <ItemTemplate>
 
@@ -104,11 +106,14 @@
                                 <div class="issue-header">
 
                                     <div class="user-info">
+                                        <asp:Image
+                                            ID="Image1"
+                                            runat="server"
+                                            CssClass="user-avatar"
+                                            ImageUrl='<%# Eval("ProfilePhoto") %>'
+                                            AlternateText="User" />
 
-                                        <img
-                                            src='<%# Eval("ProfilePhoto") %>'
-                                            class="user-avatar"
-                                            alt="User" />
+
 
                                         <div>
 
@@ -123,8 +128,10 @@
 
                                     </div>
 
-                                    <span class="status pending">
+                                    <span class='status <%# GetStatusClass(Eval("Status").ToString()) %>'>
+
                                         <%# Eval("Status") %>
+
                                     </span>
 
                                 </div>

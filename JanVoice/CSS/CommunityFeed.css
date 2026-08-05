@@ -346,3 +346,27 @@
     .btn-details:hover {
         background: #0F766E;
     }
+
+.status {
+    padding: 8px 18px;
+    border-radius: 30px;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.pending {
+    background: #F59E0B;
+}
+
+.accepted {
+    background: #3B82F6;
+}
+
+.resolved {
+    background: #22C55E;
+}
+
+.rejected {
+    background: #EF4444;
+}
