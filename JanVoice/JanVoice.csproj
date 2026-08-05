@@ -78,10 +78,12 @@
     <Content Include="Citizen\Profile.aspx" />
     <Content Include="Citizen\ReportIssue.aspx" />
     <Content Include="CommunityFeed.aspx" />
+    <Content Include="Contact.aspx" />
     <Content Include="CSS\citizen.css" />
     <Content Include="CSS\CommunityFeed.css" />
     <Content Include="CSS\complaintdetails.css" />
     <Content Include="CSS\components.css" />
+    <Content Include="CSS\Contact.css" />
     <Content Include="CSS\dashboard.css" />
     <Content Include="CSS\forgotpassword.css" />
     <Content Include="CSS\IssueMap.css" />
@@ -187,6 +189,13 @@
     </Compile>
     <Compile Include="CommunityFeed.aspx.designer.cs">
       <DependentUpon>CommunityFeed.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Contact.aspx.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Contact.aspx.designer.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
     </Compile>
     <Compile Include="ForgotPassword.aspx.cs">
       <DependentUpon>ForgotPassword.aspx</DependentUpon>
