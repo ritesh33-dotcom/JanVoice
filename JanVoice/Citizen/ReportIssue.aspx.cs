@@ -139,37 +139,48 @@ namespace JanVoice.Citizen
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
+                int assignedOfficerID = 0;
 
+                string officerQuery = @"
+                SELECT TOP 1 UserID
+                FROM Users
+                WHERE WardID=@WardID
+                AND RoleID=2";
+
+                SqlCommand officerCmd = new SqlCommand(officerQuery, con);
+                officerCmd.Parameters.AddWithValue("@WardID", ddlWard.SelectedValue);
+
+                object result = officerCmd.ExecuteScalar();
+
+                if (result != null)
+                {
+                    assignedOfficerID = Convert.ToInt32(result);
+                }
                 string query = @"
                             INSERT INTO Complaints
-                            (
+                                (
                                 UserID,
                                 CategoryID,
                                 WardID,
+                                AssignedOfficerID,
                                 Title,
                                 Description,
-                                Latitude,
-                                Longitude,
-                                Landmark,
-                                Status,
                                 Priority,
+                                Status,
                                 CreatedDate
-                            )
-                            VALUES
-                            (
+                                )
+                                VALUES
+                                (
                                 @UserID,
                                 @CategoryID,
                                 @WardID,
+                                @AssignedOfficerID,
                                 @Title,
                                 @Description,
-                                @Latitude,
-                                @Longitude,
-                                @Landmark,
-                                @Status,
                                 @Priority,
+                                'Pending',
                                 GETDATE()
-                            );
-
+                                )
                             SELECT CAST(SCOPE_IDENTITY() AS INT);
                             ";
 
@@ -182,6 +193,7 @@ namespace JanVoice.Citizen
                 cmd.Parameters.AddWithValue("@CategoryID", ddlCategory.SelectedValue);
 
                 cmd.Parameters.AddWithValue("@WardID", ddlWard.SelectedValue);
+                cmd.Parameters.AddWithValue("@AssignedOfficerID", assignedOfficerID);
 
                 cmd.Parameters.AddWithValue("@Title", txtTitle.Text.Trim());
 
@@ -289,6 +301,12 @@ namespace JanVoice.Citizen
                         "Complaint Submitted",
                         "Your complaint has been submitted successfully.",
                         "Complaint");
+                                    NotificationHelper.AddNotification(
+                assignedOfficerID,
+                complaintID,
+                "New Complaint Assigned",
+                "You have received a new complaint.",
+                "Complaint");
 
 
 

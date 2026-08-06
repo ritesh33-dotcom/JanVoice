@@ -518,7 +518,7 @@
 
                             <br />
 
-                            <small class="text-muted">
+                            <small class="text">
 
                                 <%# Convert.ToDateTime(Eval("CreatedDate")).ToString("dd MMM yyyy hh:mm tt") %>
 
@@ -580,7 +580,7 @@
 
                         </p>
 
-                        <small class="text-muted">
+                        <small class="text">
 
                             <%# Convert.ToDateTime(Eval("ChangeDate")).ToString("dd MMM yyyy hh:mm tt") %>
 
