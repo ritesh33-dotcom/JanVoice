@@ -1,221 +1,289 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
-using System.Configuration;
-using System.Data.SqlClient;
 
 namespace JanVoice.Officer
 {
-    public partial class Dashboard : System.Web.UI.Page
+    public partial class Dashboard : Page
     {
+        string cs = ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack)
             {
-                LoadDashboardCards();
+                CheckLogin();
+
+                LoadDashboardStatistics();
+
+                LoadOfficerProfile();
+
                 LoadRecentComplaints();
 
+                LoadNotifications();
 
-            }
-
-        }
-        private void LoadDashboardCards()
-        {
-            try
-            {
-                int officerID = Convert.ToInt32(Session["UserID"]);
-
-                string cs = ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
-
-                using (SqlConnection con = new SqlConnection(cs))
-                {
-                    string query = @"
-                                    SELECT
-
-                                    COUNT(*) AS TotalAssigned,
-
-                                    ISNULL(SUM(CASE
-                                        WHEN Status='Pending'
-                                        THEN 1
-                                        ELSE 0
-                                    END),0) AS Pending,
-
-                                    ISNULL(SUM(CASE
-                                        WHEN Status='In Progress'
-                                        THEN 1
-                                        ELSE 0
-                                    END),0) AS InProgress,
-
-                                    ISNULL(SUM(CASE
-                                        WHEN Status='Resolved'
-                                        THEN 1
-                                        ELSE 0
-                                    END),0) AS Resolved,
-
-                                    ISNULL(SUM(CASE
-                                        WHEN Priority='High'
-                                        THEN 1
-                                        ELSE 0
-                                    END),0) AS HighPriority,
-
-                                    ISNULL(SUM(CASE
-                                        WHEN CAST(CreatedDate AS DATE)=CAST(GETDATE() AS DATE)
-                                        THEN 1
-                                        ELSE 0
-                                    END),0) AS TodayComplaints
-
-                                    FROM Complaints
-
-                                    WHERE AssignedOfficerID=@OfficerID";
-
-                    SqlCommand cmd = new SqlCommand(query, con);
-
-                    cmd.Parameters.AddWithValue("@OfficerID", officerID);
-
-                    con.Open();
-
-                    using (SqlDataReader dr = cmd.ExecuteReader())
-                    {
-                        if (dr.Read())
-                        {
-                            lblTotalAssigned.Text = Convert.ToString(dr["TotalAssigned"]);
-
-                            lblPending.Text = Convert.ToString(dr["Pending"]);
-
-                            lblInProgress.Text = Convert.ToString(dr["InProgress"]);
-
-                            lblResolved.Text = Convert.ToString(dr["Resolved"]);
-
-                            lblHighPriority.Text = Convert.ToString(dr["HighPriority"]);
-
-                            lblToday.Text = Convert.ToString(dr["TodayComplaints"]);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Response.Write("<script>alert('" + ex.Message.Replace("'", "") + "');</script>");
+                LoadRecentActivity();
             }
         }
-            private void LoadRecentComplaints()
+
+        private void CheckLogin()
         {
-            try
+            if (Session["UserID"] == null)
             {
-                int officerID = Convert.ToInt32(Session["UserID"]);
-
-                string cs = ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
-
-                using (SqlConnection con = new SqlConnection(cs))
-                {
-                    string query = @"
-
-            SELECT TOP 5
-
-                C.ComplaintID,
-
-                C.Title,
-
-                U.FullName AS CitizenName,
-
-                CAT.CategoryName,
-
-                C.Priority,
-
-                C.Status,
-
-                C.CreatedDate
-
-            FROM Complaints C
-
-            INNER JOIN Users U
-
-                ON C.UserID = U.UserID
-
-            INNER JOIN Categories CAT
-
-                ON C.CategoryID = CAT.CategoryID
-
-            WHERE C.AssignedOfficerID = @OfficerID
-
-            ORDER BY C.CreatedDate DESC";
-
-                    SqlCommand cmd = new SqlCommand(query, con);
-
-                    cmd.Parameters.AddWithValue("@OfficerID", officerID);
-
-                    con.Open();
-
-                    SqlDataReader dr = cmd.ExecuteReader();
-
-                    gvRecentComplaints.DataSource = dr;
-
-                    gvRecentComplaints.DataBind();
-
-                    dr.Close();
-                }
-            }
-            catch (Exception ex)
-            {
-                Response.Write("<script>alert('" + ex.Message.Replace("'", "") + "');</script>");
+                Response.Redirect("~/Login.aspx");
             }
         }
-        private void LoadComplaintChart()
+        private void LoadDashboardStatistics()
         {
-            try
+            using (SqlConnection con = new SqlConnection(cs))
             {
-                int officerID = Convert.ToInt32(Session["UserID"]);
+                string query = @"
 
-                string cs = ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
+SELECT
 
-                using (SqlConnection con = new SqlConnection(cs))
+COUNT(*) TotalAssigned,
+
+SUM(CASE WHEN Status='Pending' THEN 1 ELSE 0 END) Pending,
+
+SUM(CASE WHEN Status='In Progress' THEN 1 ELSE 0 END) InProgress,
+
+SUM(CASE WHEN Status='Resolved' THEN 1 ELSE 0 END) Resolved,
+
+SUM(CASE WHEN Priority='High' THEN 1 ELSE 0 END) HighPriority,
+
+SUM(CASE
+WHEN CAST(CreatedDate AS DATE)=CAST(GETDATE() AS DATE)
+THEN 1
+ELSE 0
+END) TodayComplaint
+
+FROM Complaints
+
+WHERE AssignedOfficerID=@OfficerID";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                cmd.Parameters.AddWithValue("@OfficerID",
+                    Convert.ToInt32(Session["UserID"]));
+
+                con.Open();
+
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.Read())
                 {
-                    string query = @"
+                    lblTotalAssigned.Text = dr["TotalAssigned"].ToString();
 
-            SELECT
+                    lblPending.Text = dr["Pending"] == DBNull.Value ? "0" : dr["Pending"].ToString();
 
-            ISNULL(SUM(CASE WHEN Status='Pending'
-            THEN 1 ELSE 0 END),0) AS Pending,
+                    lblInProgress.Text = dr["InProgress"] == DBNull.Value ? "0" : dr["InProgress"].ToString();
 
-            ISNULL(SUM(CASE WHEN Status='In Progress'
-            THEN 1 ELSE 0 END),0) AS InProgress,
+                    lblResolved.Text = dr["Resolved"] == DBNull.Value ? "0" : dr["Resolved"].ToString();
 
-            ISNULL(SUM(CASE WHEN Status='Resolved'
-            THEN 1 ELSE 0 END),0) AS Resolved
+                    lblHighPriority.Text = dr["HighPriority"] == DBNull.Value ? "0" : dr["HighPriority"].ToString();
 
-            FROM Complaints
+                    lblToday.Text = dr["TodayComplaint"] == DBNull.Value ? "0" : dr["TodayComplaint"].ToString();
 
-            WHERE AssignedOfficerID=@OfficerID";
+                    hfPending.Value = lblPending.Text;
 
-                    SqlCommand cmd = new SqlCommand(query, con);
+                    hfInProgress.Value = lblInProgress.Text;
 
-                    cmd.Parameters.AddWithValue("@OfficerID", officerID);
-
-                    con.Open();
-
-                    SqlDataReader dr = cmd.ExecuteReader();
-
-                    if (dr.Read())
-                    {
-                        hfPending.Value = dr["Pending"].ToString();
-
-                        hfInProgress.Value = dr["InProgress"].ToString();
-
-                        hfResolved.Value = dr["Resolved"].ToString();
-                    }
-
-                    dr.Close();
+                    hfResolved.Value = lblResolved.Text;
                 }
+
+                dr.Close();
             }
-            catch (Exception ex)
+        }
+        private void LoadOfficerProfile()
+        {
+            using (SqlConnection con = new SqlConnection(cs))
             {
-                Response.Write("<script>alert('" + ex.Message.Replace("'", "") + "');</script>");
+                string query = @"
+
+SELECT
+
+U.FullName,
+
+U.Email,
+
+U.Mobile,
+
+W.WardName,
+
+(
+
+SELECT COUNT(*)
+
+FROM Complaints
+
+WHERE AssignedOfficerID=U.UserID
+
+AND Status='Resolved'
+
+) TotalResolved
+
+FROM Users U
+
+INNER JOIN Wards W
+
+ON U.WardID=W.WardID
+
+WHERE U.UserID=@UserID";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                cmd.Parameters.AddWithValue("@UserID",
+                    Convert.ToInt32(Session["UserID"]));
+
+                con.Open();
+
+                SqlDataReader dr = cmd.ExecuteReader();
+
+                if (dr.Read())
+                {
+                    lblOfficerName.Text = dr["FullName"].ToString();
+
+                    lblOfficer.Text = dr["FullName"].ToString();
+
+                    lblEmail.Text = dr["Email"].ToString();
+
+                    lblMobile.Text = dr["Mobile"].ToString();
+
+                    lblWard.Text = dr["WardName"].ToString();
+
+                    lblDepartment.Text = "Ward Officer";
+
+                    lblOfficerResolved.Text = dr["TotalResolved"].ToString();
+                }
+
+                dr.Close();
+            }
+        }
+        private void LoadRecentComplaints()
+        {
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                string query = @"
+
+SELECT TOP 10
+
+C.ComplaintID,
+
+C.Title,
+
+U.FullName AS CitizenName,
+
+CAT.CategoryName,
+
+C.Priority,
+
+C.Status,
+
+C.CreatedDate
+
+FROM Complaints C
+
+INNER JOIN Users U
+ON C.UserID = U.UserID
+
+INNER JOIN Categories CAT
+ON C.CategoryID = CAT.CategoryID
+
+WHERE C.AssignedOfficerID = @OfficerID
+
+ORDER BY C.CreatedDate DESC";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                cmd.Parameters.AddWithValue("@OfficerID",
+                    Convert.ToInt32(Session["UserID"]));
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+
+                DataTable dt = new DataTable();
+
+                da.Fill(dt);
+
+                gvRecentComplaints.DataSource = dt;
+
+                gvRecentComplaints.DataBind();
+            }
+        }
+        private void LoadNotifications()
+        {
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                string query = @"
+
+SELECT TOP 5
+
+Message,
+
+CreatedDate
+
+FROM Notifications
+
+WHERE UserID=@UserID
+
+ORDER BY CreatedDate DESC";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                cmd.Parameters.AddWithValue("@UserID",
+                    Convert.ToInt32(Session["UserID"]));
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+
+                DataTable dt = new DataTable();
+
+                da.Fill(dt);
+
+                rptNotifications.DataSource = dt;
+
+                rptNotifications.DataBind();
+            }
+        }
+        private void LoadRecentActivity()
+        {
+            using (SqlConnection con = new SqlConnection(cs))
+            {
+                string query = @"
+
+SELECT TOP 5
+
+NewStatus,
+
+Remarks,
+
+ChangeDate
+
+FROM StatusHistory
+
+WHERE ChangedBy=@OfficerID
+
+ORDER BY ChangeDate DESC";
+
+                SqlCommand cmd = new SqlCommand(query, con);
+
+                cmd.Parameters.AddWithValue("@OfficerID",
+                    Convert.ToInt32(Session["UserID"]));
+
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+
+                DataTable dt = new DataTable();
+
+                da.Fill(dt);
+
+                rptRecentActivity.DataSource = dt;
+
+                rptRecentActivity.DataBind();
             }
         }
     }
-    
 }
-       
