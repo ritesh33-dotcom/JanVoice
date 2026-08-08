@@ -144,18 +144,33 @@ namespace JanVoice.Citizen
                 string officerQuery = @"
                 SELECT TOP 1 UserID
                 FROM Users
-                WHERE WardID=@WardID
-                AND RoleID=2";
+                WHERE WardID = @WardID
+                AND RoleID = 2";
 
-                SqlCommand officerCmd = new SqlCommand(officerQuery, con);
-                officerCmd.Parameters.AddWithValue("@WardID", ddlWard.SelectedValue);
-
-                object result = officerCmd.ExecuteScalar();
-
-                if (result != null)
+                using (SqlCommand officerCmd = new SqlCommand(officerQuery, con))
                 {
+                    officerCmd.Parameters.Add(
+                        "@WardID",
+                        SqlDbType.Int
+                    ).Value = Convert.ToInt32(ddlWard.SelectedValue);
+
+                    object result = officerCmd.ExecuteScalar();
+
+                    if (assignedOfficerID==0)
+                    {
+                        ClientScript.RegisterStartupScript(
+                            this.GetType(),
+                            "officerError",
+                            "alert('No officer is assigned to the selected ward.');",
+                            true
+                        );
+
+                        return;
+                    }
+
                     assignedOfficerID = Convert.ToInt32(result);
                 }
+            }
                 string query = @"
                             INSERT INTO Complaints
                                 (
@@ -165,6 +180,8 @@ namespace JanVoice.Citizen
                                 AssignedOfficerID,
                                 Title,
                                 Description,
+                                Latitude,
+                                Longitude,
                                 Priority,
                                 Status,
                                 CreatedDate
@@ -177,8 +194,10 @@ namespace JanVoice.Citizen
                                 @AssignedOfficerID,
                                 @Title,
                                 @Description,
+                                @Latitude,
+                                @Longitude,
                                 @Priority,
-                                'Pending',
+                                @Status,
                                 GETDATE()
                                 )
                             SELECT CAST(SCOPE_IDENTITY() AS INT);
@@ -188,26 +207,38 @@ namespace JanVoice.Citizen
                 SqlCommand cmd = new SqlCommand(query, con);
 
 
-                cmd.Parameters.AddWithValue("@UserID", Session["UserID"]);
+                cmd.Parameters.Add("@UserID", SqlDbType.Int)
+     .Value = Convert.ToInt32(Session["UserID"]);
 
-                cmd.Parameters.AddWithValue("@CategoryID", ddlCategory.SelectedValue);
+                cmd.Parameters.Add("@CategoryID", SqlDbType.Int)
+                    .Value = Convert.ToInt32(ddlCategory.SelectedValue);
 
-                cmd.Parameters.AddWithValue("@WardID", ddlWard.SelectedValue);
-                cmd.Parameters.AddWithValue("@AssignedOfficerID", assignedOfficerID);
+                cmd.Parameters.Add("@WardID", SqlDbType.Int)
+                    .Value = Convert.ToInt32(ddlWard.SelectedValue);
 
-                cmd.Parameters.AddWithValue("@Title", txtTitle.Text.Trim());
+                cmd.Parameters.Add("@AssignedOfficerID", SqlDbType.Int)
+                    .Value = assignedOfficerID;
 
-                cmd.Parameters.AddWithValue("@Description", txtDescription.Text.Trim());
+                cmd.Parameters.Add("@Title", SqlDbType.NVarChar, 200)
+                    .Value = txtTitle.Text.Trim();
 
-                cmd.Parameters.AddWithValue("@Latitude", hfLatitude.Value);
+                cmd.Parameters.Add("@Description", SqlDbType.NVarChar)
+                    .Value = txtDescription.Text.Trim();
 
-                cmd.Parameters.AddWithValue("@Longitude", hfLongitude.Value);
+                cmd.Parameters.Add("@Latitude", SqlDbType.NVarChar, 50)
+                    .Value = hfLatitude.Value;
 
-                cmd.Parameters.AddWithValue("@Landmark", txtLandmark.Text.Trim());
+                cmd.Parameters.Add("@Longitude", SqlDbType.NVarChar, 50)
+                    .Value = hfLongitude.Value;
 
-                cmd.Parameters.AddWithValue("@Status", "Pending");
+                cmd.Parameters.Add("@Landmark", SqlDbType.NVarChar, 250)
+                    .Value = txtLandmark.Text.Trim();
 
-                cmd.Parameters.AddWithValue("@Priority", "Medium");
+                cmd.Parameters.Add("@Status", SqlDbType.NVarChar, 50)
+                    .Value = "Pending";
+
+                cmd.Parameters.Add("@Priority", SqlDbType.NVarChar, 50)
+                    .Value = "Medium";
 
 
                 int complaintID = Convert.ToInt32(cmd.ExecuteScalar());
