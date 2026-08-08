@@ -78,6 +78,7 @@
     <Content Include="Citizen\Profile.aspx" />
     <Content Include="Citizen\ReportIssue.aspx" />
     <Content Include="CommunityFeed.aspx" />
+    <Content Include="ComplaintDetails.aspx" />
     <Content Include="Contact.aspx" />
     <Content Include="CSS\AssignedComplaints.css" />
     <Content Include="CSS\citizen.css" />
@@ -93,6 +94,7 @@
     <Content Include="CSS\Officer.css" />
     <Content Include="CSS\OfficerDashBoard.css" />
     <Content Include="CSS\profile.css" />
+    <Content Include="CSS\PublicComplaintDetails.css" />
     <Content Include="CSS\reportissue.css" />
     <Content Include="CSS\responsive.css" />
     <Content Include="CSS\style.css" />
@@ -194,6 +196,13 @@
     </Compile>
     <Compile Include="CommunityFeed.aspx.designer.cs">
       <DependentUpon>CommunityFeed.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="ComplaintDetails.aspx.cs">
+      <DependentUpon>ComplaintDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="ComplaintDetails.aspx.designer.cs">
+      <DependentUpon>ComplaintDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Contact.aspx.cs">
       <DependentUpon>Contact.aspx</DependentUpon>
