@@ -71,6 +71,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="About.aspx" />
+    <Content Include="Admin\AdminDashboard.aspx" />
     <Content Include="Citizen\ComplaintDetails.aspx" />
     <Content Include="Citizen\Dashboard.aspx" />
     <Content Include="Citizen\MyComplaints.aspx" />
@@ -80,6 +81,7 @@
     <Content Include="CommunityFeed.aspx" />
     <Content Include="ComplaintDetails.aspx" />
     <Content Include="Contact.aspx" />
+    <Content Include="CSS\AdminMaster.css" />
     <Content Include="CSS\AssignedComplaints.css" />
     <Content Include="CSS\citizen.css" />
     <Content Include="CSS\CommunityFeed.css" />
@@ -147,6 +149,13 @@
     </Compile>
     <Compile Include="About.aspx.designer.cs">
       <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\AdminDashboard.aspx.cs">
+      <DependentUpon>AdminDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\AdminDashboard.aspx.designer.cs">
+      <DependentUpon>AdminDashboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Citizen\ComplaintDetails.aspx.cs">
       <DependentUpon>ComplaintDetails.aspx</DependentUpon>
@@ -307,7 +316,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Admin\" />
     <Folder Include="App_Data\" />
     <Folder Include="DAL\" />
     <Folder Include="Models\" />

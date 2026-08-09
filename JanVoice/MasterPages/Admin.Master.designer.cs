@@ -15,13 +15,13 @@ namespace JanVoice.MasterPages
     {
 
         /// <summary>
-        /// head control.
+        /// TitleContent control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.ContentPlaceHolder head;
+        protected global::System.Web.UI.WebControls.ContentPlaceHolder TitleContent;
 
         /// <summary>
         /// form1 control.
@@ -31,6 +31,15 @@ namespace JanVoice.MasterPages
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.HtmlControls.HtmlForm form1;
+
+        /// <summary>
+        /// btnLogout control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton btnLogout;
 
         /// <summary>
         /// ContentPlaceHolder1 control.

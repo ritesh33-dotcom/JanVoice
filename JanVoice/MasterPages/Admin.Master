@@ -4,16 +4,350 @@
 
 <html>
 <head runat="server">
-    <title></title>
-    <asp:ContentPlaceHolder ID="head" runat="server">
-    </asp:ContentPlaceHolder>
+     <meta charset="utf-8" />
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0" />
+
+    <title>
+        <asp:ContentPlaceHolder
+            ID="TitleContent"
+            runat="server">
+
+            JanVoice Admin
+
+        </asp:ContentPlaceHolder>
+    </title>
+
+
+    <!-- Admin CSS -->
+
+    <link href="../CSS/AdminMaster.css"
+          rel="stylesheet" />
+
+   
+
+
+   
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
-            <asp:ContentPlaceHolder ID="ContentPlaceHolder1" runat="server">
-            </asp:ContentPlaceHolder>
+
+
+
+        <div class="admin-layout">
+
+
+            <!-- =====================================
+             SIDEBAR
+        ====================================== -->
+
+            <aside class="admin-sidebar">
+
+
+                <!-- LOGO -->
+
+                <div class="admin-logo">
+
+                    <div class="logo-icon">
+                        JV
+               
+                    </div>
+
+                    <div class="logo-text">
+
+                        <h2>JanVoice
+                    </h2>
+
+                        <span>ADMIN PANEL
+                    </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- NAVIGATION -->
+
+                <nav class="admin-navigation">
+
+
+                    <div class="nav-section-title">
+                        MAIN
+               
+                    </div>
+
+
+                    <a href="../Admin/AdminDashboard.aspx"
+   class="admin-nav-link active">
+
+                        <span class="nav-icon">⌂
+                    </span>
+
+                        <span>Dashboard
+                    </span>
+
+                    </a>
+
+
+                    <a href="../Admin/ManageComplaints.aspx"
+   class="admin-nav-link">
+
+                        <span class="nav-icon">▣
+                    </span>
+
+                        <span>Complaints
+                    </span>
+
+                    </a>
+
+
+                    <div class="nav-section-title">
+                        MANAGEMENT
+               
+                    </div>
+
+
+                   <a href="../Admin/ManageUsers.aspx"
+   class="admin-nav-link">
+
+                        <span class="nav-icon">◉
+                    </span>
+
+                        <span>Users
+                    </span>
+
+                    </a>
+
+
+                    <a href="../Admin/ManageOfficers.aspx"
+                        class="admin-nav-link">
+
+                        <span class="nav-icon">◈
+                    </span>
+
+                        <span>Officers
+                    </span>
+
+                    </a>
+
+
+                    <a href="../Admin/ManageCategories.aspx"
+                        class="admin-nav-link">
+
+                        <span class="nav-icon">#
+                    </span>
+
+                        <span>Categories
+                    </span>
+
+                    </a>
+
+
+                    <a href="../Admin/ManageWards.aspx"
+                        class="admin-nav-link">
+
+                        <span class="nav-icon">◇
+                    </span>
+
+                        <span>Wards
+                    </span>
+
+                    </a>
+
+
+                    <div class="nav-section-title">
+                        MONITORING
+               
+                    </div>
+
+
+                    <a href="../Admin/Reports.aspx"
+                        class="admin-nav-link">
+
+                        <span class="nav-icon">◫
+                    </span>
+
+                        <span>Reports
+                    </span>
+
+                    </a>
+
+
+                    <a href="../Admin/ContactMessages.aspx"
+                        class="admin-nav-link">
+
+                        <span class="nav-icon">✉
+                    </span>
+
+                        <span>Messages
+                    </span>
+
+                    </a>
+
+
+                    <a href="../Admin/EmergencyContacts.aspx"
+                        class="admin-nav-link">
+
+                        <span class="nav-icon">!
+                    </span>
+
+                        <span>Emergency
+                    </span>
+
+                    </a>
+
+
+                </nav>
+
+
+                <!-- SIDEBAR BOTTOM -->
+
+                <div class="sidebar-bottom">
+
+                    <a href="../Home.aspx"
+                        class="admin-nav-link">
+
+                        <span class="nav-icon">←
+                    </span>
+
+                        <span>Back to JanVoice
+                    </span>
+
+                    </a>
+
+
+                    <asp:LinkButton
+                        ID="btnLogout"
+                        runat="server"
+                        CssClass="admin-nav-link logout-link">
+
+                    <span class="nav-icon">
+                        ⎋
+                    </span>
+
+                    <span>
+                        Logout
+                    </span>
+
+                </asp:LinkButton>
+
+                </div>
+
+
+            </aside>
+
+
+
+            <!-- =====================================
+             MAIN AREA
+        ====================================== -->
+
+            <main class="admin-main">
+
+
+                <!-- TOPBAR -->
+
+                <header class="admin-topbar">
+
+
+                    <!-- Mobile Menu -->
+
+                    <button
+                        type="button"
+                        class="mobile-menu-btn">
+                        ☰
+
+               
+                    </button>
+
+
+                    <!-- PAGE TITLE -->
+
+                    <div class="topbar-title">
+
+                        <span>JanVoice
+                    </span>
+
+                        <strong>Administration
+                    </strong>
+
+                    </div>
+
+
+                    <!-- TOPBAR ACTIONS -->
+
+                    <div class="topbar-actions">
+
+
+                        <!-- Notification -->
+
+                        <a href="Notifications.aspx"
+                            class="notification-btn">🔔
+
+                       
+
+                            <span class="notification-badge">3
+                        </span>
+
+                        </a>
+
+
+                        <!-- Admin Profile -->
+
+                        <div class="admin-profile">
+
+
+                            <div class="admin-avatar">
+                                A
+                       
+                            </div>
+
+
+                            <div class="admin-profile-info">
+
+                                <strong>Administrator
+                            </strong>
+
+                                <span>System Admin
+                            </span>
+
+                            </div>
+
+
+                            <span class="profile-arrow">▾
+                        </span>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </header>
+
+
+
+                <!-- PAGE CONTENT -->
+
+                <section class="admin-content">
+
+
+                    <asp:ContentPlaceHolder
+                        ID="ContentPlaceHolder1"
+                        runat="server">
+                    </asp:ContentPlaceHolder>
+
+
+                </section>
+
+
+            </main>
+
+
         </div>
+       
     </form>
 </body>
 </html>
