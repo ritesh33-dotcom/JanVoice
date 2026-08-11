@@ -131,6 +131,7 @@
     <Content Include="Login.aspx" />
     <Content Include="Officer\AssignedComplaints.aspx" />
     <Content Include="Officer\Dashboard.aspx" />
+    <Content Include="Officer\ResolutionDetails.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="Uploads\ComplaintImages\078304b2-0039-4c21-8da8-a6df6e740662.jpg" />
     <Content Include="Uploads\ComplaintImages\2f5a230d-993c-4d01-913c-1c3b8067d5c5.png" />
@@ -293,6 +294,13 @@
     </Compile>
     <Compile Include="Officer\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Officer\ResolutionDetails.aspx.cs">
+      <DependentUpon>ResolutionDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Officer\ResolutionDetails.aspx.designer.cs">
+      <DependentUpon>ResolutionDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Register.aspx.cs">

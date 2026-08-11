@@ -8,21 +8,26 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-using System;
-using System.Configuration;
-using System.Data;
-using System.Data.SqlClient;
-using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace JanVoice.Officer
 {
     public partial class AssignedComplaints : Page
     {
+        // =========================================================
+        // PAGE LOAD
+        // =========================================================
+
         protected void Page_Load(object sender, EventArgs e)
         {
-            lblTotalAssigned.Text = "888";
+            CheckOfficerLogin();
+
+            if (!IsPostBack)
+            {
+                LoadStatistics();
+                LoadAssignedComplaints();
+            }
         }
+
 
         // =========================================================
         // CHECK OFFICER LOGIN
@@ -30,9 +35,10 @@ namespace JanVoice.Officer
 
         private void CheckOfficerLogin()
         {
-            if (Session["OfficerID"] == null)
+            if (Session["OfficerID"] == null &&
+                Session["UserID"] == null)
             {
-                Response.Redirect("~/Officer/OfficerLogin.aspx");
+                Response.Redirect("~/Login.aspx");
                 return;
             }
         }
@@ -44,19 +50,41 @@ namespace JanVoice.Officer
 
         private int GetOfficerID()
         {
-            if (Session["OfficerID"] == null)
+            // First preference:
+            // If OfficerID is already stored in session
+            if (Session["OfficerID"] != null)
             {
-                Response.Redirect("~/Officer/OfficerLogin.aspx");
-                return 0;
+                return Convert.ToInt32(Session["OfficerID"]);
             }
 
-            return Convert.ToInt32(Session["OfficerID"]);
+
+            // Because Citizen / Officer / Admin
+            // use the SAME LOGIN PAGE,
+            // Officer may have UserID in session.
+            if (Session["UserID"] != null)
+            {
+                return Convert.ToInt32(Session["UserID"]);
+            }
+
+
+            // No login session
+            Response.Redirect("~/Login.aspx");
+
+            return 0;
         }
 
 
         // =========================================================
-        // LOAD STATISTICS
+        // DATABASE CONNECTION
         // =========================================================
+
+        private string GetConnectionString()
+        {
+            return ConfigurationManager
+                .ConnectionStrings["JanVoiceDB"]
+                .ConnectionString;
+        }
+
 
         // =========================================================
         // LOAD STATISTICS
@@ -66,37 +94,39 @@ namespace JanVoice.Officer
         {
             int officerID = GetOfficerID();
 
-            string connectionString =
-                ConfigurationManager
-                .ConnectionStrings["JanVoiceDB"]
-                .ConnectionString;
-
             string query = @"
-        SELECT
-            COUNT(*) AS TotalAssigned,
+                SELECT
+                    COUNT(*) AS TotalAssigned,
 
-            COUNT(CASE
-                WHEN Status = 'Pending'
-                THEN 1
-            END) AS PendingCount,
+                    COUNT(
+                        CASE
+                            WHEN Status = 'Pending'
+                            THEN 1
+                        END
+                    ) AS PendingCount,
 
-            COUNT(CASE
-                WHEN Status = 'In Progress'
-                THEN 1
-            END) AS InProgressCount,
+                    COUNT(
+                        CASE
+                            WHEN Status = 'In Progress'
+                            THEN 1
+                        END
+                    ) AS InProgressCount,
 
-            COUNT(CASE
-                WHEN Status = 'Resolved'
-                THEN 1
-            END) AS ResolvedCount
+                    COUNT(
+                        CASE
+                            WHEN Status = 'Resolved'
+                            THEN 1
+                        END
+                    ) AS ResolvedCount
 
-        FROM Complaints
+                FROM Complaints
 
-        WHERE AssignedOfficerID = @OfficerID;
-    ";
+                WHERE AssignedOfficerID = @OfficerID;
+            ";
+
 
             using (SqlConnection con =
-                   new SqlConnection(connectionString))
+                   new SqlConnection(GetConnectionString()))
             using (SqlCommand cmd =
                    new SqlCommand(query, con))
             {
@@ -105,7 +135,9 @@ namespace JanVoice.Officer
                     SqlDbType.Int
                 ).Value = officerID;
 
+
                 con.Open();
+
 
                 using (SqlDataReader reader =
                        cmd.ExecuteReader())
@@ -113,32 +145,24 @@ namespace JanVoice.Officer
                     if (reader.Read())
                     {
                         lblTotalAssigned.Text =
-                            Convert.ToInt32(
-                                reader["TotalAssigned"]
-                            ).ToString();
+                            reader["TotalAssigned"]
+                            .ToString();
 
                         lblPending.Text =
-                            Convert.ToInt32(
-                                reader["PendingCount"]
-                            ).ToString();
+                            reader["PendingCount"]
+                            .ToString();
 
                         lblInProgress.Text =
-                            Convert.ToInt32(
-                                reader["InProgressCount"]
-                            ).ToString();
+                            reader["InProgressCount"]
+                            .ToString();
 
                         lblResolved.Text =
-                            Convert.ToInt32(
-                                reader["ResolvedCount"]
-                            ).ToString();
+                            reader["ResolvedCount"]
+                            .ToString();
                     }
                 }
             }
         }
-
-        // Neeche tumhara existing code same rahega...
-
-        // existing code below
 
 
         // =========================================================
@@ -149,10 +173,6 @@ namespace JanVoice.Officer
         {
             int officerID = GetOfficerID();
 
-            string connectionString =
-                ConfigurationManager
-                .ConnectionStrings["JanVoiceDB"]
-                .ConnectionString;
 
             string query = @"
                 SELECT
@@ -167,13 +187,13 @@ namespace JanVoice.Officer
 
                 FROM Complaints C
 
-                INNER JOIN Users U
+                LEFT JOIN Users U
                     ON C.UserID = U.UserID
 
-                INNER JOIN Categories CAT
+                LEFT JOIN Categories CAT
                     ON C.CategoryID = CAT.CategoryID
 
-                INNER JOIN Wards W
+                LEFT JOIN Wards W
                     ON C.WardID = W.WardID
 
                 WHERE C.AssignedOfficerID = @OfficerID
@@ -183,23 +203,28 @@ namespace JanVoice.Officer
 
 
             using (SqlConnection con =
-                   new SqlConnection(connectionString))
+                   new SqlConnection(GetConnectionString()))
             using (SqlCommand cmd =
                    new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue(
+                cmd.Parameters.Add(
                     "@OfficerID",
-                    officerID
-                );
+                    SqlDbType.Int
+                ).Value = officerID;
+
 
                 using (SqlDataAdapter da =
                        new SqlDataAdapter(cmd))
                 {
-                    DataTable dt = new DataTable();
+                    DataTable dt =
+                        new DataTable();
+
 
                     da.Fill(dt);
 
-                    gvAssignedComplaints.DataSource = dt;
+
+                    gvAssignedComplaints.DataSource =
+                        dt;
 
                     gvAssignedComplaints.DataBind();
                 }
@@ -208,17 +233,23 @@ namespace JanVoice.Officer
 
 
         // =========================================================
-        // SEARCH ASSIGNED COMPLAINTS
+        // SEARCH + FILTER ASSIGNED COMPLAINTS
         // =========================================================
 
         private void SearchAssignedComplaints()
         {
             int officerID = GetOfficerID();
 
-            string connectionString =
-                ConfigurationManager
-                .ConnectionStrings["JanVoiceDB"]
-                .ConnectionString;
+
+            string searchText =
+                txtSearch.Text.Trim();
+
+            string status =
+                ddlStatus.SelectedValue;
+
+            string priority =
+                ddlPriority.SelectedValue;
+
 
             string query = @"
                 SELECT
@@ -233,13 +264,13 @@ namespace JanVoice.Officer
 
                 FROM Complaints C
 
-                INNER JOIN Users U
+                LEFT JOIN Users U
                     ON C.UserID = U.UserID
 
-                INNER JOIN Categories CAT
+                LEFT JOIN Categories CAT
                     ON C.CategoryID = CAT.CategoryID
 
-                INNER JOIN Wards W
+                LEFT JOIN Wards W
                     ON C.WardID = W.WardID
 
                 WHERE C.AssignedOfficerID = @OfficerID
@@ -247,22 +278,29 @@ namespace JanVoice.Officer
                 AND
                 (
                     @Search = ''
+
                     OR CAST(
                         C.ComplaintID AS VARCHAR(50)
                     ) LIKE '%' + @Search + '%'
 
                     OR C.Title LIKE '%' + @Search + '%'
+
+                    OR U.FullName LIKE '%' + @Search + '%'
+
+                    OR CAT.CategoryName LIKE '%' + @Search + '%'
                 )
 
                 AND
                 (
                     @Status = ''
+                    OR @Status = 'All'
                     OR C.Status = @Status
                 )
 
                 AND
                 (
                     @Priority = ''
+                    OR @Priority = 'All'
                     OR C.Priority = @Priority
                 )
 
@@ -271,39 +309,49 @@ namespace JanVoice.Officer
 
 
             using (SqlConnection con =
-                   new SqlConnection(connectionString))
+                   new SqlConnection(GetConnectionString()))
             using (SqlCommand cmd =
                    new SqlCommand(query, con))
             {
-                cmd.Parameters.AddWithValue(
+                cmd.Parameters.Add(
                     "@OfficerID",
-                    officerID
-                );
+                    SqlDbType.Int
+                ).Value = officerID;
 
-                cmd.Parameters.AddWithValue(
+
+                cmd.Parameters.Add(
                     "@Search",
-                    txtSearch.Text.Trim()
-                );
+                    SqlDbType.NVarChar,
+                    200
+                ).Value = searchText;
 
-                cmd.Parameters.AddWithValue(
+
+                cmd.Parameters.Add(
                     "@Status",
-                    ddlStatus.SelectedValue
-                );
+                    SqlDbType.NVarChar,
+                    50
+                ).Value = status;
 
-                cmd.Parameters.AddWithValue(
+
+                cmd.Parameters.Add(
                     "@Priority",
-                    ddlPriority.SelectedValue
-                );
+                    SqlDbType.NVarChar,
+                    50
+                ).Value = priority;
 
 
                 using (SqlDataAdapter da =
                        new SqlDataAdapter(cmd))
                 {
-                    DataTable dt = new DataTable();
+                    DataTable dt =
+                        new DataTable();
+
 
                     da.Fill(dt);
 
-                    gvAssignedComplaints.DataSource = dt;
+
+                    gvAssignedComplaints.DataSource =
+                        dt;
 
                     gvAssignedComplaints.DataBind();
                 }
@@ -315,9 +363,12 @@ namespace JanVoice.Officer
         // SEARCH BUTTON
         // =========================================================
 
-        protected void btnSearch_Click(object sender, EventArgs e)
+        protected void btnSearch_Click(
+            object sender,
+            EventArgs e)
         {
             gvAssignedComplaints.PageIndex = 0;
+
             SearchAssignedComplaints();
         }
 
@@ -326,14 +377,29 @@ namespace JanVoice.Officer
         // RESET BUTTON
         // =========================================================
 
-        protected void btnReset_Click(object sender, EventArgs e)
+        protected void btnReset_Click(
+            object sender,
+            EventArgs e)
         {
             txtSearch.Text = "";
 
-            ddlStatus.SelectedIndex = 0;
-            ddlPriority.SelectedIndex = 0;
+
+            if (ddlStatus.Items.Count > 0)
+            {
+                ddlStatus.SelectedIndex = 0;
+            }
+
+
+            if (ddlPriority.Items.Count > 0)
+            {
+                ddlPriority.SelectedIndex = 0;
+            }
+
 
             gvAssignedComplaints.PageIndex = 0;
+
+
+            LoadStatistics();
 
             LoadAssignedComplaints();
         }
@@ -344,20 +410,39 @@ namespace JanVoice.Officer
         // =========================================================
 
         protected void gvAssignedComplaints_PageIndexChanging(
-    object sender,
-    GridViewPageEventArgs e)
+            object sender,
+            GridViewPageEventArgs e)
         {
-            gvAssignedComplaints.PageIndex = e.NewPageIndex;
+            gvAssignedComplaints.PageIndex =
+                e.NewPageIndex;
 
-            if (string.IsNullOrWhiteSpace(txtSearch.Text) &&
-                string.IsNullOrEmpty(ddlStatus.SelectedValue) &&
-                string.IsNullOrEmpty(ddlPriority.SelectedValue))
+
+            bool hasSearch =
+                !string.IsNullOrWhiteSpace(
+                    txtSearch.Text);
+
+
+            bool hasStatus =
+                !string.IsNullOrEmpty(
+                    ddlStatus.SelectedValue) &&
+                ddlStatus.SelectedValue != "All";
+
+
+            bool hasPriority =
+                !string.IsNullOrEmpty(
+                    ddlPriority.SelectedValue) &&
+                ddlPriority.SelectedValue != "All";
+
+
+            if (hasSearch ||
+                hasStatus ||
+                hasPriority)
             {
-                LoadAssignedComplaints();
+                SearchAssignedComplaints();
             }
             else
             {
-                SearchAssignedComplaints();
+                LoadAssignedComplaints();
             }
         }
     }
