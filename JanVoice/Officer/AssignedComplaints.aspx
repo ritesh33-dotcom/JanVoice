@@ -475,23 +475,18 @@
                                 HeaderText="Created"
                                 DataFormatString="{0:dd MMM yyyy}" />
 
-                            <asp:TemplateField
-                                HeaderText="Action">
-
+                            <asp:TemplateField HeaderText="Action">
                                 <ItemTemplate>
 
-                                    <a
-                                        href='ComplaintDetails.aspx?ComplaintID=<%# Eval("ComplaintID") %>'
-                                        class="view-complaint-btn">
-
-                                        <i class="fa-solid fa-eye"></i>
-
-                                        View
-
-                                    </a>
+                                    <asp:HyperLink
+                                        ID="lnkResolutionDetails"
+                                        runat="server"
+                                        Text="Resolution Details"
+                                        CssClass="btn-resolution"
+                                        NavigateUrl='<%# "ResolutionDetails.aspx?ComplaintID=" + Eval("ComplaintID") %>'>
+                                    </asp:HyperLink>
 
                                 </ItemTemplate>
-
                             </asp:TemplateField>
 
                         </Columns>

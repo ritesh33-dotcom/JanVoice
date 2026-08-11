@@ -1,10 +1,15 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/MasterPages/Officer.Master" AutoEventWireup="true" CodeBehind="ResolutionDetails.aspx.cs" Inherits="JanVoice.Officer.ResolutionDetails" %>
+
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+
+    <link href="../CSS/ResolutionDetails.css" rel="stylesheet" />
+
+
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
 
 
-    
+
     <!-- =========================================================
          RESOLUTION DETAILS PAGE
     ========================================================== -->
@@ -31,14 +36,14 @@
                     </span>
 
 
-                    <h1>
-                        Resolution Details
+                    <h1>Resolution Details
                     </h1>
 
 
                     <p>
                         Review complaint information and manage
                         its resolution.
+                   
                     </p>
 
                 </div>
@@ -71,10 +76,12 @@
 
                             Complaint Information
 
+                       
                         </div>
 
                         <p>
                             Basic information about the selected complaint.
+                       
                         </p>
 
                     </div>
@@ -97,8 +104,7 @@
 
                     <div class="resolution-info-item">
 
-                        <span class="resolution-info-label">
-                            Complaint ID
+                        <span class="resolution-info-label">Complaint ID
                         </span>
 
                         <strong>
@@ -116,8 +122,7 @@
 
                     <div class="resolution-info-item">
 
-                        <span class="resolution-info-label">
-                            Complaint Title
+                        <span class="resolution-info-label">Complaint Title
                         </span>
 
                         <strong>
@@ -135,8 +140,7 @@
 
                     <div class="resolution-info-item">
 
-                        <span class="resolution-info-label">
-                            Category
+                        <span class="resolution-info-label">Category
                         </span>
 
                         <strong>
@@ -154,8 +158,7 @@
 
                     <div class="resolution-info-item">
 
-                        <span class="resolution-info-label">
-                            Ward
+                        <span class="resolution-info-label">Ward
                         </span>
 
                         <strong>
@@ -173,8 +176,7 @@
 
                     <div class="resolution-info-item">
 
-                        <span class="resolution-info-label">
-                            Priority
+                        <span class="resolution-info-label">Priority
                         </span>
 
                         <strong>
@@ -192,8 +194,7 @@
 
                     <div class="resolution-info-item">
 
-                        <span class="resolution-info-label">
-                            Current Status
+                        <span class="resolution-info-label">Current Status
                         </span>
 
                         <span class="resolution-status-badge">
@@ -213,8 +214,7 @@
 
                     <div class="resolution-info-item">
 
-                        <span class="resolution-info-label">
-                            Created Date
+                        <span class="resolution-info-label">Created Date
                         </span>
 
                         <strong>
@@ -232,8 +232,7 @@
 
                     <div class="resolution-info-item">
 
-                        <span class="resolution-info-label">
-                            Last Updated
+                        <span class="resolution-info-label">Last Updated
                         </span>
 
                         <strong>
@@ -270,10 +269,12 @@
 
                             Complaint Description
 
+                       
                         </div>
 
                         <p>
                             Detailed description provided by the citizen.
+                       
                         </p>
 
                     </div>
@@ -312,11 +313,13 @@
 
                             Citizen Information
 
+                       
                         </div>
 
                         <p>
                             Information about the citizen who submitted
                             this complaint.
+                       
                         </p>
 
                     </div>
@@ -332,8 +335,7 @@
 
                     <div class="resolution-info-item">
 
-                        <span class="resolution-info-label">
-                            Citizen Name
+                        <span class="resolution-info-label">Citizen Name
                         </span>
 
                         <strong>
@@ -353,8 +355,7 @@
 
                     <div class="resolution-info-item">
 
-                        <span class="resolution-info-label">
-                            Email
+                        <span class="resolution-info-label">Email
                         </span>
 
                         <strong>
@@ -374,8 +375,7 @@
 
                     <div class="resolution-info-item">
 
-                        <span class="resolution-info-label">
-                            Contact Number
+                        <span class="resolution-info-label">Contact Number
                         </span>
 
                         <strong>
@@ -414,10 +414,12 @@
 
                             Complaint Location
 
+                       
                         </div>
 
                         <p>
                             Location information provided with the complaint.
+                       
                         </p>
 
                     </div>
@@ -433,8 +435,7 @@
 
                     <div class="resolution-info-item">
 
-                        <span class="resolution-info-label">
-                            Landmark
+                        <span class="resolution-info-label">Landmark
                         </span>
 
                         <strong>
@@ -454,8 +455,7 @@
 
                     <div class="resolution-info-item">
 
-                        <span class="resolution-info-label">
-                            Latitude
+                        <span class="resolution-info-label">Latitude
                         </span>
 
                         <strong>
@@ -475,8 +475,7 @@
 
                     <div class="resolution-info-item">
 
-                        <span class="resolution-info-label">
-                            Longitude
+                        <span class="resolution-info-label">Longitude
                         </span>
 
                         <strong>
@@ -515,10 +514,12 @@
 
                             Complaint Evidence
 
+                       
                         </div>
 
                         <p>
                             Image uploaded by the citizen.
+                       
                         </p>
 
                     </div>
@@ -566,10 +567,12 @@
 
                             Resolution
 
+                       
                         </div>
 
                         <p>
                             Enter the action taken to resolve this complaint.
+                       
                         </p>
 
                     </div>
@@ -584,6 +587,7 @@
 
                     <label>
                         Resolution Remarks
+                   
                     </label>
 
                     <asp:TextBox
@@ -605,6 +609,7 @@
 
                     <label>
                         Resolution Date
+                   
                     </label>
 
                     <asp:TextBox
@@ -663,10 +668,12 @@
 
                             Status History
 
+                       
                         </div>
 
                         <p>
                             Track the complaint status changes.
+                       
                         </p>
 
                     </div>
@@ -686,14 +693,17 @@
                         EmptyDataText="No status history available.">
 
                         <Columns>
-
                             <asp:BoundField
                                 DataField="OldStatus"
-                                HeaderText="Previous Status" />
+                                HeaderText="Old Status" />
 
                             <asp:BoundField
                                 DataField="NewStatus"
                                 HeaderText="New Status" />
+
+                            <asp:BoundField
+                                DataField="ChangedByName"
+                                HeaderText="Changed By" />
 
                             <asp:BoundField
                                 DataField="Remarks"
@@ -702,7 +712,7 @@
                             <asp:BoundField
                                 DataField="ChangeDate"
                                 HeaderText="Date"
-                                DataFormatString="{0:dd MMM yyyy hh:mm tt}" />
+                                DataFormatString="{0:dd MMM yyyy, hh:mm tt}" />
 
                         </Columns>
 
@@ -726,6 +736,7 @@
 
                     Resolution details are recorded for transparency.
 
+               
                 </div>
 
 
@@ -735,6 +746,7 @@
 
                     JanVoice Officer Panel
 
+               
                 </div>
 
             </div>

@@ -74,6 +74,12 @@ namespace JanVoice
 
                     int roleID = Convert.ToInt32(reader["RoleID"]);
 
+                    // Officer session
+                    if (roleID == 2)
+                    {
+                        Session["OfficerID"] = reader["UserID"];
+                    }
+
                     reader.Close();
 
                     string returnUrl = Request.QueryString["ReturnUrl"];
