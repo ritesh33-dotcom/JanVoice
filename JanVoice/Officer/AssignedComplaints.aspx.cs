@@ -35,8 +35,21 @@ namespace JanVoice.Officer
 
         private void CheckOfficerLogin()
         {
-            if (Session["OfficerID"] == null &&
-                Session["UserID"] == null)
+            if (Session["UserID"] == null)
+            {
+                Response.Redirect("~/Login.aspx");
+                return;
+            }
+
+            if (Session["RoleID"] == null)
+            {
+                Response.Redirect("~/Login.aspx");
+                return;
+            }
+
+            int roleID = Convert.ToInt32(Session["RoleID"]);
+
+            if (roleID != 2)
             {
                 Response.Redirect("~/Login.aspx");
                 return;
@@ -50,29 +63,21 @@ namespace JanVoice.Officer
 
         private int GetOfficerID()
         {
-            // First preference:
-            // If OfficerID is already stored in session
-            if (Session["OfficerID"] != null)
+            if (Session["UserID"] == null)
             {
-                return Convert.ToInt32(Session["OfficerID"]);
+                Response.Redirect("~/Login.aspx");
+                return 0;
             }
 
-
-            // Because Citizen / Officer / Admin
-            // use the SAME LOGIN PAGE,
-            // Officer may have UserID in session.
-            if (Session["UserID"] != null)
+            if (Session["RoleID"] == null ||
+                Convert.ToInt32(Session["RoleID"]) != 2)
             {
-                return Convert.ToInt32(Session["UserID"]);
+                Response.Redirect("~/Login.aspx");
+                return 0;
             }
 
-
-            // No login session
-            Response.Redirect("~/Login.aspx");
-
-            return 0;
+            return Convert.ToInt32(Session["UserID"]);
         }
-
 
         // =========================================================
         // DATABASE CONNECTION

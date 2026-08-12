@@ -483,7 +483,7 @@
                                         runat="server"
                                         Text="Resolution Details"
                                         CssClass="btn-resolution"
-                                        NavigateUrl='<%# "ResolutionDetails.aspx?ComplaintID=" + Eval("ComplaintID") %>'>
+                                        NavigateUrl='<%# ResolveUrl("~/Officer/ResolutionDetails.aspx?ComplaintID=" + Eval("ComplaintID")) %>'>
                                     </asp:HyperLink>
 
                                 </ItemTemplate>
