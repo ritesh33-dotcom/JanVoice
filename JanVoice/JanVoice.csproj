@@ -101,6 +101,7 @@
     <Content Include="CSS\ResolutionDetails.css" />
     <Content Include="CSS\responsive.css" />
     <Content Include="CSS\style.css" />
+    <Content Include="CSS\TrendingIssues.css" />
     <Content Include="Database\001_CreateRoles.sql" />
     <Content Include="Database\002_CreateWards.sql" />
     <Content Include="Database\003_CreateCategories.sql" />
@@ -133,6 +134,7 @@
     <Content Include="Officer\AssignedComplaints.aspx" />
     <Content Include="Officer\Dashboard.aspx" />
     <Content Include="Officer\ResolutionDetails.aspx" />
+    <Content Include="Officer\TrendingIssues.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="Uploads\ComplaintImages\078304b2-0039-4c21-8da8-a6df6e740662.jpg" />
     <Content Include="Uploads\ComplaintImages\2f5a230d-993c-4d01-913c-1c3b8067d5c5.png" />
@@ -302,6 +304,13 @@
     </Compile>
     <Compile Include="Officer\ResolutionDetails.aspx.designer.cs">
       <DependentUpon>ResolutionDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Officer\TrendingIssues.aspx.cs">
+      <DependentUpon>TrendingIssues.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Officer\TrendingIssues.aspx.designer.cs">
+      <DependentUpon>TrendingIssues.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Register.aspx.cs">

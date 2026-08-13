@@ -475,21 +475,21 @@
                                 HeaderText="Created"
                                 DataFormatString="{0:dd MMM yyyy}" />
 
-                            <asp:TemplateField HeaderText="Action">
-                                <ItemTemplate>
+                          <asp:TemplateField HeaderText="Action">
+                        <ItemTemplate>
 
-                                    <asp:HyperLink
-                                        ID="lnkResolutionDetails"
-                                        runat="server"
-                                        Text="Resolution Details"
-                                        CssClass="btn-resolution"
-                                        NavigateUrl='<%# ResolveUrl("~/Officer/ResolutionDetails.aspx?ComplaintID=" + Eval("ComplaintID")) %>'>
-                                    </asp:HyperLink>
+                            <asp:HyperLink
+                                ID="btnResolution"
+                                runat="server"
+                                Text="Resolution Details"
+                                CssClass="btn-resolution"
+                                NavigateUrl='<%# ResolveUrl("~/Officer/ResolutionDetails.aspx?ComplaintID=" + Eval("ComplaintID")) %>'>
+                            </asp:HyperLink>
 
-                                </ItemTemplate>
-                            </asp:TemplateField>
+                        </ItemTemplate>
+                    </asp:TemplateField>
 
-                        </Columns>
+                 </Columns>
 
                     </asp:GridView>
 

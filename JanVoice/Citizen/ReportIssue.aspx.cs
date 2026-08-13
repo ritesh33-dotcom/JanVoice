@@ -14,8 +14,14 @@ namespace JanVoice.Citizen
 {
     public partial class ReportIssue : System.Web.UI.Page
     {
+        string connectionString =
+            ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
 
-        string connectionString =ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
+
+        // =========================================================
+        // PAGE LOAD
+        // =========================================================
+
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["UserID"] == null)
@@ -28,14 +34,19 @@ namespace JanVoice.Citizen
                 LoadCategories();
                 LoadWards();
             }
-
         }
+
+
+        // =========================================================
+        // SUBMIT COMPLAINT
+        // =========================================================
 
         protected void btnSubmitComplaint_Click(object sender, EventArgs e)
         {
             using (SqlConnection con = new SqlConnection(connectionString))
             {
                 con.Open();
+
 
                 // =====================================================
                 // FIND OFFICER FOR SELECTED WARD
@@ -44,12 +55,12 @@ namespace JanVoice.Citizen
                 int assignedOfficerID = 0;
 
                 string officerQuery = @"
-        SELECT TOP 1 UserID
-        FROM Users
-        WHERE WardID = @WardID
-        AND RoleID = 2
-        ORDER BY UserID;
-    ";
+                    SELECT TOP 1 UserID
+                    FROM Users
+                    WHERE WardID = @WardID
+                    AND RoleID = 2
+                    ORDER BY UserID;
+                ";
 
                 using (SqlCommand officerCmd =
                        new SqlCommand(officerQuery, con))
@@ -72,16 +83,23 @@ namespace JanVoice.Citizen
 
                     assignedOfficerID = Convert.ToInt32(result);
                 }
+
+
+                // =====================================================
+                // IMAGE VALIDATION
+                // =====================================================
+
                 string extension = Path.GetExtension(
-    fuComplaintImage.FileName
-).ToLower();
+                    fuComplaintImage.FileName
+                ).ToLower();
 
                 string[] allowed =
                 {
-    ".jpg",
-    ".jpeg",
-    ".png"
-};
+                    ".jpg",
+                    ".jpeg",
+                    ".png"
+                };
+
 
                 if (!allowed.Contains(extension))
                 {
@@ -94,7 +112,9 @@ namespace JanVoice.Citizen
                     return;
                 }
 
-                if (fuComplaintImage.PostedFile.ContentLength > 2 * 1024 * 1024)
+
+                if (fuComplaintImage.PostedFile.ContentLength >
+                    2 * 1024 * 1024)
                 {
                     ClientScript.RegisterStartupScript(
                         this.GetType(),
@@ -105,6 +125,11 @@ namespace JanVoice.Citizen
                     return;
                 }
 
+
+                // =====================================================
+                // SAVE IMAGE
+                // =====================================================
+
                 string fileName =
                     Guid.NewGuid().ToString() + extension;
 
@@ -114,15 +139,30 @@ namespace JanVoice.Citizen
                 string folderPath =
                     Server.MapPath("~/Uploads/ComplaintImages/");
 
+
                 if (!Directory.Exists(folderPath))
                 {
                     Directory.CreateDirectory(folderPath);
                 }
 
+
                 string fullPath =
                     Path.Combine(folderPath, fileName);
 
+
                 fuComplaintImage.SaveAs(fullPath);
+
+
+                // =====================================================
+                // AUTOMATIC PRIORITY DETECTION
+                // =====================================================
+
+                string complaintPriority =
+                    DeterminePriority(
+                        txtTitle.Text.Trim(),
+                        txtDescription.Text.Trim(),
+                        ddlCategory.SelectedItem.Text.Trim()
+                    );
 
 
                 // =====================================================
@@ -130,82 +170,110 @@ namespace JanVoice.Citizen
                 // =====================================================
 
                 string query = @"
-        INSERT INTO Complaints
-        (
-            UserID,
-            CategoryID,
-            WardID,
-            AssignedOfficerID,
-            Title,
-            Description,
-            Latitude,
-            Longitude,
-            Landmark,
-            Priority,
-            Status,
-            CreatedDate
-        )
-        VALUES
-        (
-            @UserID,
-            @CategoryID,
-            @WardID,
-            @AssignedOfficerID,
-            @Title,
-            @Description,
-            @Latitude,
-            @Longitude,
-            @Landmark,
-            @Priority,
-            @Status,
-            GETDATE()
-        );
+                    INSERT INTO Complaints
+                    (
+                        UserID,
+                        CategoryID,
+                        WardID,
+                        AssignedOfficerID,
+                        Title,
+                        Description,
+                        Latitude,
+                        Longitude,
+                        Landmark,
+                        Priority,
+                        Status,
+                        CreatedDate
+                    )
+                    VALUES
+                    (
+                        @UserID,
+                        @CategoryID,
+                        @WardID,
+                        @AssignedOfficerID,
+                        @Title,
+                        @Description,
+                        @Latitude,
+                        @Longitude,
+                        @Landmark,
+                        @Priority,
+                        @Status,
+                        GETDATE()
+                    );
 
-        SELECT CAST(SCOPE_IDENTITY() AS INT);
-    ";
+                    SELECT CAST(SCOPE_IDENTITY() AS INT);
+                ";
 
 
                 int complaintID;
+
 
                 using (SqlCommand cmd =
                        new SqlCommand(query, con))
                 {
                     cmd.Parameters.Add("@UserID", SqlDbType.Int)
-                        .Value = Convert.ToInt32(Session["UserID"]);
+                        .Value =
+                        Convert.ToInt32(Session["UserID"]);
+
 
                     cmd.Parameters.Add("@CategoryID", SqlDbType.Int)
-                        .Value = Convert.ToInt32(ddlCategory.SelectedValue);
+                        .Value =
+                        Convert.ToInt32(ddlCategory.SelectedValue);
+
 
                     cmd.Parameters.Add("@WardID", SqlDbType.Int)
-                        .Value = Convert.ToInt32(ddlWard.SelectedValue);
+                        .Value =
+                        Convert.ToInt32(ddlWard.SelectedValue);
+
 
                     cmd.Parameters.Add("@AssignedOfficerID", SqlDbType.Int)
-                        .Value = assignedOfficerID;
+                        .Value =
+                        assignedOfficerID;
+
 
                     cmd.Parameters.Add("@Title", SqlDbType.NVarChar, 200)
-                        .Value = txtTitle.Text.Trim();
+                        .Value =
+                        txtTitle.Text.Trim();
+
 
                     cmd.Parameters.Add("@Description", SqlDbType.NVarChar)
-                        .Value = txtDescription.Text.Trim();
+                        .Value =
+                        txtDescription.Text.Trim();
+
 
                     cmd.Parameters.Add("@Latitude", SqlDbType.NVarChar, 50)
-                        .Value = hfLatitude.Value;
+                        .Value =
+                        hfLatitude.Value;
+
 
                     cmd.Parameters.Add("@Longitude", SqlDbType.NVarChar, 50)
-                        .Value = hfLongitude.Value;
+                        .Value =
+                        hfLongitude.Value;
+
 
                     cmd.Parameters.Add("@Landmark", SqlDbType.NVarChar, 250)
-                        .Value = txtLandmark.Text.Trim();
+                        .Value =
+                        txtLandmark.Text.Trim();
+
+
+                    // =================================================
+                    // AUTOMATIC PRIORITY
+                    // =================================================
 
                     cmd.Parameters.Add("@Priority", SqlDbType.NVarChar, 50)
-                        .Value = "Medium";
+                        .Value =
+                        complaintPriority;
+
 
                     cmd.Parameters.Add("@Status", SqlDbType.NVarChar, 50)
-                        .Value = "Pending";
+                        .Value =
+                        "Pending";
 
-                    complaintID = Convert.ToInt32(
-                        cmd.ExecuteScalar()
-                    );
+
+                    complaintID =
+                        Convert.ToInt32(
+                            cmd.ExecuteScalar()
+                        );
                 }
 
 
@@ -214,23 +282,24 @@ namespace JanVoice.Citizen
                 // =====================================================
 
                 string imageQuery = @"
-        INSERT INTO ComplaintImages
-        (
-            ComplaintID,
-            UploadedBy,
-            ImagePath,
-            ImageType,
-            UploadDate
-        )
-        VALUES
-        (
-            @ComplaintID,
-            @UploadedBy,
-            @ImagePath,
-            @ImageType,
-            GETDATE()
-        );
-    ";
+                    INSERT INTO ComplaintImages
+                    (
+                        ComplaintID,
+                        UploadedBy,
+                        ImagePath,
+                        ImageType,
+                        UploadDate
+                    )
+                    VALUES
+                    (
+                        @ComplaintID,
+                        @UploadedBy,
+                        @ImagePath,
+                        @ImageType,
+                        GETDATE()
+                    );
+                ";
+
 
                 using (SqlCommand imageCmd =
                        new SqlCommand(imageQuery, con))
@@ -238,14 +307,21 @@ namespace JanVoice.Citizen
                     imageCmd.Parameters.Add("@ComplaintID", SqlDbType.Int)
                         .Value = complaintID;
 
+
                     imageCmd.Parameters.Add("@UploadedBy", SqlDbType.Int)
-                        .Value = Convert.ToInt32(Session["UserID"]);
+                        .Value =
+                        Convert.ToInt32(Session["UserID"]);
+
 
                     imageCmd.Parameters.Add("@ImagePath", SqlDbType.NVarChar, 500)
-                        .Value = imagePath;
+                        .Value =
+                        imagePath;
+
 
                     imageCmd.Parameters.Add("@ImageType", SqlDbType.NVarChar, 50)
-                        .Value = extension;
+                        .Value =
+                        extension;
+
 
                     imageCmd.ExecuteNonQuery();
                 }
@@ -256,25 +332,26 @@ namespace JanVoice.Citizen
                 // =====================================================
 
                 string historyQuery = @"
-        INSERT INTO StatusHistory
-        (
-            ComplaintID,
-            OldStatus,
-            NewStatus,
-            ChangedBy,
-            Remarks,
-            ChangeDate
-        )
-        VALUES
-        (
-            @ComplaintID,
-            @OldStatus,
-            @NewStatus,
-            @ChangedBy,
-            @Remarks,
-            GETDATE()
-        );
-    ";
+                    INSERT INTO StatusHistory
+                    (
+                        ComplaintID,
+                        OldStatus,
+                        NewStatus,
+                        ChangedBy,
+                        Remarks,
+                        ChangeDate
+                    )
+                    VALUES
+                    (
+                        @ComplaintID,
+                        @OldStatus,
+                        @NewStatus,
+                        @ChangedBy,
+                        @Remarks,
+                        GETDATE()
+                    );
+                ";
+
 
                 using (SqlCommand historyCmd =
                        new SqlCommand(historyQuery, con))
@@ -282,17 +359,24 @@ namespace JanVoice.Citizen
                     historyCmd.Parameters.Add("@ComplaintID", SqlDbType.Int)
                         .Value = complaintID;
 
+
                     historyCmd.Parameters.Add("@OldStatus", SqlDbType.NVarChar, 50)
                         .Value = DBNull.Value;
+
 
                     historyCmd.Parameters.Add("@NewStatus", SqlDbType.NVarChar, 50)
                         .Value = "Pending";
 
+
                     historyCmd.Parameters.Add("@ChangedBy", SqlDbType.Int)
-                        .Value = Convert.ToInt32(Session["UserID"]);
+                        .Value =
+                        Convert.ToInt32(Session["UserID"]);
+
 
                     historyCmd.Parameters.Add("@Remarks", SqlDbType.NVarChar, 500)
-                        .Value = "Complaint submitted successfully.";
+                        .Value =
+                        "Complaint submitted successfully.";
+
 
                     historyCmd.ExecuteNonQuery();
                 }
@@ -309,6 +393,7 @@ namespace JanVoice.Citizen
                     "Your complaint has been submitted successfully.",
                     "Complaint"
                 );
+
 
                 NotificationHelper.AddNotification(
                     assignedOfficerID,
@@ -331,7 +416,9 @@ namespace JanVoice.Citizen
                 );
 
 
-                // Clear form
+                // =====================================================
+                // CLEAR FORM
+                // =====================================================
 
                 txtTitle.Text = "";
                 txtDescription.Text = "";
@@ -343,89 +430,249 @@ namespace JanVoice.Citizen
                 hfLatitude.Value = "";
                 hfLongitude.Value = "";
             }
-
         }
 
 
+        // =========================================================
+        // AUTOMATIC PRIORITY DETECTION
+        // =========================================================
 
-            
-
-           
-
-
-        
-
-
-
-
-
-
-
+        private string DeterminePriority(
+            string title,
+            string description,
+            string category)
+        {
+            string text =
+                (
+                    title + " " +
+                    description + " " +
+                    category
+                ).ToLower();
 
 
+            // =====================================================
+            // HIGH PRIORITY KEYWORDS
+            // =====================================================
 
+            string[] highPriorityKeywords =
+            {
+                "accident",
+                "fire",
+                "gas leak",
+                "gas leakage",
+                "electric shock",
+                "electric wire",
+                "live wire",
+                "exposed wire",
+                "short circuit",
+                "dangerous",
+                "danger",
+                "life threatening",
+                "life threat",
+                "emergency",
+                "open manhole",
+                "manhole open",
+                "sewage overflow",
+                "sewage leakage",
+                "major leakage",
+                "major water leakage",
+                "road blocked",
+                "roadblock",
+                "building collapse",
+                "wall collapse",
+                "tree fallen",
+                "fallen tree",
+                "electric pole fallen",
+                "pole fallen",
+                "transformer",
+                "water contamination",
+                "contaminated water",
+                "toxic",
+                "smoke",
+                "explosion",
+                "flood",
+                "flooded road"
+            };
+
+
+            foreach (string keyword in highPriorityKeywords)
+            {
+                if (text.Contains(keyword))
+                {
+                    return "High";
+                }
+            }
+
+
+            // =====================================================
+            // MEDIUM PRIORITY KEYWORDS
+            // =====================================================
+
+            string[] mediumPriorityKeywords =
+            {
+                "pothole",
+                "road damage",
+                "damaged road",
+                "garbage",
+                "waste",
+                "street light",
+                "streetlight",
+                "drainage",
+                "drain blocked",
+                "water leakage",
+                "water leak",
+                "water problem",
+                "traffic",
+                "broken footpath",
+                "footpath",
+                "broken road",
+                "road damaged",
+                "dirty",
+                "sanitation",
+                "public toilet",
+                "stray dogs",
+                "dog",
+                "noise",
+                "parking",
+                "dust",
+                "construction",
+                "drain",
+                "sewer"
+            };
+
+
+            foreach (string keyword in mediumPriorityKeywords)
+            {
+                if (text.Contains(keyword))
+                {
+                    return "Medium";
+                }
+            }
+
+
+            // =====================================================
+            // DEFAULT PRIORITY
+            // =====================================================
+
+            return "Low";
+        }
+
+
+        // =========================================================
+        // LOAD CATEGORIES
+        // =========================================================
 
         private void LoadCategories()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con =
+                   new SqlConnection(connectionString))
             {
-                string query = "SELECT CategoryID, CategoryName FROM Categories WHERE IsActive=1";
+                string query =
+                    "SELECT CategoryID, CategoryName " +
+                    "FROM Categories " +
+                    "WHERE IsActive=1";
 
-                SqlDataAdapter da = new SqlDataAdapter(query, con);
 
-                DataTable dt = new DataTable();
+                SqlDataAdapter da =
+                    new SqlDataAdapter(query, con);
+
+
+                DataTable dt =
+                    new DataTable();
+
 
                 da.Fill(dt);
+
 
                 ddlCategory.DataSource = dt;
 
-                ddlCategory.DataTextField = "CategoryName";
+                ddlCategory.DataTextField =
+                    "CategoryName";
 
-                ddlCategory.DataValueField = "CategoryID";
+                ddlCategory.DataValueField =
+                    "CategoryID";
+
 
                 ddlCategory.DataBind();
 
-                ddlCategory.Items.Insert(0, "-- Select Category --");
+
+                ddlCategory.Items.Insert(
+                    0,
+                    "-- Select Category --"
+                );
             }
         }
+
+
+        // =========================================================
+        // LOAD WARDS
+        // =========================================================
 
         private void LoadWards()
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            using (SqlConnection con =
+                   new SqlConnection(connectionString))
             {
-                string query = "SELECT WardID, WardName FROM Wards";
+                string query =
+                    "SELECT WardID, WardName FROM Wards";
 
-                SqlDataAdapter da = new SqlDataAdapter(query, con);
 
-                DataTable dt = new DataTable();
+                SqlDataAdapter da =
+                    new SqlDataAdapter(query, con);
+
+
+                DataTable dt =
+                    new DataTable();
+
 
                 da.Fill(dt);
 
-                ddlWard.DataSource = dt;
 
-                ddlWard.DataTextField = "WardName";
+                ddlWard.DataSource =
+                    dt;
 
-                ddlWard.DataValueField = "WardID";
+
+                ddlWard.DataTextField =
+                    "WardName";
+
+
+                ddlWard.DataValueField =
+                    "WardID";
+
 
                 ddlWard.DataBind();
 
-                ddlWard.Items.Insert(0, "-- Select Ward --");
+
+                ddlWard.Items.Insert(
+                    0,
+                    "-- Select Ward --"
+                );
             }
         }
 
-        protected void btnReset_Click(object sender, EventArgs e)
-        {
 
+        // =========================================================
+        // RESET BUTTON
+        // =========================================================
+
+        protected void btnReset_Click(
+            object sender,
+            EventArgs e)
+        {
         }
 
-        protected void btnReset_Click1(object sender, EventArgs e)
-        {
 
+        protected void btnReset_Click1(
+            object sender,
+            EventArgs e)
+        {
         }
 
-        protected void btnReset_Click2(object sender, EventArgs e)
-        {
 
+        protected void btnReset_Click2(
+            object sender,
+            EventArgs e)
+        {
         }
     }
 }
