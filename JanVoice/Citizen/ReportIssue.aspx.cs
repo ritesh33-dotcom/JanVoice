@@ -15,7 +15,7 @@ namespace JanVoice.Citizen
     public partial class ReportIssue : System.Web.UI.Page
     {
 
-        string connectionString =ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
+        string connectionString = ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
         protected void Page_Load(object sender, EventArgs e)
         {
             if (Session["UserID"] == null)
@@ -156,7 +156,7 @@ namespace JanVoice.Citizen
 
                     object result = officerCmd.ExecuteScalar();
 
-                    if (assignedOfficerID==0)
+                    if (assignedOfficerID == 0)
                     {
                         ClientScript.RegisterStartupScript(
                             this.GetType(),
@@ -171,7 +171,7 @@ namespace JanVoice.Citizen
                     assignedOfficerID = Convert.ToInt32(result);
                 }
             }
-                string query = @"
+            string query = @"
                             INSERT INTO Complaints
                                 (
                                 UserID,
@@ -204,54 +204,54 @@ namespace JanVoice.Citizen
                             ";
 
 
-                SqlCommand cmd = new SqlCommand(query, con);
+            SqlCommand cmd = new SqlCommand(query, con);
 
 
-                cmd.Parameters.Add("@UserID", SqlDbType.Int)
-     .Value = Convert.ToInt32(Session["UserID"]);
+            cmd.Parameters.Add("@UserID", SqlDbType.Int)
+ .Value = Convert.ToInt32(Session["UserID"]);
 
-                cmd.Parameters.Add("@CategoryID", SqlDbType.Int)
-                    .Value = Convert.ToInt32(ddlCategory.SelectedValue);
+            cmd.Parameters.Add("@CategoryID", SqlDbType.Int)
+                .Value = Convert.ToInt32(ddlCategory.SelectedValue);
 
-                cmd.Parameters.Add("@WardID", SqlDbType.Int)
-                    .Value = Convert.ToInt32(ddlWard.SelectedValue);
+            cmd.Parameters.Add("@WardID", SqlDbType.Int)
+                .Value = Convert.ToInt32(ddlWard.SelectedValue);
 
-                cmd.Parameters.Add("@AssignedOfficerID", SqlDbType.Int)
-                    .Value = assignedOfficerID;
+            cmd.Parameters.Add("@AssignedOfficerID", SqlDbType.Int)
+                .Value = assignedOfficerID;
 
-                cmd.Parameters.Add("@Title", SqlDbType.NVarChar, 200)
-                    .Value = txtTitle.Text.Trim();
+            cmd.Parameters.Add("@Title", SqlDbType.NVarChar, 200)
+                .Value = txtTitle.Text.Trim();
 
-                cmd.Parameters.Add("@Description", SqlDbType.NVarChar)
-                    .Value = txtDescription.Text.Trim();
+            cmd.Parameters.Add("@Description", SqlDbType.NVarChar)
+                .Value = txtDescription.Text.Trim();
 
-                cmd.Parameters.Add("@Latitude", SqlDbType.NVarChar, 50)
-                    .Value = hfLatitude.Value;
+            cmd.Parameters.Add("@Latitude", SqlDbType.NVarChar, 50)
+                .Value = hfLatitude.Value;
 
-                cmd.Parameters.Add("@Longitude", SqlDbType.NVarChar, 50)
-                    .Value = hfLongitude.Value;
+            cmd.Parameters.Add("@Longitude", SqlDbType.NVarChar, 50)
+                .Value = hfLongitude.Value;
 
-                cmd.Parameters.Add("@Landmark", SqlDbType.NVarChar, 250)
-                    .Value = txtLandmark.Text.Trim();
+            cmd.Parameters.Add("@Landmark", SqlDbType.NVarChar, 250)
+                .Value = txtLandmark.Text.Trim();
 
-                cmd.Parameters.Add("@Status", SqlDbType.NVarChar, 50)
-                    .Value = "Pending";
+            cmd.Parameters.Add("@Status", SqlDbType.NVarChar, 50)
+                .Value = "Pending";
 
-                cmd.Parameters.Add("@Priority", SqlDbType.NVarChar, 50)
-                    .Value = "Medium";
-
-
-                int complaintID = Convert.ToInt32(cmd.ExecuteScalar());
-
-                //-------------------------------------
-                // Save Uploaded Image
-                //-------------------------------------
-
-                if (fuComplaintImage.HasFile)
-                {
+            cmd.Parameters.Add("@Priority", SqlDbType.NVarChar, 50)
+                .Value = "Medium";
 
 
-                    string imageQuery = @"
+            int complaintID = Convert.ToInt32(cmd.ExecuteScalar());
+
+            //-------------------------------------
+            // Save Uploaded Image
+            //-------------------------------------
+
+            if (fuComplaintImage.HasFile)
+            {
+
+
+                string imageQuery = @"
                             INSERT INTO ComplaintImages
                             (
                                 ComplaintID,
@@ -268,28 +268,28 @@ namespace JanVoice.Citizen
                                 @ImageType,
                                 GETDATE()
                             )";
-                    SqlCommand imageCmd =
-    new SqlCommand(imageQuery, con);
+                SqlCommand imageCmd =
+new SqlCommand(imageQuery, con);
 
-                    imageCmd.Parameters.AddWithValue(
-                        "@ComplaintID",
-                        complaintID);
-                    imageCmd.Parameters.AddWithValue(
-                            "@UploadedBy",
-                            Session["UserID"]);
-                    imageCmd.Parameters.AddWithValue(
-                        "@ImagePath",
-                        imagePath);
-                   
-
-                    imageCmd.Parameters.AddWithValue(
-                        "@ImageType",
-                        extension);
-
-                    imageCmd.ExecuteNonQuery();
+                imageCmd.Parameters.AddWithValue(
+                    "@ComplaintID",
+                    complaintID);
+                imageCmd.Parameters.AddWithValue(
+                        "@UploadedBy",
+                        Session["UserID"]);
+                imageCmd.Parameters.AddWithValue(
+                    "@ImagePath",
+                    imagePath);
 
 
-                 string historyQuery = @"
+                imageCmd.Parameters.AddWithValue(
+                    "@ImageType",
+                    extension);
+
+                imageCmd.ExecuteNonQuery();
+
+
+                string historyQuery = @"
                             INSERT INTO StatusHistory
                             (
                                 ComplaintID,
@@ -309,63 +309,63 @@ namespace JanVoice.Citizen
                                 GETDATE()
                             )";
 
-                    SqlCommand historyCmd = new SqlCommand(historyQuery, con);
+                SqlCommand historyCmd = new SqlCommand(historyQuery, con);
 
-                    historyCmd.Parameters.AddWithValue("@ComplaintID", complaintID);
+                historyCmd.Parameters.AddWithValue("@ComplaintID", complaintID);
 
-                    historyCmd.Parameters.AddWithValue("@OldStatus", DBNull.Value);
+                historyCmd.Parameters.AddWithValue("@OldStatus", DBNull.Value);
 
-                    historyCmd.Parameters.AddWithValue("@NewStatus", "Pending");
+                historyCmd.Parameters.AddWithValue("@NewStatus", "Pending");
 
-                    historyCmd.Parameters.AddWithValue("@ChangedBy", Session["UserID"]);
+                historyCmd.Parameters.AddWithValue("@ChangedBy", Session["UserID"]);
 
-                    historyCmd.Parameters.AddWithValue("@Remarks",
-                        "Complaint submitted successfully.");
+                historyCmd.Parameters.AddWithValue("@Remarks",
+                    "Complaint submitted successfully.");
 
-                    historyCmd.ExecuteNonQuery();
-
-                    
-
-                    NotificationHelper.AddNotification(
-                        Convert.ToInt32(Session["UserID"]),
-                        complaintID,
-                        "Complaint Submitted",
-                        "Your complaint has been submitted successfully.",
-                        "Complaint");
-                                    NotificationHelper.AddNotification(
-                assignedOfficerID,
-                complaintID,
-                "New Complaint Assigned",
-                "You have received a new complaint.",
-                "Complaint");
+                historyCmd.ExecuteNonQuery();
 
 
 
-
-                    ClientScript.RegisterStartupScript(
-    this.GetType(),
-    "success",
-    "alert('Complaint submitted successfully.');",
-    true);
-
-                    txtTitle.Text = "";
-                    txtDescription.Text = "";
-                    txtLandmark.Text = "";
-                    ddlCategory.SelectedIndex = 0;
-                    ddlWard.SelectedIndex = 0;
-                    hfLatitude.Value = "";
-                    hfLongitude.Value = "";
-
-                }
+                NotificationHelper.AddNotification(
+                    Convert.ToInt32(Session["UserID"]),
+                    complaintID,
+                    "Complaint Submitted",
+                    "Your complaint has been submitted successfully.",
+                    "Complaint");
+                NotificationHelper.AddNotification(
+assignedOfficerID,
+complaintID,
+"New Complaint Assigned",
+"You have received a new complaint.",
+"Complaint");
 
 
+
+
+                ClientScript.RegisterStartupScript(
+this.GetType(),
+"success",
+"alert('Complaint submitted successfully.');",
+true);
+
+                txtTitle.Text = "";
+                txtDescription.Text = "";
+                txtLandmark.Text = "";
+                ddlCategory.SelectedIndex = 0;
+                ddlWard.SelectedIndex = 0;
+                hfLatitude.Value = "";
+                hfLongitude.Value = "";
 
             }
 
-           
 
 
         }
+
+
+
+
+    }
 
 
 
