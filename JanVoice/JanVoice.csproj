@@ -85,6 +85,7 @@
     <Content Include="CSS\AssignedComplaints.css" />
     <Content Include="CSS\citizen.css" />
     <Content Include="CSS\CommunityFeed.css" />
+    <Content Include="CSS\CommunityLeaderboard.css" />
     <Content Include="CSS\complaintdetails.css" />
     <Content Include="CSS\components.css" />
     <Content Include="CSS\Contact.css" />
@@ -132,6 +133,7 @@
     <Content Include="JS\script.js" />
     <Content Include="Login.aspx" />
     <Content Include="Officer\AssignedComplaints.aspx" />
+    <Content Include="Officer\CommunityLeaderboard.aspx" />
     <Content Include="Officer\Dashboard.aspx" />
     <Content Include="Officer\ResolutionDetails.aspx" />
     <Content Include="Officer\TrendingIssues.aspx" />
@@ -290,6 +292,13 @@
     </Compile>
     <Compile Include="Officer\AssignedComplaints.aspx.designer.cs">
       <DependentUpon>AssignedComplaints.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Officer\CommunityLeaderboard.aspx.cs">
+      <DependentUpon>CommunityLeaderboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Officer\CommunityLeaderboard.aspx.designer.cs">
+      <DependentUpon>CommunityLeaderboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Officer\Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
