@@ -90,6 +90,7 @@
     <Content Include="CSS\components.css" />
     <Content Include="CSS\Contact.css" />
     <Content Include="CSS\dashboard.css" />
+    <Content Include="CSS\EmergencyContact.css" />
     <Content Include="CSS\forgotpassword.css" />
     <Content Include="CSS\IssueMap.css" />
     <Content Include="CSS\mycomplaints.css" />
@@ -135,6 +136,7 @@
     <Content Include="Officer\AssignedComplaints.aspx" />
     <Content Include="Officer\CommunityLeaderboard.aspx" />
     <Content Include="Officer\Dashboard.aspx" />
+    <Content Include="Officer\EmergencyContact.aspx" />
     <Content Include="Officer\ResolutionDetails.aspx" />
     <Content Include="Officer\TrendingIssues.aspx" />
     <Content Include="Register.aspx" />
@@ -306,6 +308,13 @@
     </Compile>
     <Compile Include="Officer\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Officer\EmergencyContact.aspx.cs">
+      <DependentUpon>EmergencyContact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Officer\EmergencyContact.aspx.designer.cs">
+      <DependentUpon>EmergencyContact.aspx</DependentUpon>
     </Compile>
     <Compile Include="Officer\ResolutionDetails.aspx.cs">
       <DependentUpon>ResolutionDetails.aspx</DependentUpon>
