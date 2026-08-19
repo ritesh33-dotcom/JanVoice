@@ -11,7 +11,7 @@ namespace JanVoice.Admin
 {
 
 
-    public partial class Profile
+    public partial class ComplaintDetails
     {
     }
 }

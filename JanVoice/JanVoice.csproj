@@ -72,7 +72,8 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="Admin\AdminDashboard.aspx" />
-    <Content Include="Admin\Profile.aspx" />
+    <Content Include="Admin\ComplaintDetails.aspx" />
+    <Content Include="Admin\ManageComplaints.aspx" />
     <Content Include="Citizen\ComplaintDetails.aspx" />
     <Content Include="Citizen\Dashboard.aspx" />
     <Content Include="Citizen\MyComplaints.aspx" />
@@ -82,6 +83,8 @@
     <Content Include="CommunityFeed.aspx" />
     <Content Include="ComplaintDetails.aspx" />
     <Content Include="Contact.aspx" />
+    <Content Include="CSS\AdminComplaintDetails.css" />
+    <Content Include="CSS\AdminDashboard.css" />
     <Content Include="CSS\AdminMaster.css" />
     <Content Include="CSS\AssignedComplaints.css" />
     <Content Include="CSS\citizen.css" />
@@ -94,6 +97,7 @@
     <Content Include="CSS\EmergencyContact.css" />
     <Content Include="CSS\forgotpassword.css" />
     <Content Include="CSS\IssueMap.css" />
+    <Content Include="CSS\ManageComplaints.css" />
     <Content Include="CSS\mycomplaints.css" />
     <Content Include="CSS\notifications.css" />
     <Content Include="CSS\Officer.css" />
@@ -166,12 +170,19 @@
     <Compile Include="Admin\AdminDashboard.aspx.designer.cs">
       <DependentUpon>AdminDashboard.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Admin\Profile.aspx.cs">
-      <DependentUpon>Profile.aspx</DependentUpon>
+    <Compile Include="Admin\ComplaintDetails.aspx.cs">
+      <DependentUpon>ComplaintDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Admin\Profile.aspx.designer.cs">
-      <DependentUpon>Profile.aspx</DependentUpon>
+    <Compile Include="Admin\ComplaintDetails.aspx.designer.cs">
+      <DependentUpon>ComplaintDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ManageComplaints.aspx.cs">
+      <DependentUpon>ManageComplaints.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ManageComplaints.aspx.designer.cs">
+      <DependentUpon>ManageComplaints.aspx</DependentUpon>
     </Compile>
     <Compile Include="Citizen\ComplaintDetails.aspx.cs">
       <DependentUpon>ComplaintDetails.aspx</DependentUpon>

@@ -7,10 +7,14 @@ using System.Web.UI.WebControls;
 
 namespace JanVoice.Admin
 {
-    public partial class Profile : System.Web.UI.Page
+    public partial class ComplaintDetails : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                // Dynamic complaint loading will be added later.
+            }
 
         }
     }

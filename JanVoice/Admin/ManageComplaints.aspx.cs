@@ -5,12 +5,16 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
-namespace JanVoice.MasterPages
+namespace JanVoice.Admin
 {
-    public partial class Admin : System.Web.UI.MasterPage
+    public partial class ManageComplaints : System.Web.UI.Page
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsPostBack)
+            {
+                // Database functionality will be added in the next stage.
+            }
 
         }
     }
