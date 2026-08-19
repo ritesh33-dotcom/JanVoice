@@ -1,0 +1,1369 @@
+﻿/* =========================================================
+   TRENDING ISSUES PAGE
+   JANVOICE OFFICER PANEL
+========================================================= */
+
+
+/* =========================================================
+   PAGE
+========================================================= */
+
+.trending-page {
+    width: 100%;
+    min-height: 100vh;
+    padding: 34px 40px 60px;
+    background: #f5f7fb;
+    box-sizing: border-box;
+}
+
+
+.trending-container {
+    width: 100%;
+    max-width: 1450px;
+    margin: 0 auto;
+}
+
+
+
+/* =========================================================
+   HERO SECTION
+========================================================= */
+
+.trending-hero {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 245px;
+    padding: 48px 54px;
+    overflow: hidden;
+    border-radius: 28px;
+    background: radial-gradient( circle at 100% 0%, rgba(56, 118, 255, 0.30), transparent 34% ), radial-gradient( circle at 70% 115%, rgba(57, 93, 220, 0.25), transparent 30% ), linear-gradient( 135deg, #0d1731, #172653 55%, #23428f );
+    box-shadow: 0 20px 45px rgba(15, 30, 65, 0.16);
+    box-sizing: border-box;
+}
+
+
+    .trending-hero::before {
+        content: "";
+        position: absolute;
+        width: 260px;
+        height: 260px;
+        right: -90px;
+        top: -130px;
+        border-radius: 50%;
+        background: rgba(86, 137, 255, 0.12);
+    }
+
+
+    .trending-hero::after {
+        content: "";
+        position: absolute;
+        width: 180px;
+        height: 180px;
+        right: 190px;
+        bottom: -120px;
+        border-radius: 50%;
+        background: rgba(72, 111, 231, 0.12);
+    }
+
+
+.trending-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 850px;
+}
+
+
+.trending-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 17px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 30px;
+    background: rgba(255, 255, 255, 0.08);
+    color: #dbe8ff;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    backdrop-filter: blur(8px);
+}
+
+
+    .trending-badge i {
+        color: #8dbdff;
+        font-size: 15px;
+    }
+
+
+.trending-hero h1 {
+    margin: 20px 0 12px;
+    color: #ffffff;
+    font-size: clamp(34px, 4vw, 52px);
+    line-height: 1.08;
+    font-weight: 800;
+    letter-spacing: -1.5px;
+}
+
+
+.trending-hero p {
+    max-width: 760px;
+    margin: 0;
+    color: #cbd8f3;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+
+.trending-hero-icon {
+    position: relative;
+    z-index: 3;
+    width: 105px;
+    height: 105px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 26px;
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+}
+
+
+    .trending-hero-icon i {
+        color: #8fc1ff;
+        font-size: 48px;
+    }
+
+
+
+/* =========================================================
+   STATISTICS GRID
+========================================================= */
+
+.trending-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 22px;
+    margin-top: 28px;
+}
+
+
+.trend-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    min-height: 120px;
+    padding: 22px 24px;
+    border: 1px solid #e3e8f2;
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: 0 10px 28px rgba(21, 38, 74, 0.07);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    box-sizing: border-box;
+}
+
+
+    .trend-stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 35px rgba(21, 38, 74, 0.12);
+    }
+
+
+.trend-stat-icon {
+    flex: 0 0 auto;
+    width: 62px;
+    height: 62px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    font-size: 25px;
+}
+
+
+    .trend-stat-icon.blue {
+        background: #edf4ff;
+        color: #2f73e9;
+    }
+
+
+    .trend-stat-icon.red {
+        background: #fff0f1;
+        color: #ef4b56;
+    }
+
+
+    .trend-stat-icon.orange {
+        background: #fff6e8;
+        color: #ed9000;
+    }
+
+
+    .trend-stat-icon.green {
+        background: #eafaf3;
+        color: #0ba56c;
+    }
+
+
+.trend-stat-content {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.trend-stat-label {
+    margin-bottom: 4px;
+    color: #6f7b91;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+
+.trend-stat-content strong {
+    color: #17233d;
+    font-size: 28px;
+    line-height: 1.15;
+    font-weight: 800;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+.trend-stat-content small {
+    margin-top: 5px;
+    color: #929bae;
+    font-size: 12px;
+}
+
+
+.trend-stat-title {
+    max-width: 190px;
+}
+
+
+
+/* =========================================================
+   GENERAL CARD
+========================================================= */
+
+.trending-card {
+    margin-top: 28px;
+    overflow: hidden;
+    border: 1px solid #e3e8f2;
+    border-radius: 24px;
+    background: #ffffff;
+    box-shadow: 0 12px 32px rgba(21, 38, 74, 0.06);
+}
+
+
+.trending-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 27px 30px;
+    border-bottom: 1px solid #edf0f5;
+}
+
+
+.trending-card-title {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    color: #17233d;
+    font-size: 19px;
+    font-weight: 750;
+}
+
+
+    .trending-card-title i {
+        color: #3478ef;
+    }
+
+
+.trending-card-header p {
+    margin: 7px 0 0 30px;
+    color: #8a94a7;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+
+.trending-card-header-icon {
+    width: 48px;
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 14px;
+    background: #edf4ff;
+    color: #3679ed;
+    font-size: 20px;
+}
+
+
+
+/* =========================================================
+   MOST REPORTED ISSUES
+========================================================= */
+
+.most-reported-list {
+    padding: 8px 30px 25px;
+}
+
+
+.reported-issue-item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+    padding: 18px 8px;
+    border-bottom: 1px solid #edf0f5;
+    transition: background 0.2s ease, transform 0.2s ease;
+}
+
+
+    .reported-issue-item:last-child {
+        border-bottom: none;
+    }
+
+
+    .reported-issue-item:hover {
+        background: #f8faff;
+        transform: translateX(4px);
+    }
+
+
+.reported-rank {
+    width: 34px;
+    height: 34px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    border-radius: 10px;
+    background: #f0f4fa;
+    color: #59677f;
+    font-size: 13px;
+    font-weight: 800;
+}
+
+
+.reported-issue-item:first-child .reported-rank {
+    background: #fff0d9;
+    color: #d68100;
+}
+
+
+.reported-icon {
+    width: 46px;
+    height: 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    border-radius: 14px;
+    background: #eef4ff;
+    color: #3478ef;
+}
+
+
+.reported-info {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+    .reported-info strong {
+        color: #202c45;
+        font-size: 15px;
+        font-weight: 700;
+    }
+
+
+    .reported-info span {
+        margin-top: 4px;
+        color: #929caf;
+        font-size: 12px;
+    }
+
+
+.reported-count {
+    min-width: 48px;
+    padding: 8px 12px;
+    border-radius: 10px;
+    background: #edf4ff;
+    color: #3478ef;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+
+
+/* =========================================================
+   ANALYSIS GRID
+========================================================= */
+
+.trending-analysis-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 28px;
+}
+
+
+    .trending-analysis-grid .trending-card {
+        min-width: 0;
+    }
+
+
+
+/* =========================================================
+   HIGH PRIORITY LIST
+========================================================= */
+
+.priority-list {
+    padding: 8px 25px 25px;
+}
+
+
+.priority-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 16px 7px;
+    border-bottom: 1px solid #edf0f5;
+}
+
+
+    .priority-item:last-child {
+        border-bottom: none;
+    }
+
+
+.priority-item-icon {
+    width: 42px;
+    height: 42px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    border-radius: 13px;
+    background: #fff4e6;
+    color: #e78b00;
+}
+
+
+.priority-item-content {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+    .priority-item-content strong {
+        color: #26334c;
+        font-size: 14px;
+        font-weight: 700;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+
+    .priority-item-content span {
+        margin-top: 4px;
+        color: #929caf;
+        font-size: 12px;
+    }
+
+
+.priority-badge {
+    padding: 6px 10px;
+    border-radius: 8px;
+    background: #fff0f0;
+    color: #e14d55;
+    font-size: 11px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+
+
+/* =========================================================
+   ACTIVE ISSUES
+========================================================= */
+
+.active-issues-list {
+    padding: 8px 25px 25px;
+}
+
+
+.active-issue-item {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 16px 7px;
+    border-bottom: 1px solid #edf0f5;
+}
+
+
+    .active-issue-item:last-child {
+        border-bottom: none;
+    }
+
+
+.active-status-dot {
+    width: 10px;
+    height: 10px;
+    flex: 0 0 auto;
+    border-radius: 50%;
+    background: #20b57a;
+    box-shadow: 0 0 0 5px #e9f9f2;
+}
+
+
+.active-issue-content {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+
+    .active-issue-content strong {
+        color: #26334c;
+        font-size: 14px;
+        font-weight: 700;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+
+    .active-issue-content span {
+        margin-top: 4px;
+        color: #929caf;
+        font-size: 12px;
+    }
+
+
+.active-issue-date {
+    color: #8b96a9;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+
+
+/* =========================================================
+   CATEGORY TABLE
+========================================================= */
+
+.category-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    padding: 0 25px 25px;
+    box-sizing: border-box;
+}
+
+
+.category-issues-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 700px;
+}
+
+
+    .category-issues-table th {
+        padding: 15px 18px;
+        background: #f6f8fc;
+        border-bottom: 1px solid #e5e9f1;
+        color: #66738a;
+        font-size: 12px;
+        font-weight: 750;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+
+    .category-issues-table td {
+        padding: 17px 18px;
+        border-bottom: 1px solid #edf0f5;
+        color: #35425b;
+        font-size: 13px;
+        background: #ffffff;
+    }
+
+
+    .category-issues-table tr:hover td {
+        background: #f8faff;
+    }
+
+
+    .category-issues-table tr:last-child td {
+        border-bottom: none;
+    }
+
+
+
+/* =========================================================
+   EMPTY STATE
+========================================================= */
+
+.empty-trending {
+    min-height: 190px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 30px;
+    text-align: center;
+}
+
+
+    .empty-trending i {
+        margin-bottom: 12px;
+        color: #aab4c6;
+        font-size: 32px;
+    }
+
+
+    .empty-trending h3 {
+        margin: 0 0 7px;
+        color: #3c4960;
+        font-size: 16px;
+    }
+
+
+    .empty-trending p {
+        margin: 0;
+        color: #929caf;
+        font-size: 13px;
+    }
+
+
+
+/* =========================================================
+   INFORMATION FOOTER
+========================================================= */
+
+.trending-information {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    margin-top: 28px;
+    padding: 18px 22px;
+    border: 1px solid #e3e8f2;
+    border-radius: 16px;
+    background: #ffffff;
+    color: #7d899e;
+    font-size: 12px;
+    box-shadow: 0 8px 20px rgba(21, 38, 74, 0.04);
+}
+
+
+    .trending-information div {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+
+    .trending-information i {
+        color: #3478ef;
+    }
+
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 1200px) {
+
+    .trending-page {
+        padding: 28px 25px 50px;
+    }
+
+
+    .trending-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+
+    .trending-hero {
+        padding: 42px;
+    }
+}
+
+
+
+/* =========================================================
+   TABLET / SMALL LAPTOP
+========================================================= */
+
+@media (max-width: 900px) {
+
+    .trending-page {
+        padding: 25px 20px 45px;
+    }
+
+
+    .trending-hero {
+        min-height: 220px;
+        padding: 36px;
+    }
+
+
+    .trending-hero-icon {
+        width: 85px;
+        height: 85px;
+    }
+
+
+        .trending-hero-icon i {
+            font-size: 38px;
+        }
+
+
+    .trending-analysis-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 650px) {
+
+    .trending-page {
+        padding: 18px 14px 35px;
+    }
+
+
+    .trending-hero {
+        min-height: auto;
+        padding: 30px 24px;
+        border-radius: 22px;
+    }
+
+
+    .trending-hero-content {
+        max-width: 100%;
+    }
+
+
+    .trending-hero h1 {
+        margin-top: 17px;
+        font-size: 34px;
+    }
+
+
+    .trending-hero p {
+        font-size: 14px;
+        line-height: 1.6;
+    }
+
+
+    .trending-hero-icon {
+        display: none;
+    }
+
+
+    .trending-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin-top: 18px;
+    }
+
+
+    .trend-stat-card {
+        min-height: 100px;
+        padding: 18px;
+    }
+
+
+    .trend-stat-icon {
+        width: 54px;
+        height: 54px;
+        border-radius: 15px;
+        font-size: 21px;
+    }
+
+
+    .trend-stat-content strong {
+        font-size: 23px;
+    }
+
+
+    .trending-card {
+        margin-top: 18px;
+        border-radius: 19px;
+    }
+
+
+    .trending-card-header {
+        padding: 21px 18px;
+    }
+
+
+    .trending-card-title {
+        font-size: 16px;
+    }
+
+
+    .trending-card-header p {
+        margin-left: 0;
+        font-size: 12px;
+    }
+
+
+    .trending-card-header-icon {
+        display: none;
+    }
+
+
+    .most-reported-list {
+        padding: 5px 17px 18px;
+    }
+
+
+    .reported-issue-item {
+        gap: 10px;
+        padding: 15px 4px;
+    }
+
+
+    .reported-rank {
+        width: 29px;
+        height: 29px;
+    }
+
+
+    .reported-icon {
+        width: 39px;
+        height: 39px;
+    }
+
+
+    .reported-info strong {
+        font-size: 13px;
+    }
+
+
+    .reported-info span {
+        font-size: 11px;
+    }
+
+
+    .reported-count {
+        min-width: 35px;
+        padding: 6px 8px;
+        font-size: 12px;
+    }
+
+
+    .priority-list,
+    .active-issues-list {
+        padding-left: 17px;
+        padding-right: 17px;
+    }
+
+
+    .priority-item {
+        gap: 10px;
+    }
+
+
+    .priority-item-icon {
+        width: 38px;
+        height: 38px;
+    }
+
+
+    .priority-item-content strong,
+    .active-issue-content strong {
+        font-size: 13px;
+    }
+
+
+    .priority-badge {
+        padding: 5px 7px;
+        font-size: 9px;
+    }
+
+
+    .active-issue-date {
+        display: none;
+    }
+
+
+    .category-table-wrapper {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+
+    .trending-information {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 16px;
+        line-height: 1.5;
+    }
+}
+
+
+
+/* =========================================================
+   VERY SMALL MOBILE
+========================================================= */
+
+@media (max-width: 400px) {
+
+    .trending-hero {
+        padding: 26px 19px;
+    }
+
+
+        .trending-hero h1 {
+            font-size: 29px;
+        }
+
+
+    .trending-badge {
+        padding: 8px 12px;
+        font-size: 11px;
+    }
+
+
+    .trend-stat-card {
+        padding: 15px;
+    }
+
+
+    .trend-stat-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 18px;
+    }
+
+
+    .trend-stat-content strong {
+        font-size: 21px;
+    }
+
+
+    .trending-card-title {
+        font-size: 15px;
+    }
+}
+
+
+
+/* =========================================================
+   PART 3 — FINAL RESPONSIVE POLISH
+   TRENDING ISSUES
+========================================================= */
+
+
+/* =========================================================
+   SIDEBAR + CONTENT ADJUSTMENT
+========================================================= */
+
+@media (max-width: 1100px) {
+
+    .trending-container {
+        max-width: 100%;
+    }
+
+    .trending-hero {
+        padding: 38px 35px;
+    }
+
+        .trending-hero h1 {
+            font-size: 40px;
+        }
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+
+    .trending-page {
+        width: 100%;
+        padding: 20px 16px 40px;
+    }
+
+
+    /* HERO */
+
+    .trending-hero {
+        display: block;
+        padding: 30px 24px;
+        border-radius: 20px;
+    }
+
+
+        .trending-hero h1 {
+            font-size: 32px;
+            letter-spacing: -0.8px;
+        }
+
+
+        .trending-hero p {
+            font-size: 14px;
+            max-width: 100%;
+        }
+
+
+    /* STATISTICS */
+
+    .trending-stats-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 14px;
+    }
+
+
+    .trend-stat-card {
+        min-width: 0;
+        padding: 17px;
+    }
+
+
+    .trend-stat-content {
+        min-width: 0;
+    }
+
+
+        .trend-stat-content strong {
+            font-size: 23px;
+        }
+
+
+    /* ANALYSIS */
+
+    .trending-analysis-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+    }
+
+
+    /* INFORMATION */
+
+    .trending-information {
+        gap: 12px;
+    }
+}
+
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 576px) {
+
+    .trending-page {
+        padding: 15px 12px 30px;
+    }
+
+
+    /* HERO */
+
+    .trending-hero {
+        padding: 25px 20px;
+        border-radius: 18px;
+    }
+
+
+    .trending-badge {
+        padding: 8px 12px;
+        font-size: 10px;
+    }
+
+
+    .trending-hero h1 {
+        margin-top: 15px;
+        margin-bottom: 9px;
+        font-size: 28px;
+        line-height: 1.15;
+    }
+
+
+    .trending-hero p {
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+
+    .trending-hero-icon {
+        display: none;
+    }
+
+
+    /* STATISTICS */
+
+    .trending-stats-grid {
+        grid-template-columns: 1fr;
+        gap: 11px;
+    }
+
+
+    .trend-stat-card {
+        width: 100%;
+        min-height: 88px;
+        padding: 15px 16px;
+        border-radius: 16px;
+    }
+
+
+    .trend-stat-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        font-size: 19px;
+    }
+
+
+    .trend-stat-label {
+        font-size: 11px;
+    }
+
+
+    .trend-stat-content strong {
+        font-size: 21px;
+    }
+
+
+    .trend-stat-content small {
+        font-size: 10px;
+    }
+
+
+    /* CARD */
+
+    .trending-card {
+        margin-top: 15px;
+        border-radius: 17px;
+    }
+
+
+    .trending-card-header {
+        padding: 18px 16px;
+    }
+
+
+    .trending-card-title {
+        font-size: 15px;
+    }
+
+
+        .trending-card-title i {
+            font-size: 14px;
+        }
+
+
+    .trending-card-header p {
+        margin-top: 5px;
+        font-size: 11px;
+    }
+
+
+    .trending-card-header-icon {
+        display: none;
+    }
+
+
+    /* MOST REPORTED */
+
+    .most-reported-list {
+        padding: 2px 13px 14px;
+    }
+
+
+    .reported-issue-item {
+        gap: 8px;
+        padding: 13px 3px;
+    }
+
+
+    .reported-rank {
+        width: 27px;
+        height: 27px;
+        border-radius: 8px;
+        font-size: 10px;
+    }
+
+
+    .reported-icon {
+        width: 37px;
+        height: 37px;
+        border-radius: 11px;
+        font-size: 14px;
+    }
+
+
+    .reported-info strong {
+        font-size: 12px;
+    }
+
+
+    .reported-info span {
+        font-size: 10px;
+    }
+
+
+    .reported-count {
+        min-width: 31px;
+        padding: 5px 7px;
+        font-size: 10px;
+    }
+
+
+    /* PRIORITY */
+
+    .priority-list,
+    .active-issues-list {
+        padding: 3px 14px 14px;
+    }
+
+
+    .priority-item,
+    .active-issue-item {
+        padding: 13px 3px;
+    }
+
+
+    .priority-item-icon {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        font-size: 13px;
+    }
+
+
+    .priority-item-content strong,
+    .active-issue-content strong {
+        font-size: 12px;
+    }
+
+
+    .priority-item-content span,
+    .active-issue-content span {
+        font-size: 10px;
+    }
+
+
+    .priority-badge {
+        padding: 5px 6px;
+        font-size: 8px;
+    }
+
+
+    .active-status-dot {
+        width: 8px;
+        height: 8px;
+    }
+
+
+    .active-issue-date {
+        display: none;
+    }
+
+
+    /* TABLE */
+
+    .category-table-wrapper {
+        padding: 0 10px 15px;
+    }
+
+
+    .category-issues-table {
+        min-width: 620px;
+    }
+
+
+        .category-issues-table th,
+        .category-issues-table td {
+            padding: 12px 13px;
+            font-size: 11px;
+        }
+
+
+    /* FOOTER */
+
+    .trending-information {
+        flex-direction: column;
+        align-items: flex-start;
+        margin-top: 15px;
+        padding: 14px;
+        border-radius: 13px;
+        font-size: 10px;
+    }
+}
+
+
+
+/* =========================================================
+   SMALL PHONES
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .trending-page {
+        padding-left: 9px;
+        padding-right: 9px;
+    }
+
+
+    .trending-hero {
+        padding: 22px 17px;
+    }
+
+
+        .trending-hero h1 {
+            font-size: 25px;
+        }
+
+
+        .trending-hero p {
+            font-size: 12px;
+        }
+
+
+    .trend-stat-card {
+        padding: 13px;
+    }
+
+
+    .trend-stat-icon {
+        width: 43px;
+        height: 43px;
+        font-size: 17px;
+    }
+
+
+    .trend-stat-content strong {
+        font-size: 19px;
+    }
+
+
+    .trending-card-title {
+        font-size: 14px;
+    }
+}

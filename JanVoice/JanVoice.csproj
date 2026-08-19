@@ -86,10 +86,12 @@
     <Content Include="CSS\AssignedComplaints.css" />
     <Content Include="CSS\citizen.css" />
     <Content Include="CSS\CommunityFeed.css" />
+    <Content Include="CSS\CommunityLeaderboard.css" />
     <Content Include="CSS\complaintdetails.css" />
     <Content Include="CSS\components.css" />
     <Content Include="CSS\Contact.css" />
     <Content Include="CSS\dashboard.css" />
+    <Content Include="CSS\EmergencyContact.css" />
     <Content Include="CSS\forgotpassword.css" />
     <Content Include="CSS\IssueMap.css" />
     <Content Include="CSS\mycomplaints.css" />
@@ -99,8 +101,10 @@
     <Content Include="CSS\profile.css" />
     <Content Include="CSS\PublicComplaintDetails.css" />
     <Content Include="CSS\reportissue.css" />
+    <Content Include="CSS\ResolutionDetails.css" />
     <Content Include="CSS\responsive.css" />
     <Content Include="CSS\style.css" />
+    <Content Include="CSS\TrendingIssues.css" />
     <Content Include="Database\001_CreateRoles.sql" />
     <Content Include="Database\002_CreateWards.sql" />
     <Content Include="Database\003_CreateCategories.sql" />
@@ -131,7 +135,11 @@
     <Content Include="JS\script.js" />
     <Content Include="Login.aspx" />
     <Content Include="Officer\AssignedComplaints.aspx" />
+    <Content Include="Officer\CommunityLeaderboard.aspx" />
     <Content Include="Officer\Dashboard.aspx" />
+    <Content Include="Officer\EmergencyContact.aspx" />
+    <Content Include="Officer\ResolutionDetails.aspx" />
+    <Content Include="Officer\TrendingIssues.aspx" />
     <Content Include="Register.aspx" />
     <Content Include="Uploads\ComplaintImages\078304b2-0039-4c21-8da8-a6df6e740662.jpg" />
     <Content Include="Uploads\ComplaintImages\2f5a230d-993c-4d01-913c-1c3b8067d5c5.png" />
@@ -290,9 +298,17 @@
     </Compile>
     <Compile Include="Officer\AssignedComplaints.aspx.cs">
       <DependentUpon>AssignedComplaints.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Officer\AssignedComplaints.aspx.designer.cs">
       <DependentUpon>AssignedComplaints.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Officer\CommunityLeaderboard.aspx.cs">
+      <DependentUpon>CommunityLeaderboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Officer\CommunityLeaderboard.aspx.designer.cs">
+      <DependentUpon>CommunityLeaderboard.aspx</DependentUpon>
     </Compile>
     <Compile Include="Officer\Dashboard.aspx.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
@@ -300,6 +316,27 @@
     </Compile>
     <Compile Include="Officer\Dashboard.aspx.designer.cs">
       <DependentUpon>Dashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Officer\EmergencyContact.aspx.cs">
+      <DependentUpon>EmergencyContact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Officer\EmergencyContact.aspx.designer.cs">
+      <DependentUpon>EmergencyContact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Officer\ResolutionDetails.aspx.cs">
+      <DependentUpon>ResolutionDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Officer\ResolutionDetails.aspx.designer.cs">
+      <DependentUpon>ResolutionDetails.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Officer\TrendingIssues.aspx.cs">
+      <DependentUpon>TrendingIssues.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Officer\TrendingIssues.aspx.designer.cs">
+      <DependentUpon>TrendingIssues.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Register.aspx.cs">
