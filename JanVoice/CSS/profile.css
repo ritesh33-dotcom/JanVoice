@@ -1055,3 +1055,52 @@
         width: 100%;
     }
 }
+
+
+/* =========================================================
+   CHANGE PASSWORD CARD
+========================================================= */
+
+.profile-password-card {
+    margin-top: 28px;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 30px;
+    border: 1px solid #e5e7eb;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+}
+
+
+.profile-password-form {
+    margin-top: 25px;
+    max-width: 700px;
+}
+
+
+    .profile-password-form .profile-edit-group {
+        margin-bottom: 20px;
+    }
+
+
+        .profile-password-form .profile-edit-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+
+    .profile-password-form .profile-edit-input {
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+
+    .profile-password-form .profile-edit-actions {
+        margin-top: 25px;
+    }
+
+
+.profile-password-card .profile-message {
+    display: block;
+    margin-top: 18px;
+}

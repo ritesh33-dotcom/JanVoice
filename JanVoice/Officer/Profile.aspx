@@ -668,15 +668,156 @@
 
                 <!-- CHANGE PASSWORD -->
 
-                <asp:Button
-                    ID="btnChangePassword"
-                    runat="server"
-                    Text="Change Password"
-                    CssClass="profile-password-button"
-                    CausesValidation="false" />
+                            <asp:Button
+                ID="btnChangePassword"
+                runat="server"
+                Text="Change Password"
+                CssClass="profile-password-button"
+                CausesValidation="false"
+                OnClick="btnChangePassword_Click" />
 
 
             </div>
+
+
+            <!-- =====================================================
+     CHANGE PASSWORD
+====================================================== -->
+
+<asp:Panel
+    ID="pnlChangePassword"
+    runat="server"
+    CssClass="profile-password-card"
+    Visible="false">
+
+    <!-- HEADER -->
+
+    <div class="profile-card-header">
+
+        <div>
+
+            <span class="profile-section-badge">
+
+                <i class="fa-solid fa-key"></i>
+
+                SECURITY
+
+            </span>
+
+            <h2>Change Password</h2>
+
+            <p>
+                Update your JanVoice account password securely.
+            </p>
+
+        </div>
+
+        <div class="profile-card-header-icon">
+
+            <i class="fa-solid fa-lock"></i>
+
+        </div>
+
+    </div>
+
+
+    <!-- PASSWORD FORM -->
+
+    <div class="profile-password-form">
+
+
+        <!-- CURRENT PASSWORD -->
+
+        <div class="profile-edit-group">
+
+            <label>
+                Current Password
+            </label>
+
+            <asp:TextBox
+                ID="txtCurrentPassword"
+                runat="server"
+                CssClass="profile-edit-input"
+                TextMode="Password"
+                placeholder="Enter current password">
+            </asp:TextBox>
+
+        </div>
+
+
+        <!-- NEW PASSWORD -->
+
+        <div class="profile-edit-group">
+
+            <label>
+                New Password
+            </label>
+
+            <asp:TextBox
+                ID="txtNewPassword"
+                runat="server"
+                CssClass="profile-edit-input"
+                TextMode="Password"
+                placeholder="Enter new password">
+            </asp:TextBox>
+
+        </div>
+
+
+        <!-- CONFIRM PASSWORD -->
+
+        <div class="profile-edit-group">
+
+            <label>
+                Confirm New Password
+            </label>
+
+            <asp:TextBox
+                ID="txtConfirmPassword"
+                runat="server"
+                CssClass="profile-edit-input"
+                TextMode="Password"
+                placeholder="Confirm new password">
+            </asp:TextBox>
+
+        </div>
+
+
+        <!-- BUTTONS -->
+
+        <div class="profile-edit-actions">
+
+            <asp:Button
+                ID="btnCancelPassword"
+                runat="server"
+                Text="Cancel"
+                CssClass="profile-cancel-button"
+                CausesValidation="false"
+                OnClick="btnCancelPassword_Click" />
+
+
+            <asp:Button
+                ID="btnSavePassword"
+                runat="server"
+                Text="Update Password"
+                CssClass="profile-save-button"
+                CausesValidation="false"
+                OnClick="btnSavePassword_Click" />
+
+        </div>
+
+
+        <!-- MESSAGE -->
+
+        <asp:Label
+            ID="lblPasswordMessage"
+            runat="server"
+            CssClass="profile-message">
+        </asp:Label>
+
+    </div>
+
+</asp:Panel>
 
             <!-- =====================================================
                  INFORMATION FOOTER

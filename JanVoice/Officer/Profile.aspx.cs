@@ -28,14 +28,12 @@ namespace JanVoice.Officer
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Check Officer Login
             if (Session["UserID"] == null)
             {
                 Response.Redirect("~/Login.aspx");
                 return;
             }
 
-            // Load profile only first time
             if (!IsPostBack)
             {
                 LoadOfficerProfile();
@@ -62,22 +60,15 @@ namespace JanVoice.Officer
                     U.RoleID,
                     U.IsActive,
                     U.CreatedDate,
-
                     R.RoleName,
-
                     W.WardNumber,
                     W.WardName
-
                 FROM Users U
-
                 LEFT JOIN Roles R
                     ON U.RoleID = R.RoleID
-
                 LEFT JOIN Wards W
                     ON U.WardID = W.WardID
-
-                WHERE U.UserID = @UserID
-            ";
+                WHERE U.UserID = @UserID";
 
 
             using (SqlConnection con =
@@ -89,8 +80,7 @@ namespace JanVoice.Officer
                     cmd.Parameters.Add(
                         "@UserID",
                         SqlDbType.Int
-                    ).Value =
-                        Convert.ToInt32(userId);
+                    ).Value = Convert.ToInt32(userId);
 
 
                     try
@@ -102,9 +92,9 @@ namespace JanVoice.Officer
                         {
                             if (reader.Read())
                             {
-                                // =============================================
+                                // ==============================
                                 // OFFICER ID
-                                // =============================================
+                                // ==============================
 
                                 string officerID =
                                     GetValue(reader, "UserID");
@@ -116,52 +106,34 @@ namespace JanVoice.Officer
                                     officerID;
 
 
-                                // =============================================
-                                // FULL NAME
-                                // =============================================
+                                // ==============================
+                                // PERSONAL DETAILS
+                                // ==============================
 
                                 lblFullName.Text =
                                     GetValue(reader, "FullName");
 
-
-                                // =============================================
-                                // EMAIL
-                                // =============================================
-
                                 lblEmail.Text =
                                     GetValue(reader, "Email");
 
-
-                                // =============================================
-                                // MOBILE
-                                // =============================================
-
                                 lblMobile.Text =
                                     GetValue(reader, "Mobile");
-
-
-                                // =============================================
-                                // ADDRESS
-                                // =============================================
 
                                 lblAddress.Text =
                                     GetValue(reader, "Address");
 
 
-                                // =============================================
+                                // ==============================
                                 // USERNAME
-                                // =============================================
-
-                                // Users table currently does not have
-                                // a Username column.
+                                // ==============================
 
                                 lblUsername.Text =
                                     "Officer";
 
 
-                                // =============================================
+                                // ==============================
                                 // ROLE
-                                // =============================================
+                                // ==============================
 
                                 string roleName =
                                     GetValue(reader, "RoleName");
@@ -169,21 +141,13 @@ namespace JanVoice.Officer
                                 lblDesignation.Text =
                                     roleName;
 
-
-                                // =============================================
-                                // DEPARTMENT
-                                // =============================================
-
-                                // Current database has RoleName but
-                                // no Department column.
-
                                 lblDepartment.Text =
                                     roleName;
 
 
-                                // =============================================
-                                // ASSIGNED WARD
-                                // =============================================
+                                // ==============================
+                                // ASSIGNED AREA
+                                // ==============================
 
                                 string wardNumber =
                                     GetValue(reader, "WardNumber");
@@ -239,31 +203,35 @@ namespace JanVoice.Officer
 
 
         // =========================================================
-        // EDIT PROFILE BUTTON
+        // EDIT PROFILE
         // =========================================================
 
         protected void btnEditProfile_Click(
             object sender,
             EventArgs e)
         {
-            // Load latest database values
+            // Load latest values
             LoadEditProfileData();
 
 
-            // Hide view
-            pnlPersonalView.Visible = false;
+            // Hide View Mode
+            pnlPersonalView.Visible =
+                false;
 
 
-            // Show edit form
-            pnlEditProfile.Visible = true;
+            // Show Edit Mode
+            pnlPersonalEdit.Visible =
+                true;
 
 
             // Hide Edit Profile button
-            btnEditProfile.Visible = false;
+            btnEditProfile.Visible =
+                false;
 
 
-            // Clear previous message
-            lblProfileMessage.Text = "";
+            // Clear old message
+            lblPersonalMessage.Text =
+                "";
         }
 
 
@@ -284,8 +252,7 @@ namespace JanVoice.Officer
                     Mobile,
                     Address
                 FROM Users
-                WHERE UserID = @UserID
-            ";
+                WHERE UserID = @UserID";
 
 
             using (SqlConnection con =
@@ -305,35 +272,34 @@ namespace JanVoice.Officer
                     {
                         con.Open();
 
-
                         using (SqlDataReader reader =
                                cmd.ExecuteReader())
                         {
                             if (reader.Read())
                             {
                                 txtEditFullName.Text =
-                                    GetValue(
+                                    GetEditValue(
                                         reader,
                                         "FullName"
                                     );
 
 
                                 txtEditEmail.Text =
-                                    GetValue(
+                                    GetEditValue(
                                         reader,
                                         "Email"
                                     );
 
 
                                 txtEditMobile.Text =
-                                    GetValue(
+                                    GetEditValue(
                                         reader,
                                         "Mobile"
                                     );
 
 
                                 txtEditAddress.Text =
-                                    GetValue(
+                                    GetEditValue(
                                         reader,
                                         "Address"
                                     );
@@ -358,10 +324,10 @@ namespace JanVoice.Officer
 
 
         // =========================================================
-        // SAVE PROFILE
+        // SAVE PERSONAL DETAILS
         // =========================================================
 
-        protected void btnSaveProfile_Click(
+        protected void btnSavePersonalDetails_Click(
             object sender,
             EventArgs e)
         {
@@ -423,7 +389,7 @@ namespace JanVoice.Officer
 
 
             // =====================================================
-            // UPDATE DATABASE
+            // UPDATE QUERY
             // =====================================================
 
             string query = @"
@@ -433,8 +399,7 @@ namespace JanVoice.Officer
                     Email = @Email,
                     Mobile = @Mobile,
                     Address = @Address
-                WHERE UserID = @UserID
-            ";
+                WHERE UserID = @UserID";
 
 
             using (SqlConnection con =
@@ -491,23 +456,19 @@ namespace JanVoice.Officer
 
                         if (rowsAffected > 0)
                         {
-                            // =========================================
-                            // DATABASE UPDATED
-                            // =========================================
-
-                            // Reload latest profile
+                            // Reload updated data
                             LoadOfficerProfile();
 
 
-                            // Switch to VIEW mode
-                            pnlEditProfile.Visible =
+                            // Switch to View Mode
+                            pnlPersonalEdit.Visible =
                                 false;
-
 
                             pnlPersonalView.Visible =
                                 true;
 
 
+                            // Show Edit button
                             btnEditProfile.Visible =
                                 true;
 
@@ -556,18 +517,339 @@ namespace JanVoice.Officer
 
 
         // =========================================================
-        // CANCEL EDIT
+        // CANCEL PERSONAL EDIT
         // =========================================================
 
-        protected void btnCancelEdit_Click(
-     object sender,
-     EventArgs e)
+        protected void btnCancelPersonalEdit_Click(
+            object sender,
+            EventArgs e)
         {
-            pnlEditProfile.Visible = false;
-            pnlPersonalView.Visible = true;
-            btnEditProfile.Visible = true;
-            lblProfileMessage.Text = "";
+            // Hide edit mode
+            pnlPersonalEdit.Visible =
+                false;
+
+
+            // Show view mode
+            pnlPersonalView.Visible =
+                true;
+
+
+            // Show Edit Profile button
+            btnEditProfile.Visible =
+                true;
+
+
+            // Clear message
+            lblPersonalMessage.Text =
+                "";
         }
+
+        // =========================================================
+// CHANGE PASSWORD BUTTON
+// =========================================================
+
+protected void btnChangePassword_Click(
+    object sender,
+    EventArgs e)
+{
+    // Show Change Password panel
+    pnlChangePassword.Visible = true;
+
+    // Clear previous values
+    txtCurrentPassword.Text = "";
+    txtNewPassword.Text = "";
+    txtConfirmPassword.Text = "";
+
+    // Clear previous message
+    lblPasswordMessage.Text = "";
+
+    // Hide profile action buttons
+    btnEditProfile.Visible = false;
+    btnChangePassword.Visible = false;
+}
+
+
+// =========================================================
+// SAVE NEW PASSWORD
+// =========================================================
+
+protected void btnSavePassword_Click(
+    object sender,
+    EventArgs e)
+{
+    // =====================================================
+    // CHECK LOGIN
+    // =====================================================
+
+    if (Session["UserID"] == null)
+    {
+        Response.Redirect("~/Login.aspx");
+        return;
+    }
+
+
+    string userId =
+        Session["UserID"].ToString();
+
+
+    // =====================================================
+    // GET PASSWORD VALUES
+    // =====================================================
+
+    string currentPassword =
+        txtCurrentPassword.Text.Trim();
+
+    string newPassword =
+        txtNewPassword.Text.Trim();
+
+    string confirmPassword =
+        txtConfirmPassword.Text.Trim();
+
+
+    // =====================================================
+    // VALIDATION
+    // =====================================================
+
+    if (string.IsNullOrWhiteSpace(currentPassword))
+    {
+        ShowPasswordMessage(
+            "Please enter your current password.",
+            false
+        );
+
+        return;
+    }
+
+
+    if (string.IsNullOrWhiteSpace(newPassword))
+    {
+        ShowPasswordMessage(
+            "Please enter your new password.",
+            false
+        );
+
+        return;
+    }
+
+
+    if (string.IsNullOrWhiteSpace(confirmPassword))
+    {
+        ShowPasswordMessage(
+            "Please confirm your new password.",
+            false
+        );
+
+        return;
+    }
+
+
+    // =====================================================
+    // PASSWORD LENGTH
+    // =====================================================
+
+    if (newPassword.Length < 6)
+    {
+        ShowPasswordMessage(
+            "New password must be at least 6 characters long.",
+            false
+        );
+
+        return;
+    }
+
+
+    // =====================================================
+    // CONFIRM PASSWORD
+    // =====================================================
+
+    if (newPassword != confirmPassword)
+    {
+        ShowPasswordMessage(
+            "New password and confirm password do not match.",
+            false
+        );
+
+        return;
+    }
+
+
+    // =====================================================
+    // PREVENT SAME PASSWORD
+    // =====================================================
+
+    if (currentPassword == newPassword)
+    {
+        ShowPasswordMessage(
+            "New password must be different from your current password.",
+            false
+        );
+
+        return;
+    }
+
+
+    // =====================================================
+    // UPDATE PASSWORD
+    // =====================================================
+
+    string query = @"
+        UPDATE Users
+        SET PasswordHash = @NewPassword
+        WHERE UserID = @UserID
+        AND PasswordHash = @CurrentPassword";
+
+
+    using (SqlConnection con =
+           new SqlConnection(connectionString))
+    {
+        using (SqlCommand cmd =
+               new SqlCommand(query, con))
+        {
+            cmd.Parameters.Add(
+                "@NewPassword",
+                SqlDbType.NVarChar
+            ).Value =
+                newPassword;
+
+
+            cmd.Parameters.Add(
+                "@CurrentPassword",
+                SqlDbType.NVarChar
+            ).Value =
+                currentPassword;
+
+
+            cmd.Parameters.Add(
+                "@UserID",
+                SqlDbType.Int
+            ).Value =
+                Convert.ToInt32(userId);
+
+
+            try
+            {
+                con.Open();
+
+
+                int rowsAffected =
+                    cmd.ExecuteNonQuery();
+
+
+                // =================================================
+                // PASSWORD UPDATED
+                // =================================================
+
+                if (rowsAffected > 0)
+                {
+                    ShowPasswordMessage(
+                        "Password changed successfully.",
+                        true
+                    );
+
+
+                    // Clear password fields
+                    txtCurrentPassword.Text = "";
+                    txtNewPassword.Text = "";
+                    txtConfirmPassword.Text = "";
+
+
+                    // Optional:
+                    // Keep panel open so user can see success message.
+                }
+                else
+                {
+                    // =================================================
+                    // WRONG CURRENT PASSWORD
+                    // =================================================
+
+                    ShowPasswordMessage(
+                        "Current password is incorrect.",
+                        false
+                    );
+                }
+            }
+            catch (SqlException ex)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "SQL Change Password Error: "
+                    + ex.Message
+                );
+
+
+                ShowPasswordMessage(
+                    "Unable to change password. Please try again.",
+                    false
+                );
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    "Change Password Error: "
+                    + ex.Message
+                );
+
+
+                ShowPasswordMessage(
+                    "Something went wrong. Please try again.",
+                    false
+                );
+            }
+        }
+    }
+}
+
+
+// =========================================================
+// CANCEL CHANGE PASSWORD
+// =========================================================
+
+protected void btnCancelPassword_Click(
+    object sender,
+    EventArgs e)
+{
+    // Hide password panel
+    pnlChangePassword.Visible = false;
+
+
+    // Clear fields
+    txtCurrentPassword.Text = "";
+    txtNewPassword.Text = "";
+    txtConfirmPassword.Text = "";
+
+
+    // Clear message
+    lblPasswordMessage.Text = "";
+
+
+    // Show profile buttons
+    btnEditProfile.Visible = true;
+    btnChangePassword.Visible = true;
+}
+
+
+// =========================================================
+// PASSWORD MESSAGE
+// =========================================================
+
+private void ShowPasswordMessage(
+    string message,
+    bool success)
+{
+    lblPasswordMessage.Text =
+        message;
+
+
+    if (success)
+    {
+        lblPasswordMessage.CssClass =
+            "profile-message profile-success";
+    }
+    else
+    {
+        lblPasswordMessage.CssClass =
+            "profile-message profile-error";
+    }
+}
 
 
         // =========================================================
@@ -578,18 +860,18 @@ namespace JanVoice.Officer
             string message,
             bool success)
         {
-            lblProfileMessage.Text =
+            lblPersonalMessage.Text =
                 message;
 
 
             if (success)
             {
-                lblProfileMessage.CssClass =
+                lblPersonalMessage.CssClass =
                     "profile-message profile-success";
             }
             else
             {
-                lblProfileMessage.CssClass =
+                lblPersonalMessage.CssClass =
                     "profile-message profile-error";
             }
         }
@@ -626,7 +908,27 @@ namespace JanVoice.Officer
 
 
         // =========================================================
-        // PROFILE NOT AVAILABLE
+        // EDIT FORM VALUE
+        // =========================================================
+
+        private string GetEditValue(
+            SqlDataReader reader,
+            string columnName)
+        {
+            if (reader[columnName] == DBNull.Value)
+            {
+                return "";
+            }
+
+
+            return reader[columnName]
+                .ToString()
+                .Trim();
+        }
+
+
+        // =========================================================
+        // PROFILE UNAVAILABLE
         // =========================================================
 
         private void ShowProfileUnavailable()
@@ -634,29 +936,38 @@ namespace JanVoice.Officer
             lblOfficerID.Text =
                 "Not Available";
 
+
             lblAccountOfficerID.Text =
                 "Not Available";
+
 
             lblFullName.Text =
                 "Not Available";
 
+
             lblEmail.Text =
                 "Not Available";
+
 
             lblMobile.Text =
                 "Not Available";
 
+
             lblUsername.Text =
                 "Officer";
+
 
             lblDepartment.Text =
                 "Not Available";
 
+
             lblDesignation.Text =
                 "Not Available";
 
-            lblAssignedArea.Text =s
+
+            lblAssignedArea.Text =
                 "Not Assigned";
+
 
             lblAddress.Text =
                 "Not Available";
