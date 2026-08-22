@@ -15,75 +15,21 @@ namespace JanVoice.Officer
     {
 
         /// <summary>
-        /// lblPoliceNumber control.
+        /// rptEmergencyContacts control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPoliceNumber;
+        protected global::System.Web.UI.WebControls.Repeater rptEmergencyContacts;
 
         /// <summary>
-        /// lblAmbulanceNumber control.
+        /// pnlNoEmergencyContacts control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblAmbulanceNumber;
-
-        /// <summary>
-        /// lblFireNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblFireNumber;
-
-        /// <summary>
-        /// lblDisasterNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblDisasterNumber;
-
-        /// <summary>
-        /// lblMunicipalNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblMunicipalNumber;
-
-        /// <summary>
-        /// lblElectricityNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblElectricityNumber;
-
-        /// <summary>
-        /// lblWaterNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblWaterNumber;
-
-        /// <summary>
-        /// lblHospitalNumber control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblHospitalNumber;
+        protected global::System.Web.UI.WebControls.Panel pnlNoEmergencyContacts;
     }
 }

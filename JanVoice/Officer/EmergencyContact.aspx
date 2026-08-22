@@ -7,7 +7,6 @@
 
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
     <!-- =========================================================
          EMERGENCY CONTACT PAGE
     ========================================================== -->
@@ -33,10 +32,9 @@
 
                     </span>
 
-
-                    <h1>Emergency Contacts
+                    <h1>
+                        Emergency Contacts
                     </h1>
-
 
                     <p>
                         Quickly access important emergency departments
@@ -72,7 +70,8 @@
 
                 <div class="emergency-alert-content">
 
-                    <strong>Emergency Assistance
+                    <strong>
+                        Emergency Assistance
                     </strong>
 
                     <p>
@@ -103,7 +102,8 @@
                     </span>
 
 
-                    <h2>Emergency Helplines
+                    <h2>
+                        Emergency Helplines
                     </h2>
 
 
@@ -119,309 +119,164 @@
 
 
             <!-- =====================================================
-                 EMERGENCY CONTACT GRID
+                 DYNAMIC EMERGENCY CONTACT GRID
             ====================================================== -->
 
             <div class="emergency-contact-grid">
 
 
-                <!-- =================================================
-                     POLICE
-                ================================================== -->
+                <asp:Repeater
+                    ID="rptEmergencyContacts"
+                    runat="server">
 
-                <div class="emergency-contact-card police-card">
+                    <ItemTemplate>
 
-                    <div class="emergency-contact-top">
 
-                        <div class="emergency-contact-icon">
+                        <!-- =================================================
+                             EMERGENCY CONTACT CARD
+                        ================================================== -->
 
-                            <i class="fa-solid fa-shield-halved"></i>
+                        <div class="emergency-contact-card">
+
+
+                            <!-- TOP -->
+
+                            <div class="emergency-contact-top">
+
+
+                                <div class="emergency-contact-icon">
+
+                                    <i class="fa-solid fa-shield-halved"></i>
+
+                                </div>
+
+
+                                <span class="emergency-status">
+
+                                    <span class="status-dot"></span>
+
+                                    <%#
+                                        Convert.ToBoolean(
+                                            Eval("IsAvailable24x7")
+                                        )
+                                        ? "Available 24x7"
+                                        : "Limited Availability"
+                                    %>
+
+                                </span>
+
+                            </div>
+
+
+
+                            <!-- CONTENT -->
+
+                            <div class="emergency-contact-content">
+
+
+                                <span class="emergency-department">
+
+                                    <%#
+                                        Eval("DepartmentName")
+                                    %>
+
+                                </span>
+
+
+                                <h3>
+
+                                    <%#
+                                        Eval("ContactPerson")
+                                    %>
+
+                                </h3>
+
+
+                                <p>
+
+                                    <%#
+                                        Eval("Address")
+                                    %>
+
+                                </p>
+
+                            </div>
+
+
+
+                            <!-- PHONE NUMBER -->
+
+                            <div class="emergency-contact-number">
+
+                                <span>
+                                    Emergency Number
+                                </span>
+
+
+                                <strong>
+
+                                    <%#
+                                        Eval("PhoneNumber")
+                                    %>
+
+                                </strong>
+
+                            </div>
+
+
+
+                            <!-- CALL BUTTON -->
+
+                            <a
+                                href='<%# "tel:" + Eval("PhoneNumber").ToString().Replace("-", "").Replace(" ", "") %>'
+                                class="emergency-call-button">
+
+                                <i class="fa-solid fa-phone"></i>
+
+                                Call Now
+
+                            </a>
+
 
                         </div>
 
 
-                        <span class="emergency-status">
+                    </ItemTemplate>
 
-                            <span class="status-dot"></span>
-
-                            Available
-
-                        </span>
-
-                    </div>
+                </asp:Repeater>
 
 
-                    <div class="emergency-contact-content">
 
-                        <span class="emergency-department">LAW & ORDER
-                        </span>
+                <!-- =====================================================
+                     NO CONTACT DATA
+                ====================================================== -->
+
+                <asp:Panel
+                    ID="pnlNoEmergencyContacts"
+                    runat="server"
+                    CssClass="emergency-empty"
+                    Visible="false">
 
 
-                        <h3>Police
-                        </h3>
+                    <div class="emergency-empty-icon">
 
-
-                        <p>
-                            For crimes, public safety threats,
-                            accidents and immediate security assistance.
-                        </p>
+                        <i class="fa-solid fa-phone-slash"></i>
 
                     </div>
 
 
-                    <div class="emergency-contact-number">
+                    <h3>
+                        No Emergency Contacts Available
+                    </h3>
 
-                        <span>Emergency Number
-                        </span>
 
-                        <strong>
-                            <asp:Label
-                                ID="lblPoliceNumber"
-                                runat="server"
-                                Text="112">
-                            </asp:Label>
-                        </strong>
+                    <p>
+                        Emergency contact information is currently
+                        unavailable.
+                    </p>
 
-                    </div>
 
-
-                    <a
-                        href="tel:112"
-                        class="emergency-call-button">
-
-                        <i class="fa-solid fa-phone"></i>
-
-                        Call Now
-
-                    </a>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     AMBULANCE
-                ================================================== -->
-
-                <div class="emergency-contact-card ambulance-card">
-
-                    <div class="emergency-contact-top">
-
-                        <div class="emergency-contact-icon">
-
-                            <i class="fa-solid fa-truck-medical"></i>
-
-                        </div>
-
-
-                        <span class="emergency-status">
-
-                            <span class="status-dot"></span>
-
-                            Available
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="emergency-contact-content">
-
-                        <span class="emergency-department">MEDICAL EMERGENCY
-                        </span>
-
-
-                        <h3>Ambulance
-                        </h3>
-
-
-                        <p>
-                            For medical emergencies, accidents and
-                            urgent patient transportation.
-                        </p>
-
-                    </div>
-
-
-                    <div class="emergency-contact-number">
-
-                        <span>Emergency Number
-                        </span>
-
-                        <strong>
-                            <asp:Label
-                                ID="lblAmbulanceNumber"
-                                runat="server"
-                                Text="108">
-                            </asp:Label>
-                        </strong>
-
-                    </div>
-
-
-                    <a
-                        href="tel:108"
-                        class="emergency-call-button">
-
-                        <i class="fa-solid fa-phone"></i>
-
-                        Call Now
-
-                    </a>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     FIRE & RESCUE
-                ================================================== -->
-
-                <div class="emergency-contact-card fire-card">
-
-                    <div class="emergency-contact-top">
-
-                        <div class="emergency-contact-icon">
-
-                            <i class="fa-solid fa-fire-extinguisher"></i>
-
-                        </div>
-
-
-                        <span class="emergency-status">
-
-                            <span class="status-dot"></span>
-
-                            Available
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="emergency-contact-content">
-
-                        <span class="emergency-department">FIRE & RESCUE
-                        </span>
-
-
-                        <h3>Fire & Rescue
-                        </h3>
-
-
-                        <p>
-                            For fire incidents, rescue operations
-                            and hazardous emergency situations.
-                        </p>
-
-                    </div>
-
-
-                    <div class="emergency-contact-number">
-
-                        <span>Emergency Number
-                        </span>
-
-                        <strong>
-
-                            <asp:Label
-                                ID="lblFireNumber"
-                                runat="server"
-                                Text="101">
-                            </asp:Label>
-
-                        </strong>
-
-                    </div>
-
-
-                    <a
-                        href="tel:101"
-                        class="emergency-call-button">
-
-                        <i class="fa-solid fa-phone"></i>
-
-                        Call Now
-
-                    </a>
-
-                </div>
-
-
-
-                <!-- =================================================
-                     DISASTER MANAGEMENT
-                ================================================== -->
-
-                <div class="emergency-contact-card disaster-card">
-
-                    <div class="emergency-contact-top">
-
-                        <div class="emergency-contact-icon">
-
-                            <i class="fa-solid fa-house-flood-water"></i>
-
-                        </div>
-
-
-                        <span class="emergency-status">
-
-                            <span class="status-dot"></span>
-
-                            Available
-
-                        </span>
-
-                    </div>
-
-
-                    <div class="emergency-contact-content">
-
-                        <span class="emergency-department">DISASTER RESPONSE
-                        </span>
-
-
-                        <h3>Disaster Management
-                        </h3>
-
-
-                        <p>
-                            For floods, earthquakes, natural disasters
-                            and large-scale emergency situations.
-                        </p>
-
-                    </div>
-
-
-                    <div class="emergency-contact-number">
-
-                        <span>Emergency Number
-                        </span>
-
-                        <strong>
-
-                            <asp:Label
-                                ID="lblDisasterNumber"
-                                runat="server"
-                                Text="1078">
-                            </asp:Label>
-
-                        </strong>
-
-                    </div>
-
-
-                    <a
-                        href="tel:1078"
-                        class="emergency-call-button">
-
-                        <i class="fa-solid fa-phone"></i>
-
-                        Call Now
-
-                    </a>
-
-                </div>
+                </asp:Panel>
 
 
             </div>
@@ -445,7 +300,8 @@
                     </span>
 
 
-                    <h2>Essential Department Contacts
+                    <h2>
+                        Essential Department Contacts
                     </h2>
 
 
@@ -467,9 +323,7 @@
             <div class="service-contact-grid">
 
 
-                <!-- =================================================
-                     MUNICIPAL CORPORATION
-                ================================================== -->
+                <!-- MUNICIPAL -->
 
                 <div class="service-contact-card">
 
@@ -482,11 +336,13 @@
 
                     <div class="service-contact-content">
 
-                        <span>CIVIC ADMINISTRATION
+                        <span>
+                            CIVIC ADMINISTRATION
                         </span>
 
 
-                        <h3>Municipal Corporation
+                        <h3>
+                            Municipal Corporation
                         </h3>
 
 
@@ -497,13 +353,7 @@
 
 
                         <strong>
-
-                            <asp:Label
-                                ID="lblMunicipalNumber"
-                                runat="server"
-                                Text="1800-103-0222">
-                            </asp:Label>
-
+                            1800-103-0222
                         </strong>
 
                     </div>
@@ -521,9 +371,7 @@
 
 
 
-                <!-- =================================================
-                     ELECTRICITY
-                ================================================== -->
+                <!-- ELECTRICITY -->
 
                 <div class="service-contact-card">
 
@@ -536,11 +384,13 @@
 
                     <div class="service-contact-content">
 
-                        <span>ELECTRICITY SERVICES
+                        <span>
+                            ELECTRICITY SERVICES
                         </span>
 
 
-                        <h3>Electricity Emergency
+                        <h3>
+                            Electricity Emergency
                         </h3>
 
 
@@ -551,13 +401,7 @@
 
 
                         <strong>
-
-                            <asp:Label
-                                ID="lblElectricityNumber"
-                                runat="server"
-                                Text="1912">
-                            </asp:Label>
-
+                            1912
                         </strong>
 
                     </div>
@@ -575,9 +419,7 @@
 
 
 
-                <!-- =================================================
-                     WATER
-                ================================================== -->
+                <!-- WATER -->
 
                 <div class="service-contact-card">
 
@@ -590,11 +432,13 @@
 
                     <div class="service-contact-content">
 
-                        <span>WATER SERVICES
+                        <span>
+                            WATER SERVICES
                         </span>
 
 
-                        <h3>Water Department
+                        <h3>
+                            Water Department
                         </h3>
 
 
@@ -605,13 +449,7 @@
 
 
                         <strong>
-
-                            <asp:Label
-                                ID="lblWaterNumber"
-                                runat="server"
-                                Text="1800-121-4545">
-                            </asp:Label>
-
+                            1800-121-4545
                         </strong>
 
                     </div>
@@ -629,9 +467,7 @@
 
 
 
-                <!-- =================================================
-                     HOSPITAL
-                ================================================== -->
+                <!-- HOSPITAL -->
 
                 <div class="service-contact-card">
 
@@ -644,11 +480,13 @@
 
                     <div class="service-contact-content">
 
-                        <span>HEALTH SERVICES
+                        <span>
+                            HEALTH SERVICES
                         </span>
 
 
-                        <h3>Emergency Hospital
+                        <h3>
+                            Emergency Hospital
                         </h3>
 
 
@@ -659,13 +497,7 @@
 
 
                         <strong>
-
-                            <asp:Label
-                                ID="lblHospitalNumber"
-                                runat="server"
-                                Text="108">
-                            </asp:Label>
-
+                            108
                         </strong>
 
                     </div>
@@ -704,7 +536,8 @@
 
                     <div>
 
-                        <h2>Emergency Guidelines
+                        <h2>
+                            Emergency Guidelines
                         </h2>
 
                         <p>
@@ -721,14 +554,18 @@
                 <div class="guidelines-grid">
 
 
+                    <!-- 01 -->
+
                     <div class="guideline-item">
 
-                        <span class="guideline-number">01
+                        <span class="guideline-number">
+                            01
                         </span>
 
                         <div>
 
-                            <strong>Stay Calm
+                            <strong>
+                                Stay Calm
                             </strong>
 
                             <p>
@@ -742,14 +579,18 @@
 
 
 
+                    <!-- 02 -->
+
                     <div class="guideline-item">
 
-                        <span class="guideline-number">02
+                        <span class="guideline-number">
+                            02
                         </span>
 
                         <div>
 
-                            <strong>Share Your Location
+                            <strong>
+                                Share Your Location
                             </strong>
 
                             <p>
@@ -763,14 +604,18 @@
 
 
 
+                    <!-- 03 -->
+
                     <div class="guideline-item">
 
-                        <span class="guideline-number">03
+                        <span class="guideline-number">
+                            03
                         </span>
 
                         <div>
 
-                            <strong>Give Accurate Information
+                            <strong>
+                                Give Accurate Information
                             </strong>
 
                             <p>
@@ -784,14 +629,18 @@
 
 
 
+                    <!-- 04 -->
+
                     <div class="guideline-item">
 
-                        <span class="guideline-number">04
+                        <span class="guideline-number">
+                            04
                         </span>
 
                         <div>
 
-                            <strong>Follow Instructions
+                            <strong>
+                                Follow Instructions
                             </strong>
 
                             <p>
