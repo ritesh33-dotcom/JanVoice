@@ -73,8 +73,14 @@
     <Content Include="About.aspx" />
     <Content Include="Admin\AdminDashboard.aspx" />
     <Content Include="Admin\ComplaintDetails.aspx" />
+    <Content Include="Admin\ContactMessages.aspx" />
+    <Content Include="Admin\EmergencyContacts.aspx" />
+    <Content Include="Admin\ManageCategories.aspx" />
     <Content Include="Admin\ManageComplaints.aspx" />
+    <Content Include="Admin\ManageOfficers.aspx" />
     <Content Include="Admin\ManageUsers.aspx" />
+    <Content Include="Admin\ManageWards.aspx" />
+    <Content Include="Admin\Reports.aspx" />
     <Content Include="Citizen\ComplaintDetails.aspx" />
     <Content Include="Citizen\Dashboard.aspx" />
     <Content Include="Citizen\MyComplaints.aspx" />
@@ -94,13 +100,18 @@
     <Content Include="CSS\complaintdetails.css" />
     <Content Include="CSS\components.css" />
     <Content Include="CSS\Contact.css" />
+    <Content Include="CSS\ContactMessages.css" />
     <Content Include="CSS\dashboard.css" />
     <Content Include="CSS\EmergencyContact.css" />
+    <Content Include="CSS\EmergencyContacts.css" />
     <Content Include="CSS\Feedback.css" />
     <Content Include="CSS\forgotpassword.css" />
     <Content Include="CSS\IssueMap.css" />
+    <Content Include="CSS\ManageCategories.css" />
     <Content Include="CSS\ManageComplaints.css" />
+    <Content Include="CSS\ManageOfficers.css" />
     <Content Include="CSS\ManageUsers.css" />
+    <Content Include="CSS\ManageWards.css" />
     <Content Include="CSS\mycomplaints.css" />
     <Content Include="CSS\notifications.css" />
     <Content Include="CSS\Officer.css" />
@@ -108,6 +119,7 @@
     <Content Include="CSS\profile.css" />
     <Content Include="CSS\PublicComplaintDetails.css" />
     <Content Include="CSS\reportissue.css" />
+    <Content Include="CSS\Reports.css" />
     <Content Include="CSS\ResolutionDetails.css" />
     <Content Include="CSS\responsive.css" />
     <Content Include="CSS\style.css" />
@@ -182,6 +194,27 @@
     <Compile Include="Admin\ComplaintDetails.aspx.designer.cs">
       <DependentUpon>ComplaintDetails.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\ContactMessages.aspx.cs">
+      <DependentUpon>ContactMessages.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ContactMessages.aspx.designer.cs">
+      <DependentUpon>ContactMessages.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\EmergencyContacts.aspx.cs">
+      <DependentUpon>EmergencyContacts.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\EmergencyContacts.aspx.designer.cs">
+      <DependentUpon>EmergencyContacts.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ManageCategories.aspx.cs">
+      <DependentUpon>ManageCategories.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ManageCategories.aspx.designer.cs">
+      <DependentUpon>ManageCategories.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\ManageComplaints.aspx.cs">
       <DependentUpon>ManageComplaints.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -189,12 +222,33 @@
     <Compile Include="Admin\ManageComplaints.aspx.designer.cs">
       <DependentUpon>ManageComplaints.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\ManageOfficers.aspx.cs">
+      <DependentUpon>ManageOfficers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ManageOfficers.aspx.designer.cs">
+      <DependentUpon>ManageOfficers.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\ManageUsers.aspx.cs">
       <DependentUpon>ManageUsers.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Admin\ManageUsers.aspx.designer.cs">
       <DependentUpon>ManageUsers.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\ManageWards.aspx.cs">
+      <DependentUpon>ManageWards.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\ManageWards.aspx.designer.cs">
+      <DependentUpon>ManageWards.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Reports.aspx.cs">
+      <DependentUpon>Reports.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Reports.aspx.designer.cs">
+      <DependentUpon>Reports.aspx</DependentUpon>
     </Compile>
     <Compile Include="Citizen\ComplaintDetails.aspx.cs">
       <DependentUpon>ComplaintDetails.aspx</DependentUpon>

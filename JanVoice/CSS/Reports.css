@@ -1,0 +1,642 @@
+﻿/* ==========================================
+        JANVOICE REPORTS & ANALYTICS
+========================================== */
+
+.reports-page {
+    width: 100%;
+}
+
+
+/* ==========================================
+        PAGE HEADER
+========================================== */
+
+.reports-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 28px;
+}
+
+.page-label {
+    color: #38BDF8;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.reports-header h1 {
+    margin: 8px 0;
+    color: #F8FAFC;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.reports-header p {
+    margin: 0;
+    color: #94A3B8;
+    font-size: 14px;
+}
+
+
+/* ==========================================
+        HEADER ACTION
+========================================== */
+
+.reports-header-actions {
+    display: flex;
+    align-items: center;
+}
+
+.report-action-btn {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 11px 17px;
+    border: 1px solid rgba(56,189,248,.20);
+    border-radius: 10px;
+    background: rgba(59,130,246,.10);
+    color: #E2E8F0;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .25s;
+}
+
+    .report-action-btn:hover {
+        background: rgba(59,130,246,.20);
+        border-color: rgba(56,189,248,.40);
+        transform: translateY(-2px);
+    }
+
+
+/* ==========================================
+        FILTER CARD
+========================================== */
+
+.reports-filter-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    align-items: end;
+    gap: 18px;
+    padding: 20px;
+    margin-bottom: 25px;
+    background: #1E293B;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px;
+}
+
+.filter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+    .filter-item label {
+        color: #64748B;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: 1.2px;
+    }
+
+.report-filter {
+    width: 100%;
+    height: 42px;
+    padding: 0 13px;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 9px;
+    background: #0F172A;
+    color: #E2E8F0;
+    font-size: 13px;
+    outline: none;
+    cursor: pointer;
+}
+
+    .report-filter:focus {
+        border-color: rgba(59,130,246,.55);
+    }
+
+    .report-filter option {
+        background: #1E293B;
+        color: #F8FAFC;
+    }
+
+.apply-report-btn {
+    height: 42px;
+    padding: 0 18px;
+    border: none;
+    border-radius: 9px;
+    background: linear-gradient( 135deg, #3B82F6, #2563EB );
+    color: white;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .25s;
+}
+
+    .apply-report-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(37,99,235,.25);
+    }
+
+
+/* ==========================================
+        SUMMARY STATISTICS
+========================================== */
+
+.report-stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 25px;
+}
+
+.report-stat-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: #1E293B;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px;
+    transition: .3s;
+}
+
+    .report-stat-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(59,130,246,.30);
+        box-shadow: 0 12px 30px rgba(0,0,0,.15);
+    }
+
+.report-stat-icon {
+    width: 50px;
+    height: 50px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 13px;
+    background: rgba(59,130,246,.13);
+    font-size: 21px;
+}
+
+    .report-stat-icon.pending {
+        background: rgba(245,158,11,.13);
+    }
+
+    .report-stat-icon.progress {
+        background: rgba(56,189,248,.13);
+    }
+
+    .report-stat-icon.resolved {
+        background: rgba(34,197,94,.13);
+    }
+
+.report-stat-card > div:last-child {
+    display: flex;
+    flex-direction: column;
+}
+
+.report-stat-card span {
+    color: #94A3B8;
+    font-size: 12px;
+}
+
+.report-stat-card strong {
+    margin: 3px 0;
+    color: #F8FAFC;
+    font-size: 25px;
+}
+
+.report-stat-card small {
+    color: #64748B;
+    font-size: 10px;
+}
+
+
+/* ==========================================
+        REPORT GRID
+========================================== */
+
+.reports-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+
+/* ==========================================
+        REPORT CARD
+========================================== */
+
+.report-card {
+    background: #1E293B;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 18px;
+    overflow: hidden;
+}
+
+.report-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 21px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+    .report-card-header h3 {
+        margin: 0 0 5px;
+        color: #F8FAFC;
+        font-size: 16px;
+    }
+
+    .report-card-header p {
+        margin: 0;
+        color: #64748B;
+        font-size: 11px;
+    }
+
+.report-period {
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: rgba(59,130,246,.10);
+    color: #38BDF8;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+
+/* ==========================================
+        COMPLAINT STATUS
+========================================== */
+
+.status-report {
+    padding: 18px 21px 22px;
+}
+
+.status-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 7px;
+    color: #E2E8F0;
+    font-size: 12px;
+}
+
+.status-info {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+}
+
+    .status-info strong {
+        font-size: 12px;
+    }
+
+.status-row > span {
+    color: #F8FAFC;
+    font-weight: 600;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+}
+
+.pending-dot {
+    background: #F59E0B;
+}
+
+.accepted-dot {
+    background: #3B82F6;
+}
+
+.progress-dot {
+    background: #38BDF8;
+}
+
+.resolved-dot {
+    background: #22C55E;
+}
+
+.status-bar {
+    width: 100%;
+    height: 7px;
+    margin-bottom: 18px;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #0F172A;
+}
+
+.status-fill {
+    height: 100%;
+    border-radius: 20px;
+}
+
+.pending-fill {
+    background: #F59E0B;
+}
+
+.accepted-fill {
+    background: #3B82F6;
+}
+
+.progress-fill {
+    background: #38BDF8;
+}
+
+.resolved-fill {
+    background: #22C55E;
+}
+
+
+/* ==========================================
+        CATEGORY REPORT
+========================================== */
+
+.category-report {
+    padding: 8px 21px 16px;
+}
+
+.category-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,.05);
+}
+
+    .category-row:last-child {
+        border-bottom: none;
+    }
+
+.category-name {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+}
+
+.category-icon {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    background: rgba(59,130,246,.10);
+    font-size: 16px;
+}
+
+.category-name strong {
+    color: #E2E8F0;
+    font-size: 12px;
+}
+
+.category-value {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+    .category-value span {
+        color: #F8FAFC;
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+    .category-value small {
+        min-width: 35px;
+        color: #64748B;
+        font-size: 10px;
+        text-align: right;
+    }
+
+
+/* ==========================================
+        WARD PERFORMANCE
+========================================== */
+
+.ward-performance {
+    margin-bottom: 25px;
+}
+
+.ward-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.ward-report-table {
+    width: 100%;
+    min-width: 700px;
+    border-collapse: collapse;
+}
+
+    .ward-report-table th {
+        padding: 13px 20px;
+        background: rgba(15,23,42,.35);
+        color: #64748B;
+        font-size: 10px;
+        font-weight: 700;
+        letter-spacing: .8px;
+        text-align: left;
+    }
+
+    .ward-report-table td {
+        padding: 15px 20px;
+        border-top: 1px solid rgba(255,255,255,.05);
+        color: #94A3B8;
+        font-size: 12px;
+    }
+
+        .ward-report-table td strong {
+            color: #E2E8F0;
+        }
+
+    .ward-report-table tbody tr {
+        transition: .2s;
+    }
+
+        .ward-report-table tbody tr:hover {
+            background: rgba(59,130,246,.04);
+        }
+
+
+/* ==========================================
+        PERFORMANCE BADGES
+========================================== */
+
+.performance {
+    display: inline-flex;
+    align-items: center;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+    .performance.good {
+        background: rgba(34,197,94,.12);
+        color: #4ADE80;
+    }
+
+    .performance.average {
+        background: rgba(245,158,11,.12);
+        color: #FBBF24;
+    }
+
+
+/* ==========================================
+        ADDITIONAL INSIGHTS
+========================================== */
+
+.insights-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.insight-card {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 20px;
+    background: #1E293B;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 16px;
+    transition: .3s;
+}
+
+    .insight-card:hover {
+        transform: translateY(-3px);
+        border-color: rgba(56,189,248,.25);
+    }
+
+.insight-icon {
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 12px;
+    background: rgba(59,130,246,.10);
+    font-size: 20px;
+}
+
+.insight-card > div:last-child {
+    display: flex;
+    flex-direction: column;
+}
+
+.insight-card span {
+    color: #94A3B8;
+    font-size: 11px;
+}
+
+.insight-card strong {
+    margin: 3px 0;
+    color: #F8FAFC;
+    font-size: 22px;
+}
+
+.insight-card small {
+    color: #64748B;
+    font-size: 10px;
+}
+
+
+/* ==========================================
+        RESPONSIVE
+========================================== */
+
+@media (max-width: 1100px) {
+
+    .report-stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .reports-filter-card {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .apply-report-btn {
+        width: 100%;
+    }
+}
+
+
+@media (max-width: 900px) {
+
+    .reports-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .insights-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 650px) {
+
+    .reports-header {
+        flex-direction: column;
+    }
+
+        .reports-header h1 {
+            font-size: 26px;
+        }
+
+    .reports-header-actions {
+        width: 100%;
+    }
+
+    .report-action-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .reports-filter-card {
+        grid-template-columns: 1fr;
+    }
+
+    .report-stats {
+        grid-template-columns: 1fr;
+    }
+
+    .report-card-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .report-period {
+        align-self: flex-start;
+    }
+}
+
+
+@media (max-width: 450px) {
+
+    .report-stat-card {
+        padding: 16px;
+    }
+
+    .report-stat-icon {
+        width: 44px;
+        height: 44px;
+    }
+
+    .report-stat-card strong {
+        font-size: 22px;
+    }
+
+    .status-report,
+    .category-report {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
