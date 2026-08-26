@@ -4,7 +4,7 @@
 
 <html>
 <head runat="server">
-    
+
     <meta charset="utf-8" />
 
     <meta
@@ -33,7 +33,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
     <link href="../CSS/AdminMaster.css"
-          rel="stylesheet" />
+        rel="stylesheet" />
 
 
     <asp:ContentPlaceHolder ID="head" runat="server">
@@ -68,10 +68,10 @@
                     <div class="logo-text">
 
                         <h2>JanVoice
-                    </h2>
+                        </h2>
 
                         <span>ADMIN PANEL
-                    </span>
+                        </span>
 
                     </div>
 
@@ -90,25 +90,25 @@
 
 
                     <a href="../Admin/AdminDashboard.aspx"
-   class="admin-nav-link active">
+                        class="admin-nav-link active">
 
                         <span class="nav-icon">⌂
-                    </span>
+                        </span>
 
                         <span>Dashboard
-                    </span>
+                        </span>
 
                     </a>
 
 
                     <a href="../Admin/ManageComplaints.aspx"
-   class="admin-nav-link">
+                        class="admin-nav-link">
 
                         <span class="nav-icon">▣
-                    </span>
+                        </span>
 
                         <span>Complaints
-                    </span>
+                        </span>
 
                     </a>
 
@@ -119,14 +119,14 @@
                     </div>
 
 
-                   <a href="../Admin/ManageUsers.aspx"
-   class="admin-nav-link">
+                    <a href="../Admin/ManageUsers.aspx"
+                        class="admin-nav-link">
 
                         <span class="nav-icon">◉
-                    </span>
+                        </span>
 
                         <span>Users
-                    </span>
+                        </span>
 
                     </a>
 
@@ -135,10 +135,10 @@
                         class="admin-nav-link">
 
                         <span class="nav-icon">◈
-                    </span>
+                        </span>
 
                         <span>Officers
-                    </span>
+                        </span>
 
                     </a>
 
@@ -147,10 +147,10 @@
                         class="admin-nav-link">
 
                         <span class="nav-icon">#
-                    </span>
+                        </span>
 
                         <span>Categories
-                    </span>
+                        </span>
 
                     </a>
 
@@ -159,10 +159,10 @@
                         class="admin-nav-link">
 
                         <span class="nav-icon">◇
-                    </span>
+                        </span>
 
                         <span>Wards
-                    </span>
+                        </span>
 
                     </a>
 
@@ -177,10 +177,10 @@
                         class="admin-nav-link">
 
                         <span class="nav-icon">◫
-                    </span>
+                        </span>
 
                         <span>Reports
-                    </span>
+                        </span>
 
                     </a>
 
@@ -189,10 +189,10 @@
                         class="admin-nav-link">
 
                         <span class="nav-icon">✉
-                    </span>
+                        </span>
 
                         <span>Messages
-                    </span>
+                        </span>
 
                     </a>
 
@@ -201,10 +201,10 @@
                         class="admin-nav-link">
 
                         <span class="nav-icon">!
-                    </span>
+                        </span>
 
                         <span>Emergency
-                    </span>
+                        </span>
 
                     </a>
 
@@ -220,10 +220,10 @@
                         class="admin-nav-link">
 
                         <span class="nav-icon">←
-                    </span>
+                        </span>
 
                         <span>Back to JanVoice
-                    </span>
+                        </span>
 
                     </a>
 
@@ -231,7 +231,8 @@
                     <asp:LinkButton
                         ID="btnLogout"
                         runat="server"
-                        CssClass="admin-nav-link logout-link">
+                        CssClass="admin-nav-link logout-link"
+                        OnClick="btnLogout_Click">
 
                     <span class="nav-icon">
                         ⎋
@@ -241,7 +242,7 @@
                         Logout
                     </span>
 
-                </asp:LinkButton>
+                    </asp:LinkButton>
 
                 </div>
 
@@ -278,10 +279,10 @@
                     <div class="topbar-title">
 
                         <span>JanVoice
-                    </span>
+                        </span>
 
                         <strong>Administration
-                    </strong>
+                        </strong>
 
                     </div>
 
@@ -299,7 +300,7 @@
                        
 
                             <span class="notification-badge">3
-                        </span>
+                            </span>
 
                         </a>
 
@@ -318,16 +319,16 @@
                             <div class="admin-profile-info">
 
                                 <strong>Administrator
-                            </strong>
+                                </strong>
 
                                 <span>System Admin
-                            </span>
+                                </span>
 
                             </div>
 
 
                             <span class="profile-arrow">▾
-                        </span>
+                            </span>
 
 
                         </div>
@@ -358,7 +359,7 @@
 
 
         </div>
-       
+
     </form>
 </body>
 </html>
