@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
+using JanVoice.Helpers;
 
 namespace JanVoice
 {
@@ -13,115 +10,257 @@ namespace JanVoice
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
 
-       
 
         protected void loginButton_Click(object sender, EventArgs e)
         {
-            // Validate Email
+            // ============================================
+            // 1. VALIDATE EMAIL
+            // ============================================
+
             if (string.IsNullOrWhiteSpace(txtEmail.Text))
             {
-                ClientScript.RegisterStartupScript(this.GetType(),
-                    "msg",
-                    "alert('Please enter your email.');",
-                    true);
+                ShowMessage("Please enter your email.");
                 return;
             }
 
-            // Validate Password
+
+            // ============================================
+            // 2. VALIDATE PASSWORD
+            // ============================================
+
             if (string.IsNullOrWhiteSpace(txtPassword.Text))
             {
-                ClientScript.RegisterStartupScript(this.GetType(),
-                    "msg",
-                    "alert('Please enter your password.');",
-                    true);
+                ShowMessage("Please enter your password.");
                 return;
             }
 
-            string connectionString =
-                ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
 
-            using (SqlConnection con = new SqlConnection(connectionString))
+            // ============================================
+            // 3. GET DATABASE CONNECTION
+            // ============================================
+
+            string connectionString =
+                ConfigurationManager
+                .ConnectionStrings["JanVoiceDB"]
+                .ConnectionString;
+
+
+            using (SqlConnection con =
+                   new SqlConnection(connectionString))
             {
                 con.Open();
 
-                string query = @"SELECT UserID,
-                                FullName,
-                                Email,
-                                RoleID,
-                                WardID
-                         FROM Users
-                         WHERE Email=@Email
-                         AND PasswordHash=@Password
-                         AND IsActive=1";
 
-                SqlCommand cmd = new SqlCommand(query, con);
+                // ============================================
+                // 4. GET USER BY EMAIL
+                // ============================================
 
-                cmd.Parameters.AddWithValue("@Email", txtEmail.Text.Trim());
-                cmd.Parameters.AddWithValue("@Password", txtPassword.Text.Trim());
+                string query = @"
+                    SELECT
+                        UserID,
+                        FullName,
+                        Email,
+                        PasswordHash,
+                        RoleID,
+                        WardID,
+                        IsActive
+                    FROM Users
+                    WHERE Email = @Email";
 
-                SqlDataReader reader = cmd.ExecuteReader();
 
-                if (reader.Read())
+                using (SqlCommand cmd =
+                       new SqlCommand(query, con))
                 {
-                    Session["UserID"] = reader["UserID"];
-                    Session["FullName"] = reader["FullName"];
-                    Session["Email"] = reader["Email"];
-                    Session["RoleID"] = reader["RoleID"];
-                    Session["WardID"] = reader["WardID"];
+                    cmd.Parameters.AddWithValue(
+                        "@Email",
+                        txtEmail.Text.Trim()
+                    );
 
-                    int roleID = Convert.ToInt32(reader["RoleID"]);
 
-                    // Officer session
-                    if (roleID == 2)
+                    using (SqlDataReader reader =
+                           cmd.ExecuteReader())
                     {
-                        Session["OfficerID"] = reader["UserID"];
-                    }
 
-                    reader.Close();
+                        // ============================================
+                        // 5. USER NOT FOUND
+                        // ============================================
 
-                    string returnUrl = Request.QueryString["ReturnUrl"];
+                        if (!reader.Read())
+                        {
+                            ShowMessage(
+                                "Invalid Email or Password."
+                            );
 
-                    if (!string.IsNullOrEmpty(returnUrl))
-                    {
-                        Response.Redirect(returnUrl);
-                        return;
-                    }
+                            return;
+                        }
 
-                    if (roleID == 1)
-                    {
-                        Response.Redirect("~/Citizen/Dashboard.aspx");
-                    }
-                    else if (roleID == 2)
-                    {
-                        Response.Redirect("~/Officer/Dashboard.aspx");
-                    }
-                    else if (roleID == 3)
-                    {
-                        Response.Redirect("~/Admin/Dashboard.aspx");
-                    }
-                    else
-                    {
-                        ClientScript.RegisterStartupScript(this.GetType(),
-                            "msg",
-                            "alert('Invalid user role.');",
-                            true);
-                    }
-                }
-                else
-                {
-                    reader.Close();
 
-                    ClientScript.RegisterStartupScript(this.GetType(),
-                        "msg",
-                        "alert('Invalid Email or Password.');",
-                        true);
+                        // ============================================
+                        // 6. CHECK ACCOUNT STATUS
+                        // ============================================
+
+                        bool isActive =
+                            Convert.ToBoolean(
+                                reader["IsActive"]
+                            );
+
+
+                        if (!isActive)
+                        {
+                            ShowMessage(
+                                "Your account has been deactivated. Please contact the administrator."
+                            );
+
+                            return;
+                        }
+
+
+                        // ============================================
+                        // 7. GET STORED PASSWORD HASH
+                        // ============================================
+
+                        string storedPasswordHash =
+                            reader["PasswordHash"].ToString();
+
+
+                        // ============================================
+                        // 8. VERIFY PASSWORD
+                        // ============================================
+
+                        bool passwordValid =
+                            AuthenticationHelper.VerifyPassword(
+                                txtPassword.Text.Trim(),
+                                storedPasswordHash
+                            );
+
+
+                        if (!passwordValid)
+                        {
+                            ShowMessage(
+                                "Invalid Email or Password."
+                            );
+
+                            return;
+                        }
+
+
+                        // ============================================
+                        // 9. STORE USER INFORMATION IN SESSION
+                        // ============================================
+
+                        Session["UserID"] =
+                            reader["UserID"];
+
+                        Session["FullName"] =
+                            reader["FullName"];
+
+                        Session["Email"] =
+                            reader["Email"];
+
+                        Session["RoleID"] =
+                            reader["RoleID"];
+
+                        Session["WardID"] =
+                            reader["WardID"];
+
+
+                        int roleID =
+                            Convert.ToInt32(
+                                reader["RoleID"]
+                            );
+
+
+                        // ============================================
+                        // 10. OFFICER SESSION
+                        // ============================================
+
+                        if (roleID ==
+                            AuthenticationHelper.OfficerRole)
+                        {
+                            Session["OfficerID"] =
+                                reader["UserID"];
+                        }
+
+
+                        // ============================================
+                        // 11. CLOSE READER
+                        // ============================================
+
+                        reader.Close();
+
+
+                        // ============================================
+                        // 12. RETURN URL
+                        // ============================================
+
+                        string returnUrl =
+                            Request.QueryString["ReturnUrl"];
+
+
+                        if (!string.IsNullOrEmpty(returnUrl))
+                        {
+                            Response.Redirect(
+                                returnUrl
+                            );
+
+                            return;
+                        }
+
+
+                        // ============================================
+                        // 13. ROLE-BASED REDIRECT
+                        // ============================================
+
+                        if (roleID ==
+                            AuthenticationHelper.CitizenRole)
+                        {
+                            Response.Redirect(
+                                "~/Citizen/Dashboard.aspx"
+                            );
+                        }
+                        else if (roleID ==
+                                 AuthenticationHelper.OfficerRole)
+                        {
+                            Response.Redirect(
+                                "~/Officer/Dashboard.aspx"
+                            );
+                        }
+                        else if (roleID ==
+                                 AuthenticationHelper.AdminRole)
+                        {
+                            Response.Redirect(
+                                "~/Admin/AdminDashboard.aspx"
+                            );
+                        }
+                        else
+                        {
+                            ShowMessage(
+                                "Invalid user role."
+                            );
+                        }
+                    }
                 }
             }
         }
 
 
+        // ============================================
+        // SHOW MESSAGE
+        // ============================================
+
+        private void ShowMessage(string message)
+        {
+            string safeMessage =
+                message.Replace("'", "\\'");
+
+            ClientScript.RegisterStartupScript(
+                this.GetType(),
+                "msg",
+                "alert('" + safeMessage + "');",
+                true
+            );
+        }
     }
 }

@@ -72,6 +72,7 @@
   <ItemGroup>
     <Content Include="About.aspx" />
     <Content Include="Admin\AdminDashboard.aspx" />
+    <Content Include="Admin\AdminProfile.aspx" />
     <Content Include="Admin\ComplaintDetails.aspx" />
     <Content Include="Admin\ContactMessages.aspx" />
     <Content Include="Admin\EmergencyContacts.aspx" />
@@ -80,6 +81,7 @@
     <Content Include="Admin\ManageOfficers.aspx" />
     <Content Include="Admin\ManageUsers.aspx" />
     <Content Include="Admin\ManageWards.aspx" />
+    <Content Include="Admin\Notifications.aspx" />
     <Content Include="Admin\Reports.aspx" />
     <Content Include="Citizen\ComplaintDetails.aspx" />
     <Content Include="Citizen\Dashboard.aspx" />
@@ -93,6 +95,8 @@
     <Content Include="CSS\AdminComplaintDetails.css" />
     <Content Include="CSS\AdminDashboard.css" />
     <Content Include="CSS\AdminMaster.css" />
+    <Content Include="CSS\AdminNotifications.css" />
+    <Content Include="CSS\AdminProfile.css" />
     <Content Include="CSS\AssignedComplaints.css" />
     <Content Include="CSS\citizen.css" />
     <Content Include="CSS\CommunityFeed.css" />
@@ -187,6 +191,13 @@
     <Compile Include="Admin\AdminDashboard.aspx.designer.cs">
       <DependentUpon>AdminDashboard.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Admin\AdminProfile.aspx.cs">
+      <DependentUpon>AdminProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\AdminProfile.aspx.designer.cs">
+      <DependentUpon>AdminProfile.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Admin\ComplaintDetails.aspx.cs">
       <DependentUpon>ComplaintDetails.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -242,6 +253,13 @@
     </Compile>
     <Compile Include="Admin\ManageWards.aspx.designer.cs">
       <DependentUpon>ManageWards.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\Notifications.aspx.cs">
+      <DependentUpon>Notifications.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\Notifications.aspx.designer.cs">
+      <DependentUpon>Notifications.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Reports.aspx.cs">
       <DependentUpon>Reports.aspx</DependentUpon>
@@ -323,6 +341,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\AuthenticationHelper.cs" />
     <Compile Include="Helpers\NotificationHelper.cs" />
     <Compile Include="Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
