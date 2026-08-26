@@ -56,10 +56,12 @@
 
 
             <div class="header-status">
-
-                <span class="status-badge pending">Pending
-                </span>
-
+                <asp:Label
+                    ID="lblStatus"
+                    runat="server"
+                    CssClass="status-badge pending"
+                    Text="Pending">
+                </asp:Label>
             </div>
 
         </div>
@@ -98,7 +100,11 @@
 
                         </div>
 
-                        <span class="complaint-number">#1024
+                        <span class="complaint-number">#<asp:Label
+                            ID="lblComplaintID"
+                            runat="server"
+                            Text="0">
+                        </asp:Label>
                         </span>
 
                     </div>
@@ -107,20 +113,28 @@
                     <div class="complaint-content">
 
 
-                        <span class="category-badge">Road
-                        </span>
+                        <asp:Label
+                            ID="lblCategory"
+                            runat="server"
+                            CssClass="category-badge"
+                            Text="Category">
+                        </asp:Label>
 
 
-                        <h2>Damaged road near market
+                        <h2>
+                            <asp:Label
+                                ID="lblTitle"
+                                runat="server"
+                                Text="Complaint Title">
+                            </asp:Label>
                         </h2>
 
-
                         <p class="complaint-description">
-                            Large potholes have developed on the main
-                            road near the market area. The damaged road
-                            is creating difficulty for vehicles and may
-                            cause accidents.
-
+                            <asp:Label
+                                ID="lblDescription"
+                                runat="server"
+                                Text="Complaint description">
+                            </asp:Label>
                         </p>
 
 
@@ -149,7 +163,12 @@
                                     <small>Location
                                     </small>
 
-                                    <strong>Main Market Road
+                                    <strong>
+                                        <asp:Label
+                                            ID="lblLocation"
+                                            runat="server"
+                                            Text="Not specified">
+                                        </asp:Label>
                                     </strong>
 
                                 </div>
@@ -167,7 +186,12 @@
                                     <small>Ward
                                     </small>
 
-                                    <strong>Ward 2
+                                    <strong>
+                                        <asp:Label
+                                            ID="lblWard"
+                                            runat="server"
+                                            Text="Not specified">
+                                        </asp:Label>
                                     </strong>
 
                                 </div>
@@ -185,9 +209,13 @@
                                     <small>Reported On
                                     </small>
 
-                                    <strong>18 Aug 2026
+                                    <strong>
+                                        <asp:Label
+                                            ID="lblReportedDate"
+                                            runat="server"
+                                            Text="-">
+                                        </asp:Label>
                                     </strong>
-
                                 </div>
 
                             </div>
@@ -227,78 +255,46 @@
 
                     <div class="timeline">
 
+                        <asp:Repeater
+                            ID="rptStatusHistory"
+                            runat="server">
 
-                        <!-- STEP -->
+                            <ItemTemplate>
 
-                        <div class="timeline-item completed">
+                                <div class='<%# GetTimelineItemClass(
+                            Eval("NewStatus"),
+                            Container.ItemIndex) %>'>
 
-                            <div class="timeline-dot">
-                                ✓
-                            </div>
+                                    <div class="timeline-dot">
 
-                            <div class="timeline-content">
+                                        <%# GetTimelineIcon(
+                            Eval("NewStatus"),
+                            Container.ItemIndex) %>
+                                    </div>
 
-                                <strong>Complaint Submitted
-                                </strong>
+                                    <div class="timeline-content">
 
-                                <span>Citizen reported the issue.
-                                </span>
+                                        <strong>
+                                            <%# Eval("NewStatus") %>
+                                        </strong>
 
-                                <small>18 Aug 2026 • 10:30 AM
-                                </small>
+                                        <span>
+                                            <%# Eval("Remarks") %>
+                                        </span>
 
-                            </div>
+                                        <small>
+                                            <%# Convert.ToDateTime(
+                                Eval("ChangeDate")
+                            ).ToString("dd MMM yyyy • hh:mm tt") %>
+                                        </small>
 
-                        </div>
+                                    </div>
 
+                                </div>
 
-                        <!-- STEP -->
+                            </ItemTemplate>
 
-                        <div class="timeline-item completed">
-
-                            <div class="timeline-dot">
-                                ✓
-                            </div>
-
-                            <div class="timeline-content">
-
-                                <strong>Complaint Reviewed
-                                </strong>
-
-                                <span>Complaint verified by administration.
-                                </span>
-
-                                <small>18 Aug 2026 • 11:15 AM
-                                </small>
-
-                            </div>
-
-                        </div>
-
-
-                        <!-- CURRENT -->
-
-                        <div class="timeline-item current">
-
-                            <div class="timeline-dot">
-                                !
-                            </div>
-
-                            <div class="timeline-content">
-
-                                <strong>Pending Assignment
-                                </strong>
-
-                                <span>Waiting for an officer to be assigned.
-                                </span>
-
-                                <small>Current Status
-                                </small>
-
-                            </div>
-
-                        </div>
-
+                        </asp:Repeater>
 
                     </div>
 
@@ -337,13 +333,22 @@
 
 
                         <div class="large-avatar">
-                            R
+                            <asp:Label
+                                ID="lblCitizenInitial"
+                                runat="server"
+                                Text="?">
+                            </asp:Label>
                         </div>
 
 
                         <div>
 
-                            <strong>Ritesh Jadhav
+                            <strong>
+                                <asp:Label
+                                    ID="lblCitizenName"
+                                    runat="server"
+                                    Text="Citizen">
+                                </asp:Label>
                             </strong>
 
                             <span>Citizen
@@ -361,7 +366,12 @@
                             <span>Email
                             </span>
 
-                            <strong>ritesh@example.com
+                            <strong>
+                                <asp:Label
+                                    ID="lblCitizenEmail"
+                                    runat="server"
+                                    Text="-">
+                                </asp:Label>
                             </strong>
 
                         </div>
@@ -372,7 +382,12 @@
                             <span>Phone
                             </span>
 
-                            <strong>+91 XXXXX XXXXX
+                            <strong>
+                                <asp:Label
+                                    ID="lblCitizenPhone"
+                                    runat="server"
+                                    Text="-">
+                                </asp:Label>
                             </strong>
 
                         </div>
@@ -404,19 +419,28 @@
                     </div>
 
 
-                    <div class="priority-display high">
+                    <div id="priorityDisplay" runat="server" class="priority-display high">
 
                         <span>!
                         </span>
 
                         <div>
 
-                            <strong>High Priority
+                            <strong>
+                                <asp:Label
+                                    ID="lblPriority"
+                                    runat="server"
+                                    Text="Medium Priority">
+                                </asp:Label>
                             </strong>
 
-                            <small>Requires attention
+                            <small>
+                                <asp:Label
+                                    ID="lblPriorityDescription"
+                                    runat="server"
+                                    Text="Normal attention">
+                                </asp:Label>
                             </small>
-
                         </div>
 
                     </div>
@@ -446,26 +470,85 @@
                     </div>
 
 
-                    <div class="officer-empty">
+                    <asp:Panel
+                        ID="pnlOfficer"
+                        runat="server"
+                        CssClass="officer-empty">
 
-                        <div>
+                        <div class="officer-icon">
                             👨‍💼
                         </div>
 
-                        <strong>No Officer Assigned
+                        <strong>
+                            <asp:Label
+                                ID="lblOfficerName"
+                                runat="server"
+                                Text="No Officer Assigned">
+                            </asp:Label>
                         </strong>
 
-                        <span>This complaint is waiting for assignment.
+                        <span>
+                            <asp:Label
+                                ID="lblOfficerDetails"
+                                runat="server"
+                                Text="This complaint is waiting for assignment.">
+                            </asp:Label>
                         </span>
 
-                    </div>
+                    </asp:Panel>
+
+                    <asp:Button
+                        ID="btnAssignOfficer"
+                        runat="server"
+                        Text="Assign Officer"
+                        CssClass="assign-btn"
+                        CausesValidation="false"
+                        OnClick="btnAssignOfficer_Click" />
+
+                    <asp:Panel
+                        ID="pnlAssignOfficer"
+                        runat="server"
+                        CssClass="assign-officer-panel"
+                        Visible="false">
+
+                        <div class="assign-panel-header">
+
+                            <strong>Select Officer</strong>
+
+                            <span>Choose an officer to handle this complaint.
+                            </span>
+
+                        </div>
 
 
-                    <button type="button"
-                        class="assign-btn">
-                        Assign Officer
+                        <asp:DropDownList
+                            ID="ddlOfficers"
+                            runat="server"
+                            CssClass="officer-select">
+                        </asp:DropDownList>
 
-                    </button>
+
+                        <div class="assign-panel-actions">
+
+                            <asp:Button
+                                ID="btnConfirmAssignment"
+                                runat="server"
+                                Text="Confirm Assignment"
+                                CssClass="confirm-assign-btn"
+                                CausesValidation="false"
+                                OnClick="btnConfirmAssignment_Click" />
+
+                            <asp:Button
+                                ID="btnCancelAssignment"
+                                runat="server"
+                                Text="Cancel"
+                                CssClass="cancel-assign-btn"
+                                CausesValidation="false"
+                                OnClick="btnCancelAssignment_Click" />
+
+                        </div>
+
+                    </asp:Panel>
 
                 </div>
 
@@ -495,25 +578,93 @@
                     <div class="admin-actions">
 
 
-                        <button type="button"
-                            class="action-btn primary">
-                            Assign Officer
-
-                        </button>
 
 
-                        <button type="button"
-                            class="action-btn warning">
-                            Change Priority
 
-                        </button>
+                        <asp:Button
+                            ID="btnChangePriority"
+                            runat="server"
+                            Text="Change Priority"
+                            CssClass="action-btn warning"
+                            CausesValidation="false"
+                            OnClick="btnChangePriority_Click" />
+
+                        <asp:Panel
+                            ID="pnlChangePriority"
+                            runat="server"
+                            CssClass="change-priority-panel"
+                            Visible="false">
+
+                            <div class="priority-panel-header">
+
+                                <strong>Change Complaint Priority
+                                </strong>
+
+                                <span>Select the new priority level.
+                                </span>
+
+                            </div>
 
 
-                        <button type="button"
-                            class="action-btn danger">
-                            Reject Complaint
+                            <asp:DropDownList
+                                ID="ddlPriority"
+                                runat="server"
+                                CssClass="priority-select">
 
-                        </button>
+                                <asp:ListItem
+                                    Text="-- Select Priority --"
+                                    Value="">
+                                </asp:ListItem>
+
+                                <asp:ListItem
+                                    Text="High"
+                                    Value="High">
+                                </asp:ListItem>
+
+                                <asp:ListItem
+                                    Text="Medium"
+                                    Value="Medium">
+                                </asp:ListItem>
+
+                                <asp:ListItem
+                                    Text="Low"
+                                    Value="Low">
+                                </asp:ListItem>
+
+                            </asp:DropDownList>
+
+
+                            <div class="priority-panel-actions">
+
+                                <asp:Button
+                                    ID="btnConfirmPriority"
+                                    runat="server"
+                                    Text="Update Priority"
+                                    CssClass="confirm-priority-btn"
+                                    CausesValidation="false"
+                                    OnClick="btnConfirmPriority_Click" />
+
+                                <asp:Button
+                                    ID="btnCancelPriority"
+                                    runat="server"
+                                    Text="Cancel"
+                                    CssClass="cancel-priority-btn"
+                                    CausesValidation="false"
+                                    OnClick="btnCancelPriority_Click" />
+
+                            </div>
+
+                        </asp:Panel>
+
+
+                        <asp:Button
+                            ID="btnRejectComplaint"
+                            runat="server"
+                            Text="Reject Complaint"
+                            CssClass="action-btn danger"
+                            CausesValidation="false"
+                            OnClick="btnRejectComplaint_Click"
+                            OnClientClick="return confirm('Are you sure you want to reject this complaint?');" />
 
                     </div>
 

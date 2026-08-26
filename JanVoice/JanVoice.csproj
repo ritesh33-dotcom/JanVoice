@@ -83,6 +83,7 @@
     <Content Include="Admin\ManageWards.aspx" />
     <Content Include="Admin\Notifications.aspx" />
     <Content Include="Admin\Reports.aspx" />
+    <Content Include="Admin\UserDetails.aspx" />
     <Content Include="Citizen\ComplaintDetails.aspx" />
     <Content Include="Citizen\Dashboard.aspx" />
     <Content Include="Citizen\MyComplaints.aspx" />
@@ -128,6 +129,7 @@
     <Content Include="CSS\responsive.css" />
     <Content Include="CSS\style.css" />
     <Content Include="CSS\TrendingIssues.css" />
+    <Content Include="CSS\UserDetails.css" />
     <Content Include="Database\001_CreateRoles.sql" />
     <Content Include="Database\002_CreateWards.sql" />
     <Content Include="Database\003_CreateCategories.sql" />
@@ -267,6 +269,13 @@
     </Compile>
     <Compile Include="Admin\Reports.aspx.designer.cs">
       <DependentUpon>Reports.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\UserDetails.aspx.cs">
+      <DependentUpon>UserDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\UserDetails.aspx.designer.cs">
+      <DependentUpon>UserDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Citizen\ComplaintDetails.aspx.cs">
       <DependentUpon>ComplaintDetails.aspx</DependentUpon>

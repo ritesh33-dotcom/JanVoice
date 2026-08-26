@@ -79,10 +79,9 @@
                         Total Users
                     </span>
 
-                    <strong>
-                        0
-                    </strong>
-
+                  <strong>
+    <asp:Label ID="lblTotalUsers" runat="server" Text="0"></asp:Label>
+</strong>
                 </div>
 
             </div>
@@ -101,8 +100,8 @@
                     </span>
 
                     <strong>
-                        0
-                    </strong>
+    <asp:Label ID="lblActiveUsers" runat="server" Text="0"></asp:Label>
+</strong>
 
                 </div>
 
@@ -121,9 +120,9 @@
                         Inactive Users
                     </span>
 
-                    <strong>
-                        0
-                    </strong>
+                   <strong>
+    <asp:Label ID="lblInactiveUsers" runat="server" Text="0"></asp:Label>
+</strong>
 
                 </div>
 
@@ -142,9 +141,9 @@
                         Registered This Month
                     </span>
 
-                    <strong>
-                        0
-                    </strong>
+                   <strong>
+    <asp:Label ID="lblRegisteredThisMonth" runat="server" Text="0"></asp:Label>
+</strong>
 
                 </div>
 
@@ -168,57 +167,43 @@
                     🔍
                 </span>
 
-                <input
-                    type="text"
-                    placeholder="Search by name or email..." />
+               <asp:TextBox
+    ID="txtSearch"
+    runat="server"
+    CssClass="user-search-input"
+    placeholder="Search by name or email...">
+</asp:TextBox>
 
             </div>
 
 
-            <select class="user-filter">
+            <asp:DropDownList
+    ID="ddlWard"
+    runat="server"
+    CssClass="user-filter">
+</asp:DropDownList>
 
-                <option value="">
-                    All Wards
-                </option>
-
-                <option value="1">
-                    Ward 1
-                </option>
-
-                <option value="2">
-                    Ward 2
-                </option>
-
-                <option value="3">
-                    Ward 3
-                </option>
-
-            </select>
+                
 
 
-            <select class="user-filter">
+           <asp:DropDownList
+    ID="ddlStatus"
+    runat="server"
+    CssClass="user-filter">
 
-                <option value="">
-                    All Status
-                </option>
+    <asp:ListItem Text="All Status" Value="" />
+    <asp:ListItem Text="Active" Value="1" />
+    <asp:ListItem Text="Inactive" Value="0" />
 
-                <option value="Active">
-                    Active
-                </option>
-
-                <option value="Inactive">
-                    Inactive
-                </option>
-
-            </select>
+</asp:DropDownList>
 
 
-            <button type="button"
-                class="filter-btn">
-
-                Apply Filters
-
-            </button>
+            <asp:Button
+    ID="btnApplyFilters"
+    runat="server"
+    Text="Apply Filters"
+    CssClass="filter-btn"
+    OnClick="btnApplyFilters_Click" />
 
 
         </div>
@@ -247,9 +232,10 @@
                 </div>
 
 
-                <span class="record-count">
-                    0 Users
-                </span>
+               <span class="record-count">
+    <asp:Label ID="lblRecordCount" runat="server" Text="0"></asp:Label>
+    Users
+</span>
 
             </div>
 
@@ -297,211 +283,115 @@
 
 
                     <tbody>
+<asp:Repeater ID="rptUsers" runat="server">
 
+    <ItemTemplate>
 
-                        <!-- DEMO USER 1 -->
+        <tr>
 
-                        <tr>
+            <!-- USER -->
 
-                            <td>
+            <td>
 
-                                <div class="user-cell">
+                <div class="user-cell">
 
-                                    <div class="user-avatar">
-                                        R
-                                    </div>
+                    <div class="user-avatar">
+                        <%# GetInitials(Eval("FullName").ToString()) %>
+                    </div>
 
-                                    <div>
+                    <div>
 
-                                        <strong>
-                                            Ritesh Jadhav
-                                        </strong>
+                        <strong>
+                            <%# Eval("FullName") %>
+                        </strong>
 
-                                        <span>
-                                            User ID: #001
-                                        </span>
+                        <span>
+                            User ID: #<%# Eval("UserID") %>
+                        </span>
 
-                                    </div>
+                    </div>
 
-                                </div>
+                </div>
 
-                            </td>
+            </td>
 
 
-                            <td>
+            <!-- CONTACT -->
 
-                                <div class="contact-cell">
+            <td>
 
-                                    <span>
-                                        ritesh@example.com
-                                    </span>
+                <div class="contact-cell">
 
-                                    <small>
-                                        +91 XXXXX XXXXX
-                                    </small>
+                    <span>
+                        <%# Eval("Email") %>
+                    </span>
 
-                                </div>
+                    <small>
+                        +91 <%# Eval("Mobile") %>
+                    </small>
 
-                            </td>
+                </div>
 
+            </td>
 
-                            <td>
-                                Ward 2
-                            </td>
 
+            <!-- WARD -->
 
-                            <td>
-                                <strong class="complaint-count">
-                                    4
-                                </strong>
-                            </td>
+            <td>
+                <%# Eval("WardName") %>
+            </td>
 
 
-                            <td>
-                                18 Aug 2026
-                            </td>
+            <!-- COMPLAINTS -->
 
+            <td>
 
-                            <td>
+                <strong class="complaint-count">
+                    <%# Eval("ComplaintCount") %>
+                </strong>
 
-                                <span class="user-status active">
-                                    Active
-                                </span>
+            </td>
 
-                            </td>
 
+            <!-- REGISTERED -->
 
-                            <td>
+            <td>
+                <%# Convert.ToDateTime(Eval("CreatedDate")).ToString("dd MMM yyyy") %>
+            </td>
 
-                                <a href="#"
-                                   class="view-user-btn">
 
-                                    View
+            <!-- STATUS -->
 
-                                </a>
+            <td>
 
-                            </td>
+                <span class='user-status <%# Convert.ToBoolean(Eval("IsActive")) ? "active" : "inactive" %>'>
 
-                        </tr>
+                    <%# Convert.ToBoolean(Eval("IsActive")) ? "Active" : "Inactive" %>
 
+                </span>
 
+            </td>
 
-                        <!-- DEMO USER 2 -->
 
-                        <tr>
+            <!-- ACTION -->
 
-                            <td>
+            <td>
 
-                                <div class="user-cell">
+                <asp:HyperLink
+                    ID="lnkViewUser"
+                    runat="server"
+                    CssClass="view-user-btn"
+                    NavigateUrl='<%# "UserDetails.aspx?UserID=" + Eval("UserID") %>'
+                    Text="View">
+                </asp:HyperLink>
 
-                                    <div class="user-avatar purple">
-                                        A
-                                    </div>
+            </td>
 
-                                    <div>
+        </tr>
 
-                                        <strong>
-                                            Amit Patil
-                                        </strong>
+    </ItemTemplate>
 
-                                        <span>
-                                            User ID: #002
-                                        </span>
-
-                                    </div>
-
-                                </div>
-
-                            </td>
-
-
-                            <td>
-
-                                <div class="contact-cell">
-
-                                    <span>
-                                        amit@example.com
-                                    </span>
-
-                                    <small>
-                                        +91 XXXXX XXXXX
-                                    </small>
-
-                                </div>
-
-                            </td>
-
-
-                            <td>
-                                Ward 1
-                            </td>
-
-
-                            <td>
-                                <strong class="complaint-count">
-                                    2
-                                </strong>
-                            </td>
-
-
-                            <td>
-                                17 Aug 2026
-                            </td>
-
-
-                            <td>
-
-                                <span class="user-status active">
-                                    Active
-                                </span>
-
-                            </td>
-
-
-                            <td>
-
-                                <a href="#"
-                                   class="view-user-btn">
-
-                                    View
-
-                                </a>
-
-                            </td>
-
-                        </tr>
-
-
-
-                        <!-- EMPTY STATE -->
-
-                        <!--
-
-                        <tr>
-
-                            <td colspan="7">
-
-                                <div class="users-empty">
-
-                                    <div>
-                                        👥
-                                    </div>
-
-                                    <h4>
-                                        No Users Found
-                                    </h4>
-
-                                    <p>
-                                        Registered citizens will appear here.
-                                    </p>
-
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                        -->
+</asp:Repeater>
 
                     </tbody>
 

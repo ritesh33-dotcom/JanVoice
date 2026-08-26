@@ -631,3 +631,182 @@
         line-height: 1.6;
     }
 }
+/* ==========================================
+   ASSIGN OFFICER PANEL
+========================================== */
+
+.assign-officer-panel {
+    margin: 0 20px 20px;
+    padding: 16px;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, .65);
+    border: 1px solid rgba(59, 130, 246, .18);
+}
+
+
+.assign-panel-header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+
+    .assign-panel-header strong {
+        color: #E2E8F0;
+        font-size: 13px;
+    }
+
+
+    .assign-panel-header span {
+        color: #64748B;
+        font-size: 11px;
+    }
+
+
+.officer-select {
+    width: 100%;
+    padding: 11px 12px;
+    border-radius: 9px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: #0F172A;
+    color: #E2E8F0;
+    font-size: 12px;
+    outline: none;
+}
+
+
+    .officer-select:focus {
+        border-color: #3B82F6;
+    }
+
+
+.assign-panel-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+
+.confirm-assign-btn,
+.cancel-assign-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+.confirm-assign-btn {
+    background: #2563EB;
+    color: white;
+}
+
+
+    .confirm-assign-btn:hover {
+        background: #1D4ED8;
+    }
+
+
+.cancel-assign-btn {
+    background: #334155;
+    color: #CBD5E1;
+}
+
+
+    .cancel-assign-btn:hover {
+        background: #475569;
+    }
+
+/* ==========================================
+   CHANGE PRIORITY PANEL
+========================================== */
+
+.change-priority-panel {
+    margin-top: 12px;
+    padding: 16px;
+    border-radius: 12px;
+    background: rgba(15, 23, 42, .65);
+    border: 1px solid rgba(245, 158, 11, .18);
+}
+
+
+.priority-panel-header {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-bottom: 12px;
+}
+
+
+    .priority-panel-header strong {
+        color: #E2E8F0;
+        font-size: 13px;
+    }
+
+
+    .priority-panel-header span {
+        color: #64748B;
+        font-size: 11px;
+    }
+
+
+.priority-select {
+    width: 100%;
+    padding: 11px 12px;
+    border-radius: 9px;
+    border: 1px solid rgba(255,255,255,.08);
+    background: #0F172A;
+    color: #E2E8F0;
+    font-size: 12px;
+    outline: none;
+}
+
+
+    .priority-select:focus {
+        border-color: #F59E0B;
+    }
+
+
+.priority-panel-actions {
+    display: flex;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+
+.confirm-priority-btn,
+.cancel-priority-btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+}
+
+
+.confirm-priority-btn {
+    background: #D97706;
+    color: white;
+}
+
+
+    .confirm-priority-btn:hover {
+        background: #B45309;
+    }
+
+
+.cancel-priority-btn {
+    background: #334155;
+    color: #CBD5E1;
+}
+
+
+    .cancel-priority-btn:hover {
+        background: #475569;
+    }
