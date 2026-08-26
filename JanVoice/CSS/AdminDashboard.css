@@ -24,13 +24,13 @@
 
 .dashboard-header h1 {
     margin: 8px 0;
-    font-size: 32px;
+    font-size: 36px;
     color: #F8FAFC;
 }
 
 .dashboard-header p {
     color: #94A3B8;
-    font-size: 15px;
+    font-size: 17px;
 }
 
 
@@ -88,18 +88,18 @@
 
     .stat-info span {
         color: #94A3B8;
-        font-size: 13px;
+        font-size: 15px;
     }
 
     .stat-info h2 {
         margin: 4px 0;
         color: #F8FAFC;
-        font-size: 27px;
+        font-size: 29px;
     }
 
     .stat-info small {
         color: #64748B;
-        font-size: 11px;
+        font-size: 13px;
     }
 
 
@@ -136,13 +136,13 @@
 
     .card-header h3 {
         color: #F8FAFC;
-        font-size: 17px;
+        font-size: 18px;
         margin-bottom: 5px;
     }
 
     .card-header p {
         color: #64748B;
-        font-size: 12px;
+        font-size: 14px;
     }
 
 .card-badge {
@@ -183,12 +183,12 @@
 
     .overview-item strong {
         color: #E2E8F0;
-        font-size: 13px;
+        font-size: 14px;
     }
 
     .overview-item small {
         color: #64748B;
-        font-size: 11px;
+        font-size: 12px;
         margin-top: 3px;
     }
 
@@ -264,12 +264,12 @@
 
     .quick-action strong {
         color: #E2E8F0;
-        font-size: 13px;
+        font-size: 14px;
     }
 
     .quick-action small {
         color: #64748B;
-        font-size: 11px;
+        font-size: 12px;
         margin-top: 3px;
     }
 
@@ -317,14 +317,14 @@
 .empty-state h4 {
     margin: 15px 0 7px;
     color: #E2E8F0;
-    font-size: 15px;
+    font-size: 16px;
 }
 
 .empty-state p {
     max-width: 420px;
     margin: auto;
     color: #64748B;
-    font-size: 12px;
+    font-size: 13px;
     line-height: 1.6;
 }
 
@@ -361,5 +361,129 @@
 
     .card-header {
         padding: 18px;
+    }
+}
+/*==========================================
+        RECENT COMPLAINTS TABLE
+==========================================*/
+
+.recent-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    padding: 0 22px 22px;
+}
+
+
+/* TABLE */
+
+.recent-complaints-table {
+    width: 100%;
+    min-width: 720px;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: #172235;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+
+    /* HEADER */
+
+    .recent-complaints-table th {
+        padding: 15px 18px;
+        text-align: left;
+        background: #243247;
+        color: #CBD5E1;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: .6px;
+        border-bottom: 1px solid rgba(255,255,255,.10);
+        white-space: nowrap;
+    }
+
+
+    /* BODY */
+
+    .recent-complaints-table td {
+        padding: 16px 18px;
+        color: #CBD5E1;
+        font-size: 14px;
+        line-height: 1.5;
+        border-bottom: 1px solid rgba(255,255,255,.07);
+        vertical-align: middle;
+        white-space: nowrap;
+    }
+
+
+    /* LAST ROW */
+
+    .recent-complaints-table tr:last-child td {
+        border-bottom: none;
+    }
+
+
+    /* ROW HOVER */
+
+    .recent-complaints-table tbody tr {
+        transition: background .2s ease;
+    }
+
+        .recent-complaints-table tbody tr:hover td {
+            background: rgba(59,130,246,.07);
+        }
+
+
+    /* COMPLAINT ID */
+
+    .recent-complaints-table .complaint-id {
+        color: #94A3B8;
+        font-weight: 600;
+        width: 70px;
+    }
+
+
+    /* COMPLAINT TITLE */
+
+    .recent-complaints-table .complaint-title {
+        color: #F1F5F9;
+        font-weight: 600;
+        min-width: 220px;
+    }
+
+
+    /* STATUS */
+
+    .recent-complaints-table .complaint-status {
+        font-weight: 600;
+    }
+
+
+    /* DATE */
+
+    .recent-complaints-table .complaint-date {
+        color: #94A3B8;
+    }
+
+
+/*==========================================
+        TABLE MOBILE
+==========================================*/
+
+@media(max-width:600px) {
+
+    .recent-table-wrapper {
+        padding: 0 15px 18px;
+    }
+
+    .recent-complaints-table th {
+        padding: 13px 14px;
+        font-size: 11px;
+    }
+
+    .recent-complaints-table td {
+        padding: 14px;
+        font-size: 13px;
     }
 }

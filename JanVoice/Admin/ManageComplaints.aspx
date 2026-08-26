@@ -43,31 +43,54 @@
             </div>
 
 
+            <!-- DYNAMIC SUMMARY -->
+
             <div class="header-summary">
 
                 <div class="summary-item">
 
-                    <span>Total</span>
+                    <span>Total
+                    </span>
 
-                    <strong>24</strong>
+                    <strong>
+                        <asp:Label
+                            ID="lblTotalComplaints"
+                            runat="server"
+                            Text="0">
+                        </asp:Label>
+                    </strong>
 
                 </div>
 
 
                 <div class="summary-item pending-summary">
 
-                    <span>Pending</span>
+                    <span>Pending
+                    </span>
 
-                    <strong>8</strong>
+                    <strong>
+                        <asp:Label
+                            ID="lblPendingComplaints"
+                            runat="server"
+                            Text="0">
+                        </asp:Label>
+                    </strong>
 
                 </div>
 
 
                 <div class="summary-item resolved-summary">
 
-                    <span>Resolved</span>
+                    <span>Resolved
+                    </span>
 
-                    <strong>10</strong>
+                    <strong>
+                        <asp:Label
+                            ID="lblResolvedComplaints"
+                            runat="server"
+                            Text="0">
+                        </asp:Label>
+                    </strong>
 
                 </div>
 
@@ -116,14 +139,17 @@
                         <span class="search-icon">🔍
                         </span>
 
-                        <input
-                            type="text"
-                            class="filter-input"
-                            placeholder="Search by complaint title or ID..." />
+                        <asp:TextBox
+                            ID="txtSearch"
+                            runat="server"
+                            CssClass="filter-input"
+                            placeholder="Search by complaint title or ID...">
+                        </asp:TextBox>
 
                     </div>
 
                 </div>
+
 
 
                 <!-- STATUS -->
@@ -134,18 +160,45 @@
                         Status
                     </label>
 
-                    <select class="filter-input">
+                    <asp:DropDownList
+                        ID="ddlStatus"
+                        runat="server"
+                        CssClass="filter-input">
 
-                        <option>All Status</option>
-                        <option>Pending</option>
-                        <option>Accepted</option>
-                        <option>In Progress</option>
-                        <option>Resolved</option>
-                        <option>Rejected</option>
+                        <asp:ListItem
+                            Text="All Status"
+                            Value="">
+                        </asp:ListItem>
 
-                    </select>
+                        <asp:ListItem
+                            Text="Pending"
+                            Value="Pending">
+                        </asp:ListItem>
+
+                        <asp:ListItem
+                            Text="Accepted"
+                            Value="Accepted">
+                        </asp:ListItem>
+
+                        <asp:ListItem
+                            Text="In Progress"
+                            Value="In Progress">
+                        </asp:ListItem>
+
+                        <asp:ListItem
+                            Text="Resolved"
+                            Value="Resolved">
+                        </asp:ListItem>
+
+                        <asp:ListItem
+                            Text="Rejected"
+                            Value="Rejected">
+                        </asp:ListItem>
+
+                    </asp:DropDownList>
 
                 </div>
+
 
 
                 <!-- CATEGORY -->
@@ -156,18 +209,14 @@
                         Category
                     </label>
 
-                    <select class="filter-input">
-
-                        <option>All Categories</option>
-                        <option>Road</option>
-                        <option>Street Light</option>
-                        <option>Water Supply</option>
-                        <option>Garbage</option>
-                        <option>Drainage</option>
-
-                    </select>
+                    <asp:DropDownList
+                        ID="ddlCategory"
+                        runat="server"
+                        CssClass="filter-input">
+                    </asp:DropDownList>
 
                 </div>
+
 
 
                 <!-- WARD -->
@@ -178,28 +227,26 @@
                         Ward
                     </label>
 
-                    <select class="filter-input">
-
-                        <option>All Wards</option>
-                        <option>Ward 1</option>
-                        <option>Ward 2</option>
-                        <option>Ward 3</option>
-                        <option>Ward 4</option>
-
-                    </select>
+                    <asp:DropDownList
+                        ID="ddlWard"
+                        runat="server"
+                        CssClass="filter-input">
+                    </asp:DropDownList>
 
                 </div>
+
 
 
                 <!-- BUTTON -->
 
                 <div class="filter-action">
 
-                    <button type="button"
-                        class="btn-filter">
-                        Apply Filters
-
-                    </button>
+                    <asp:Button
+                        ID="btnFilter"
+                        runat="server"
+                        Text="Apply Filters"
+                        CssClass="btn-filter"
+                        OnClick="btnFilter_Click" />
 
                 </div>
 
@@ -233,7 +280,14 @@
                 </div>
 
 
-                <span class="record-count">24 Complaints
+                <span class="record-count">
+
+                    <asp:Label
+                        ID="lblRecordCount"
+                        runat="server"
+                        Text="0 Complaints">
+                    </asp:Label>
+
                 </span>
 
             </div>
@@ -244,82 +298,100 @@
 
             <div class="table-wrapper">
 
-                <table class="complaints-table">
+                <asp:Repeater
+                    ID="rptComplaints"
+                    runat="server"
+                    OnItemDataBound="rptComplaints_ItemDataBound">
+
+                    <HeaderTemplate>
+
+                        <table class="complaints-table">
+
+                            <thead>
+
+                                <tr>
+
+                                    <th>ID</th>
+
+                                    <th>Complaint</th>
+
+                                    <th>Citizen</th>
+
+                                    <th>Category</th>
+
+                                    <th>Ward</th>
+
+                                    <th>Priority</th>
+
+                                    <th>Status</th>
+
+                                    <th>Date</th>
+
+                                    <th>Action</th>
+
+                                </tr>
+
+                            </thead>
+
+                            <tbody>
+                    </HeaderTemplate>
 
 
-                    <thead>
-
-                        <tr>
-
-                            <th>ID
-                            </th>
-
-                            <th>Complaint
-                            </th>
-
-                            <th>Citizen
-                            </th>
-
-                            <th>Category
-                            </th>
-
-                            <th>Ward
-                            </th>
-
-                            <th>Priority
-                            </th>
-
-                            <th>Status
-                            </th>
-
-                            <th>Date
-                            </th>
-
-                            <th>Action
-                            </th>
-
-                        </tr>
-
-                    </thead>
-
-
-                    <tbody>
-
-
-                        <!-- ROW 1 -->
+                    <ItemTemplate>
 
                         <tr>
+
+                            <!-- ID -->
 
                             <td>
-                                <span class="complaint-id">#1024
+
+                                <span class="complaint-id">#<%# Eval("ComplaintID") %>
+
                                 </span>
+
                             </td>
 
+
+
+                            <!-- COMPLAINT -->
 
                             <td>
 
                                 <div class="complaint-info">
 
-                                    <strong>Damaged road near market
+                                    <strong>
+
+                                        <%# Eval("Title") %>
+
                                     </strong>
 
-                                    <span>Large potholes causing traffic problems
+                                    <span>
+
+                                        <%# Eval("Description") %>
+
                                     </span>
 
                                 </div>
 
                             </td>
 
+
+
+                            <!-- CITIZEN -->
 
                             <td>
 
                                 <div class="citizen-info">
 
                                     <div class="citizen-avatar">
-                                        R
+
+                                        <%# GetInitial(Eval("FullName")) %>
                                     </div>
 
-                                    <span>Ritesh J.
+                                    <span>
+
+                                        <%# Eval("FullName") %>
+
                                     </span>
 
                                 </div>
@@ -327,41 +399,77 @@
                             </td>
 
 
+
+                            <!-- CATEGORY -->
+
                             <td>
 
-                                <span class="category-badge">Road
+                                <span class="category-badge">
+
+                                    <%# Eval("CategoryName") %>
+
                                 </span>
 
                             </td>
 
 
-                            <td>Ward 2
-                            </td>
 
+                            <!-- WARD -->
 
                             <td>
 
-                                <span class="priority high">High
+                                <%# Eval("WardName") %>
+
+                            </td>
+
+
+
+                            <!-- PRIORITY -->
+
+                            <td>
+
+                                <span
+                                    class='<%# "priority " + GetPriorityClass(Eval("Priority")) %>'>
+
+                                    <%# Eval("Priority") %>
+
                                 </span>
 
                             </td>
 
 
+
+                            <!-- STATUS -->
+
                             <td>
 
-                                <span class="status-badge pending">Pending
+                                <span
+                                    class='<%# "status-badge " + GetStatusClass(Eval("Status")) %>'>
+
+                                    <%# Eval("Status") %>
+
                                 </span>
 
                             </td>
 
 
-                            <td>18 Aug 2026
-                            </td>
 
+                            <!-- DATE -->
 
                             <td>
 
-                                <a href="#"
+                                <%# Convert.ToDateTime(Eval("CreatedDate")).ToString("dd MMM yyyy") %>
+
+                            </td>
+
+
+
+                            <!-- ACTION -->
+
+                            <td>
+
+                                <a
+                                    href='<%# "ComplaintDetails.aspx?id=" + Eval("ComplaintID") %>'
                                     class="view-btn">View
 
                                     <span>→
@@ -373,321 +481,100 @@
 
                         </tr>
 
+                    </ItemTemplate>
 
 
-                        <!-- ROW 2 -->
+                    <FooterTemplate>
+                        </tbody>
 
-                        <tr>
+                        </table>
 
-                            <td>
+                    </FooterTemplate>
 
-                                <span class="complaint-id">#1023
-                                </span>
+                </asp:Repeater>
 
-                            </td>
 
+                <!-- NO DATA -->
 
-                            <td>
+                <asp:Panel
+                    ID="pnlNoComplaints"
+                    runat="server"
+                    CssClass="no-complaints"
+                    Visible="false">
 
-                                <div class="complaint-info">
+                    <div class="no-complaints-icon">
+                        📋
+                    </div>
 
-                                    <strong>Street light not working
-                                    </strong>
+                    <h4>No complaints found
+                    </h4>
 
-                                    <span>Street remains dark at night
-                                    </span>
+                    <p>
+                        Try changing your search or filter criteria.
+                    </p>
 
-                                </div>
-
-                            </td>
-
-
-                            <td>
-
-                                <div class="citizen-info">
-
-                                    <div class="citizen-avatar">
-                                        A
-                                    </div>
-
-                                    <span>Akshay P.
-                                    </span>
-
-                                </div>
-
-                            </td>
-
-
-                            <td>
-
-                                <span class="category-badge">Street Light
-                                </span>
-
-                            </td>
-
-
-                            <td>Ward 1
-                            </td>
-
-
-                            <td>
-
-                                <span class="priority medium">Medium
-                                </span>
-
-                            </td>
-
-
-                            <td>
-
-                                <span class="status-badge progress">In Progress
-                                </span>
-
-                            </td>
-
-
-                            <td>17 Aug 2026
-                            </td>
-
-
-                            <td>
-
-                                <a href="#"
-                                    class="view-btn">View
-
-                                    <span>→
-                                    </span>
-
-                                </a>
-
-                            </td>
-
-                        </tr>
-
-
-
-                        <!-- ROW 3 -->
-
-                        <tr>
-
-                            <td>
-
-                                <span class="complaint-id">#1022
-                                </span>
-
-                            </td>
-
-
-                            <td>
-
-                                <div class="complaint-info">
-
-                                    <strong>Garbage collection issue
-                                    </strong>
-
-                                    <span>Waste has not been collected
-                                    </span>
-
-                                </div>
-
-                            </td>
-
-
-                            <td>
-
-                                <div class="citizen-info">
-
-                                    <div class="citizen-avatar">
-                                        S
-                                    </div>
-
-                                    <span>Sneha M.
-                                    </span>
-
-                                </div>
-
-                            </td>
-
-
-                            <td>
-
-                                <span class="category-badge">Garbage
-                                </span>
-
-                            </td>
-
-
-                            <td>Ward 3
-                            </td>
-
-
-                            <td>
-
-                                <span class="priority low">Low
-                                </span>
-
-                            </td>
-
-
-                            <td>
-
-                                <span class="status-badge resolved">Resolved
-                                </span>
-
-                            </td>
-
-
-                            <td>16 Aug 2026
-                            </td>
-
-
-                            <td>
-
-                                <a href="#"
-                                    class="view-btn">View
-
-                                    <span>→
-                                    </span>
-
-                                </a>
-
-                            </td>
-
-                        </tr>
-
-
-
-                        <!-- ROW 4 -->
-
-                        <tr>
-
-                            <td>
-
-                                <span class="complaint-id">#1021
-                                </span>
-
-                            </td>
-
-
-                            <td>
-
-                                <div class="complaint-info">
-
-                                    <strong>Water supply interruption
-                                    </strong>
-
-                                    <span>No water supply since morning
-                                    </span>
-
-                                </div>
-
-                            </td>
-
-
-                            <td>
-
-                                <div class="citizen-info">
-
-                                    <div class="citizen-avatar">
-                                        M
-                                    </div>
-
-                                    <span>Mahesh K.
-                                    </span>
-
-                                </div>
-
-                            </td>
-
-
-                            <td>
-
-                                <span class="category-badge">Water Supply
-                                </span>
-
-                            </td>
-
-
-                            <td>Ward 4
-                            </td>
-
-
-                            <td>
-
-                                <span class="priority high">High
-                                </span>
-
-                            </td>
-
-
-                            <td>
-
-                                <span class="status-badge accepted">Accepted
-                                </span>
-
-                            </td>
-
-
-                            <td>15 Aug 2026
-                            </td>
-
-
-                            <td>
-
-                                <a href="ComplaintDetails.aspx?id=1024"
-                                    class="view-btn">View
-
-                                    <span>→
-                                    </span>
-
-                                </a>
-
-                            </td>
-
-                        </tr>
-
-
-                    </tbody>
-
-                </table>
+                </asp:Panel>
 
             </div>
 
 
 
-            <!-- PAGINATION -->
+            <!-- =====================================
+                 PAGINATION
+            ====================================== -->
 
             <div class="table-footer">
 
-                <span>Showing 1–4 of 24 complaints
+                <span>
+
+                    <asp:Label
+                        ID="lblShowing"
+                        runat="server"
+                        Text="Showing 0 of 0 complaints">
+                    </asp:Label>
+
                 </span>
 
 
                 <div class="pagination">
 
-                    <button class="page-btn disabled">
-                        ←
-                    </button>
+                    <asp:LinkButton
+                        ID="btnPrevious"
+                        runat="server"
+                        CssClass="page-btn"
+                        OnClick="btnPrevious_Click"
+                        Text="←">
+                    </asp:LinkButton>
 
-                    <button class="page-btn active">
-                        1
-                    </button>
 
-                    <button class="page-btn">
-                        2
-                    </button>
+                    <asp:Repeater
+                        ID="rptPages"
+                        runat="server"
+                        OnItemCommand="rptPages_ItemCommand">
 
-                    <button class="page-btn">
-                        3
-                    </button>
+                        <ItemTemplate>
 
-                    <button class="page-btn">
-                        4
-                    </button>
+                            <asp:LinkButton
+                                ID="btnPage"
+                                runat="server"
+                                CommandName="Page"
+                                CommandArgument='<%# Eval("PageNumber") %>'
+                                Text='<%# Eval("PageNumber") %>'
+                                CssClass='<%# GetPageButtonClass(Eval("PageNumber")) %>'>
+                            </asp:LinkButton>
 
-                    <button class="page-btn">
-                        →
-                    </button>
+                        </ItemTemplate>
+
+                    </asp:Repeater>
+
+
+                    <asp:LinkButton
+                        ID="btnNext"
+                        runat="server"
+                        CssClass="page-btn"
+                        OnClick="btnNext_Click"
+                        Text="→">
+                    </asp:LinkButton>
 
                 </div>
 
