@@ -82,6 +82,7 @@
     <Content Include="Admin\ManageUsers.aspx" />
     <Content Include="Admin\ManageWards.aspx" />
     <Content Include="Admin\Notifications.aspx" />
+    <Content Include="Admin\OfficerDetails.aspx" />
     <Content Include="Admin\Reports.aspx" />
     <Content Include="Admin\UserDetails.aspx" />
     <Content Include="Citizen\ComplaintDetails.aspx" />
@@ -121,6 +122,7 @@
     <Content Include="CSS\notifications.css" />
     <Content Include="CSS\Officer.css" />
     <Content Include="CSS\OfficerDashBoard.css" />
+    <Content Include="CSS\OfficerDetails.css" />
     <Content Include="CSS\profile.css" />
     <Content Include="CSS\PublicComplaintDetails.css" />
     <Content Include="CSS\reportissue.css" />
@@ -262,6 +264,13 @@
     </Compile>
     <Compile Include="Admin\Notifications.aspx.designer.cs">
       <DependentUpon>Notifications.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Admin\OfficerDetails.aspx.cs">
+      <DependentUpon>OfficerDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Admin\OfficerDetails.aspx.designer.cs">
+      <DependentUpon>OfficerDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Admin\Reports.aspx.cs">
       <DependentUpon>Reports.aspx</DependentUpon>

@@ -266,5 +266,193 @@ namespace JanVoice.Admin
             // Filtering will be added in Part 4.
             LoadUsers();
         }
+
+        // ==========================================
+        // USER ACTIONS
+        // ==========================================
+
+        protected void UserAction_Command(
+            object sender,
+            System.Web.UI.WebControls.CommandEventArgs e)
+        {
+            int userID;
+
+            if (!int.TryParse(e.CommandArgument.ToString(), out userID))
+            {
+                ShowMessage("Invalid user ID.", false);
+                return;
+            }
+
+
+            if (e.CommandName == "ToggleStatus")
+            {
+                ToggleUserStatus(userID);
+            }
+
+
+            else if (e.CommandName == "DeleteUser")
+            {
+                DeleteUser(userID);
+            }
+        }
+
+        // ==========================================
+        // ACTIVATE / DEACTIVATE USER
+        // ==========================================
+
+        private void ToggleUserStatus(int userID)
+        {
+            using (SqlConnection con =
+                new SqlConnection(connectionString))
+            {
+                string query = @"
+            UPDATE Users
+            SET IsActive =
+                CASE
+                    WHEN IsActive = 1 THEN 0
+                    ELSE 1
+                END
+            WHERE UserID = @UserID
+            AND RoleID = 1;
+        ";
+
+                using (SqlCommand cmd =
+                    new SqlCommand(query, con))
+                {
+                    cmd.Parameters.Add("@UserID", SqlDbType.Int)
+                                  .Value = userID;
+
+                    con.Open();
+
+                    int rowsAffected = cmd.ExecuteNonQuery();
+
+                    if (rowsAffected > 0)
+                    {
+                        ShowMessage(
+                            "User status updated successfully.",
+                            true
+                        );
+                    }
+                    else
+                    {
+                        ShowMessage(
+                            "User could not be found.",
+                            false
+                        );
+                    }
+                }
+            }
+
+            LoadStatistics();
+            LoadUsers();
+        }
+
+        // ==========================================
+        // DELETE USER
+        // ==========================================
+
+        private void DeleteUser(int userID)
+        {
+            using (SqlConnection con =
+                new SqlConnection(connectionString))
+            {
+                con.Open();
+
+
+                // Check whether user has complaints
+
+                string checkQuery = @"
+            SELECT COUNT(*)
+            FROM Complaints
+            WHERE UserID = @UserID;
+        ";
+
+
+                using (SqlCommand checkCmd =
+                    new SqlCommand(checkQuery, con))
+                {
+                    checkCmd.Parameters.Add("@UserID", SqlDbType.Int)
+                                     .Value = userID;
+
+                    int complaintCount =
+                        Convert.ToInt32(checkCmd.ExecuteScalar());
+
+
+                    if (complaintCount > 0)
+                    {
+                        ShowMessage(
+                            "This user cannot be deleted because they have complaints. Deactivate the user instead.",
+                            false
+                        );
+
+                        return;
+                    }
+                }
+
+
+                // Delete user
+
+                string deleteQuery = @"
+            DELETE FROM Users
+            WHERE UserID = @UserID
+            AND RoleID = 1;
+        ";
+
+
+                using (SqlCommand deleteCmd =
+                    new SqlCommand(deleteQuery, con))
+                {
+                    deleteCmd.Parameters.Add("@UserID", SqlDbType.Int)
+                                      .Value = userID;
+
+                    int rowsAffected =
+                        deleteCmd.ExecuteNonQuery();
+
+
+                    if (rowsAffected > 0)
+                    {
+                        ShowMessage(
+                            "User deleted successfully.",
+                            true
+                        );
+                    }
+                    else
+                    {
+                        ShowMessage(
+                            "User could not be found.",
+                            false
+                        );
+                    }
+                }
+            }
+
+
+            LoadStatistics();
+            LoadUsers();
+        }
+
+        // ==========================================
+        // SHOW MESSAGE
+        // ==========================================
+
+        private void ShowMessage(
+            string message,
+            bool success)
+        {
+            lblMessage.Text = message;
+
+            lblMessage.Visible = true;
+
+            if (success)
+            {
+                lblMessage.CssClass =
+                    "users-message success";
+            }
+            else
+            {
+                lblMessage.CssClass =
+                    "users-message error";
+            }
+        }
     }
 }

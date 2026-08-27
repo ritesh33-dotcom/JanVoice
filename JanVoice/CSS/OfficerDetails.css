@@ -1,0 +1,687 @@
+﻿/*==========================================
+        JANVOICE — OFFICER DETAILS
+==========================================*/
+
+.officer-details-page {
+    width: 100%;
+}
+
+
+/*==========================================
+        PAGE TOP
+==========================================*/
+
+.details-top {
+    margin-bottom: 25px;
+}
+
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 18px;
+    color: #64748B;
+    font-size: 12px;
+    text-decoration: none;
+    transition: .25s;
+}
+
+    .back-link:hover {
+        color: #60A5FA;
+    }
+
+.page-label {
+    display: block;
+    color: #38BDF8;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+
+.details-top h1 {
+    margin: 8px 0;
+    color: #F8FAFC;
+    font-size: 32px;
+    font-weight: 700;
+}
+
+.details-top p {
+    margin: 0;
+    color: #94A3B8;
+    font-size: 15px;
+}
+
+
+/*==========================================
+        OFFICER PROFILE
+==========================================*/
+
+.officer-profile-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    margin-bottom: 25px;
+    padding: 25px;
+    background: #1E293B;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 18px;
+}
+
+
+/* PROFILE MAIN */
+
+.profile-main {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+}
+
+.large-officer-avatar {
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 18px;
+    background: linear-gradient( 135deg, #3B82F6, #38BDF8 );
+    color: white;
+    font-size: 24px;
+    font-weight: 700;
+    box-shadow: 0 10px 25px rgba(59,130,246,.20);
+}
+
+.profile-role {
+    color: #38BDF8;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+
+.profile-name h2 {
+    margin: 5px 0 3px;
+    color: #F8FAFC;
+    font-size: 23px;
+    font-weight: 700;
+}
+
+.profile-name p {
+    margin: 0;
+    color: #64748B;
+    font-size: 11px;
+}
+
+    .profile-name p strong {
+        color: #94A3B8;
+    }
+
+
+/* PROFILE STATUS */
+
+.profile-status-area {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+.status-label {
+    color: #64748B;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.detail-status {
+    display: inline-flex;
+    align-items: center;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+    .detail-status.active {
+        background: rgba(34,197,94,.10);
+        color: #4ADE80;
+    }
+
+    .detail-status.inactive {
+        background: rgba(239,68,68,.10);
+        color: #F87171;
+    }
+
+
+/* STATUS BUTTON */
+
+.toggle-status-btn {
+    height: 36px;
+    padding: 0 14px;
+    border: 1px solid rgba(239,68,68,.18);
+    border-radius: 9px;
+    background: rgba(239,68,68,.08);
+    color: #F87171;
+    font-family: inherit;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: .25s;
+}
+
+    .toggle-status-btn:hover {
+        background: rgba(239,68,68,.15);
+        border-color: rgba(239,68,68,.30);
+    }
+
+    .toggle-status-btn.activate {
+        background: rgba(34,197,94,.08);
+        border-color: rgba(34,197,94,.18);
+        color: #4ADE80;
+    }
+
+        .toggle-status-btn.activate:hover {
+            background: rgba(34,197,94,.15);
+            border-color: rgba(34,197,94,.30);
+        }
+
+
+/*==========================================
+        DETAILS GRID
+==========================================*/
+
+.details-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-bottom: 25px;
+}
+
+
+/*==========================================
+        DETAILS CARD
+==========================================*/
+
+.details-card {
+    overflow: hidden;
+    background: #1E293B;
+    border: 1px solid rgba(255,255,255,.08);
+    border-radius: 18px;
+}
+
+
+/* CARD HEADER */
+
+.details-card-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 22px;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+}
+
+    .details-card-header h3 {
+        margin: 0 0 5px;
+        color: #F8FAFC;
+        font-size: 16px;
+    }
+
+    .details-card-header p {
+        margin: 0;
+        color: #64748B;
+        font-size: 11px;
+    }
+
+.header-icon {
+    width: 38px;
+    height: 38px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(59,130,246,.10);
+    font-size: 17px;
+}
+
+.complaint-header-icon {
+    background: rgba(245,158,11,.10);
+}
+
+
+/*==========================================
+        INFORMATION
+==========================================*/
+
+.information-list {
+    padding: 5px 22px;
+}
+
+.information-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    min-height: 54px;
+    border-bottom: 1px solid rgba(255,255,255,.045);
+}
+
+    .information-item:last-child {
+        border-bottom: none;
+    }
+
+.info-label {
+    color: #64748B;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .7px;
+}
+
+.information-item strong {
+    max-width: 60%;
+    color: #CBD5E1;
+    font-size: 12px;
+    font-weight: 500;
+    text-align: right;
+    word-break: break-word;
+}
+
+
+/*==========================================
+        COMPLAINT STATISTICS
+==========================================*/
+
+.complaint-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    padding: 20px 22px;
+}
+
+.complaint-stat {
+    padding: 16px 12px;
+    border-radius: 12px;
+    background: rgba(15,23,42,.45);
+    border: 1px solid rgba(255,255,255,.05);
+}
+
+.complaint-stat-icon {
+    display: block;
+    margin-bottom: 9px;
+    font-size: 16px;
+}
+
+.complaint-stat-label {
+    display: block;
+    color: #64748B;
+    font-size: 10px;
+}
+
+.complaint-stat strong {
+    display: block;
+    margin-top: 4px;
+    color: #F8FAFC;
+    font-size: 23px;
+}
+
+.active-stat {
+    background: rgba(245,158,11,.05);
+}
+
+.resolved-stat {
+    background: rgba(34,197,94,.05);
+}
+
+
+/*==========================================
+        ACCOUNT SUMMARY
+==========================================*/
+
+.account-summary {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    margin: 0 22px 20px;
+    padding: 15px;
+    border-radius: 11px;
+    background: rgba(15,23,42,.45);
+    border: 1px solid rgba(255,255,255,.05);
+}
+
+    .account-summary > div {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .account-summary span {
+        color: #64748B;
+        font-size: 10px;
+    }
+
+    .account-summary strong {
+        color: #CBD5E1;
+        font-size: 12px;
+    }
+
+.mini-status {
+    font-size: 11px !important;
+    font-weight: 600;
+}
+
+    .mini-status.active {
+        color: #4ADE80;
+    }
+
+    .mini-status.inactive {
+        color: #F87171;
+    }
+
+
+/*==========================================
+        COMPLAINTS CARD
+==========================================*/
+
+.complaints-card {
+    margin-bottom: 25px;
+}
+
+.complaint-record-count {
+    padding: 6px 11px;
+    border-radius: 20px;
+    background: rgba(59,130,246,.10);
+    color: #38BDF8;
+    font-size: 10px;
+    font-weight: 600;
+}
+
+
+/*==========================================
+        COMPLAINT TABLE
+==========================================*/
+
+.complaints-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+}
+
+.complaints-table {
+    width: 100%;
+    min-width: 750px;
+    border-collapse: collapse;
+}
+
+    .complaints-table thead {
+        background: rgba(15,23,42,.35);
+    }
+
+    .complaints-table th {
+        padding: 13px 18px;
+        color: #64748B;
+        font-size: 9px;
+        font-weight: 700;
+        letter-spacing: 1px;
+        text-align: left;
+        white-space: nowrap;
+    }
+
+    .complaints-table td {
+        padding: 15px 18px;
+        color: #CBD5E1;
+        font-size: 12px;
+        border-top: 1px solid rgba(255,255,255,.05);
+        white-space: nowrap;
+    }
+
+    .complaints-table tbody tr {
+        transition: .25s;
+    }
+
+        .complaints-table tbody tr:hover {
+            background: rgba(59,130,246,.035);
+        }
+
+
+/* COMPLAINT TITLE */
+
+.complaint-title-cell {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+    .complaint-title-cell strong {
+        max-width: 300px;
+        overflow: hidden;
+        color: #E2E8F0;
+        font-size: 12px;
+        text-overflow: ellipsis;
+    }
+
+    .complaint-title-cell span {
+        color: #64748B;
+        font-size: 9px;
+    }
+
+
+/*==========================================
+        PRIORITY
+==========================================*/
+
+.priority-badge {
+    display: inline-flex;
+    padding: 5px 9px;
+    border-radius: 15px;
+    font-size: 9px;
+    font-weight: 600;
+}
+
+    .priority-badge.high,
+    .priority-badge.critical {
+        background: rgba(239,68,68,.10);
+        color: #F87171;
+    }
+
+    .priority-badge.medium {
+        background: rgba(245,158,11,.10);
+        color: #FBBF24;
+    }
+
+    .priority-badge.low {
+        background: rgba(34,197,94,.10);
+        color: #4ADE80;
+    }
+
+
+/*==========================================
+        COMPLAINT STATUS
+==========================================*/
+
+.complaint-status {
+    display: inline-flex;
+    padding: 5px 9px;
+    border-radius: 15px;
+    font-size: 9px;
+    font-weight: 600;
+    background: rgba(59,130,246,.10);
+    color: #60A5FA;
+}
+
+    .complaint-status.resolved,
+    .complaint-status.closed {
+        background: rgba(34,197,94,.10);
+        color: #4ADE80;
+    }
+
+
+/*==========================================
+        EMPTY STATE
+==========================================*/
+
+.complaints-empty {
+    padding: 50px 20px;
+    text-align: center;
+}
+
+    .complaints-empty > div {
+        width: 55px;
+        height: 55px;
+        margin: 0 auto 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 14px;
+        background: rgba(59,130,246,.08);
+        font-size: 23px;
+    }
+
+    .complaints-empty h4 {
+        margin: 0 0 6px;
+        color: #E2E8F0;
+        font-size: 14px;
+    }
+
+    .complaints-empty p {
+        margin: 0;
+        color: #64748B;
+        font-size: 11px;
+    }
+
+
+/*==========================================
+        ADMIN NOTE
+==========================================*/
+
+.admin-note {
+    display: flex;
+    align-items: flex-start;
+    gap: 13px;
+    padding: 16px 18px;
+    margin-bottom: 25px;
+    border-radius: 13px;
+    background: rgba(59,130,246,.045);
+    border: 1px solid rgba(59,130,246,.10);
+}
+
+.admin-note-icon {
+    font-size: 17px;
+}
+
+.admin-note strong {
+    display: block;
+    margin-bottom: 4px;
+    color: #CBD5E1;
+    font-size: 12px;
+}
+
+.admin-note p {
+    margin: 0;
+    color: #64748B;
+    font-size: 10px;
+    line-height: 1.6;
+}
+
+
+/*==========================================
+        RESPONSIVE
+==========================================*/
+
+@media(max-width: 950px) {
+
+    .details-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .officer-profile-card {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .profile-status-area {
+        align-items: flex-start;
+    }
+}
+
+
+@media(max-width: 650px) {
+
+    .details-top h1 {
+        font-size: 27px;
+    }
+
+    .details-top p {
+        font-size: 13px;
+    }
+
+    .officer-profile-card {
+        padding: 20px;
+    }
+
+    .profile-main {
+        align-items: flex-start;
+    }
+
+    .large-officer-avatar {
+        width: 60px;
+        height: 60px;
+        border-radius: 15px;
+        font-size: 20px;
+    }
+
+    .profile-name h2 {
+        font-size: 19px;
+    }
+
+    .complaint-stat-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .account-summary {
+        flex-direction: column;
+    }
+
+    .information-item {
+        align-items: flex-start;
+        flex-direction: column;
+        justify-content: center;
+        gap: 5px;
+        padding: 12px 0;
+    }
+
+        .information-item strong {
+            max-width: 100%;
+            text-align: left;
+        }
+}
+
+
+@media(max-width: 450px) {
+
+    .details-top h1 {
+        font-size: 24px;
+    }
+
+    .profile-main {
+        gap: 12px;
+    }
+
+    .large-officer-avatar {
+        width: 52px;
+        height: 52px;
+        font-size: 17px;
+    }
+
+    .profile-name h2 {
+        font-size: 17px;
+    }
+
+    .details-card-header {
+        padding: 17px;
+    }
+
+    .information-list {
+        padding: 5px 17px;
+    }
+
+    .complaint-stat-grid {
+        padding: 17px;
+    }
+}

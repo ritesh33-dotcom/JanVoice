@@ -30,7 +30,6 @@
 
         <div class="wards-header">
 
-
             <div>
 
                 <span class="page-label">
@@ -48,17 +47,38 @@
             </div>
 
 
-            <button type="button"
-                class="add-ward-btn">
+            <div class="wards-header-action">
 
-                <span>＋</span>
+                <asp:Button
+                    ID="btnAddWard"
+                    runat="server"
+                    Text="＋  Add New Ward"
+                    CssClass="add-ward-btn"
+                    CausesValidation="false"
+                    OnClick="btnAddWard_Click" />
 
-                Add New Ward
-
-            </button>
-
+            </div>
 
         </div>
+
+
+
+        <!-- =====================================
+             MESSAGE
+        ====================================== -->
+
+        <asp:Panel
+            ID="pnlMessage"
+            runat="server"
+            CssClass="ward-message"
+            Visible="false">
+
+            <asp:Label
+                ID="lblMessage"
+                runat="server">
+            </asp:Label>
+
+        </asp:Panel>
 
 
 
@@ -69,7 +89,7 @@
         <div class="ward-stats">
 
 
-            <!-- TOTAL WARDS -->
+            <!-- TOTAL -->
 
             <div class="ward-stat-card">
 
@@ -84,7 +104,13 @@
                     </span>
 
                     <strong>
-                        0
+
+                        <asp:Label
+                            ID="lblTotalWards"
+                            runat="server"
+                            Text="0">
+                        </asp:Label>
+
                     </strong>
 
                     <small>
@@ -97,7 +123,7 @@
 
 
 
-            <!-- ACTIVE WARDS -->
+            <!-- ACTIVE -->
 
             <div class="ward-stat-card">
 
@@ -112,7 +138,13 @@
                     </span>
 
                     <strong>
-                        0
+
+                        <asp:Label
+                            ID="lblActiveWards"
+                            runat="server"
+                            Text="0">
+                        </asp:Label>
+
                     </strong>
 
                     <small>
@@ -140,7 +172,13 @@
                     </span>
 
                     <strong>
-                        0
+
+                        <asp:Label
+                            ID="lblAssignedOfficers"
+                            runat="server"
+                            Text="0">
+                        </asp:Label>
+
                     </strong>
 
                     <small>
@@ -168,7 +206,13 @@
                     </span>
 
                     <strong>
-                        0
+
+                        <asp:Label
+                            ID="lblTotalComplaints"
+                            runat="server"
+                            Text="0">
+                        </asp:Label>
+
                     </strong>
 
                     <small>
@@ -191,49 +235,64 @@
         <div class="wards-toolbar">
 
 
+            <!-- SEARCH -->
+
             <div class="ward-search">
 
                 <span>
                     🔍
                 </span>
 
-                <input type="text"
-                    placeholder="Search by ward name or number..." />
+                <asp:TextBox
+                    ID="txtSearch"
+                    runat="server"
+                    CssClass="ward-search-input"
+                    placeholder="Search by ward name or number...">
+                </asp:TextBox>
 
             </div>
 
 
-            <select class="ward-filter">
 
-                <option value="">
-                    All Status
-                </option>
+            <!-- STATUS -->
 
-                <option value="Active">
-                    Active
-                </option>
+            <asp:DropDownList
+                ID="ddlStatus"
+                runat="server"
+                CssClass="ward-filter">
 
-                <option value="Inactive">
-                    Inactive
-                </option>
+                <asp:ListItem
+                    Text="All Status"
+                    Value="" />
 
-            </select>
+                <asp:ListItem
+                    Text="Active"
+                    Value="1" />
+
+                <asp:ListItem
+                    Text="Inactive"
+                    Value="0" />
+
+            </asp:DropDownList>
 
 
-            <button type="button"
-                class="filter-btn">
 
-                Apply Filters
+            <!-- APPLY -->
 
-            </button>
-
+            <asp:Button
+                ID="btnApplyFilters"
+                runat="server"
+                Text="Apply Filters"
+                CssClass="filter-btn"
+                CausesValidation="false"
+                OnClick="btnApplyFilters_Click" />
 
         </div>
 
 
 
         <!-- =====================================
-             WARDS TABLE
+             WARDS CARD
         ====================================== -->
 
         <div class="wards-card">
@@ -242,7 +301,6 @@
             <!-- CARD HEADER -->
 
             <div class="wards-card-header">
-
 
                 <div>
 
@@ -258,21 +316,28 @@
 
 
                 <span class="record-count">
-                    0 Wards
-                </span>
 
+                    <asp:Label
+                        ID="lblRecordCount"
+                        runat="server"
+                        Text="0">
+                    </asp:Label>
+
+                    Wards
+
+                </span>
 
             </div>
 
 
 
-            <!-- TABLE -->
+            <!-- =====================================
+                 TABLE
+            ====================================== -->
 
             <div class="wards-table-wrapper">
 
-
                 <table class="wards-table">
-
 
                     <thead>
 
@@ -307,321 +372,721 @@
                     </thead>
 
 
-
                     <tbody>
 
+                        <asp:Repeater
+                            ID="rptWards"
+                            runat="server"
+                            OnItemCommand="rptWards_ItemCommand">
 
-                        <!-- DEMO WARD 1 -->
+                            <ItemTemplate>
 
-                        <tr>
+                                <tr>
 
 
-                            <td>
+                                    <!-- WARD -->
 
-                                <div class="ward-cell">
+                                    <td>
 
-                                    <div class="ward-icon">
-                                        W1
-                                    </div>
+                                        <div class="ward-cell">
 
-                                    <div>
+                                            <div class='ward-icon <%# GetWardIconClass(Eval("WardNumber")) %>'>
 
-                                        <strong>
-                                            Central Ward
-                                        </strong>
+                                                <%#
+                                                    GetWardIcon(
+                                                        Eval("WardNumber")
+                                                    )
+                                                %>
 
-                                        <span>
-                                            Ward administrative area
+                                            </div>
+
+
+                                            <div class="ward-info">
+
+                                                <strong>
+
+                                                    <%#
+                                                        Server.HtmlEncode(
+                                                            Eval("WardName").ToString()
+                                                        )
+                                                    %>
+
+                                                </strong>
+
+
+                                                <span>
+
+                                                    <%#
+                                                        Eval("Description") == DBNull.Value
+                                                        ||
+                                                        string.IsNullOrWhiteSpace(
+                                                            Eval("Description").ToString()
+                                                        )
+                                                        ? "Ward administrative area"
+                                                        : Server.HtmlEncode(
+                                                            Eval("Description").ToString()
+                                                        )
+                                                    %>
+
+                                                </span>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+
+
+                                    <!-- WARD NUMBER -->
+
+                                    <td>
+
+                                        <span class="ward-number">
+
+                                            <%#
+                                                Eval("WardNumber")
+                                            %>
+
                                         </span>
 
-                                    </div>
-
-                                </div>
-
-                            </td>
-
-
-                            <td>
-
-                                <span class="ward-number">
-                                    01
-                                </span>
-
-                            </td>
-
-
-                            <td>
-
-                                <strong class="ward-count">
-                                    2
-                                </strong>
-
-                            </td>
-
-
-                            <td>
-
-                                <strong class="complaint-count">
-                                    24
-                                </strong>
-
-                            </td>
-
-
-                            <td>
-
-                                <span class="ward-status active">
-                                    Active
-                                </span>
-
-                            </td>
-
-
-                            <td>
-
-                                <div class="ward-actions">
-
-                                    <a href="#"
-                                        class="ward-action view">
-                                        View
-                                    </a>
-
-                                    <a href="#"
-                                        class="ward-action edit">
-                                        Edit
-                                    </a>
-
-                                </div>
-
-                            </td>
-
-
-                        </tr>
+                                    </td>
 
 
 
-                        <!-- DEMO WARD 2 -->
+                                    <!-- OFFICERS -->
 
-                        <tr>
+                                    <td>
 
+                                        <strong class="ward-count">
 
-                            <td>
+                                            <%#
+                                                Eval("OfficerCount")
+                                            %>
 
-                                <div class="ward-cell">
-
-                                    <div class="ward-icon purple">
-                                        W2
-                                    </div>
-
-                                    <div>
-
-                                        <strong>
-                                            East Ward
                                         </strong>
 
-                                        <span>
-                                            Ward administrative area
-                                        </span>
-
-                                    </div>
-
-                                </div>
-
-                            </td>
-
-
-                            <td>
-
-                                <span class="ward-number">
-                                    02
-                                </span>
-
-                            </td>
-
-
-                            <td>
-
-                                <strong class="ward-count">
-                                    3
-                                </strong>
-
-                            </td>
-
-
-                            <td>
-
-                                <strong class="complaint-count">
-                                    18
-                                </strong>
-
-                            </td>
-
-
-                            <td>
-
-                                <span class="ward-status active">
-                                    Active
-                                </span>
-
-                            </td>
-
-
-                            <td>
-
-                                <div class="ward-actions">
-
-                                    <a href="#"
-                                        class="ward-action view">
-                                        View
-                                    </a>
-
-                                    <a href="#"
-                                        class="ward-action edit">
-                                        Edit
-                                    </a>
-
-                                </div>
-
-                            </td>
-
-
-                        </tr>
+                                    </td>
 
 
 
-                        <!-- DEMO WARD 3 -->
+                                    <!-- COMPLAINTS -->
 
-                        <tr>
+                                    <td>
 
+                                        <strong class="complaint-count">
 
-                            <td>
+                                            <%#
+                                                Eval("ComplaintCount")
+                                            %>
 
-                                <div class="ward-cell">
-
-                                    <div class="ward-icon cyan">
-                                        W3
-                                    </div>
-
-                                    <div>
-
-                                        <strong>
-                                            North Ward
                                         </strong>
 
-                                        <span>
-                                            Ward administrative area
+                                    </td>
+
+
+
+                                    <!-- STATUS -->
+
+                                    <td>
+
+                                        <span class='ward-status
+                                            <%#
+                                                Convert.ToBoolean(
+                                                    Eval("IsActive")
+                                                )
+                                                ? "active"
+                                                : "inactive"
+                                            %>'>
+
+                                            <%#
+                                                Convert.ToBoolean(
+                                                    Eval("IsActive")
+                                                )
+                                                ? "Active"
+                                                : "Inactive"
+                                            %>
+
                                         </span>
 
-                                    </div>
-
-                                </div>
-
-                            </td>
+                                    </td>
 
 
-                            <td>
 
-                                <span class="ward-number">
-                                    03
-                                </span>
+                                    <!-- ACTION -->
 
-                            </td>
+                                    <td>
 
-
-                            <td>
-
-                                <strong class="ward-count">
-                                    1
-                                </strong>
-
-                            </td>
+                                        <div class="ward-actions">
 
 
-                            <td>
+                                            <!-- VIEW -->
 
-                                <strong class="complaint-count">
-                                    11
-                                </strong>
+                                            <asp:LinkButton
+                                                ID="btnView"
+                                                runat="server"
+                                                CssClass="ward-action view"
+                                                CommandName="ViewWard"
+                                                CommandArgument='<%# Eval("WardID") %>'
+                                                CausesValidation="false">
 
-                            </td>
+                                                View
 
-
-                            <td>
-
-                                <span class="ward-status active">
-                                    Active
-                                </span>
-
-                            </td>
+                                            </asp:LinkButton>
 
 
-                            <td>
 
-                                <div class="ward-actions">
+                                            <!-- EDIT -->
 
-                                    <a href="#"
-                                        class="ward-action view">
-                                        View
-                                    </a>
+                                            <asp:LinkButton
+                                                ID="btnEdit"
+                                                runat="server"
+                                                CssClass="ward-action edit"
+                                                CommandName="EditWard"
+                                                CommandArgument='<%# Eval("WardID") %>'
+                                                CausesValidation="false">
 
-                                    <a href="#"
-                                        class="ward-action edit">
-                                        Edit
-                                    </a>
+                                                Edit
 
-                                </div>
-
-                            </td>
+                                            </asp:LinkButton>
 
 
-                        </tr>
+
+                                            <!-- TOGGLE -->
+
+                                            <asp:LinkButton
+                                                ID="btnToggle"
+                                                runat="server"
+                                                CssClass='<%#
+                                                    Convert.ToBoolean(
+                                                        Eval("IsActive")
+                                                    )
+                                                    ? "ward-action deactivate"
+                                                    : "ward-action activate"
+                                                %>'
+                                                CommandName="ToggleWard"
+                                                CommandArgument='<%# Eval("WardID") %>'
+                                                CausesValidation="false">
+
+                                                <%#
+                                                    Convert.ToBoolean(
+                                                        Eval("IsActive")
+                                                    )
+                                                    ? "Deactivate"
+                                                    : "Activate"
+                                                %>
+
+                                            </asp:LinkButton>
+
+
+
+                                            <!-- DELETE -->
+
+                                            <asp:LinkButton
+                                                ID="btnDelete"
+                                                runat="server"
+                                                CssClass="ward-action delete"
+                                                CommandName="DeleteWard"
+                                                CommandArgument='<%# Eval("WardID") %>'
+                                                CausesValidation="false"
+                                                OnClientClick="return confirm('Are you sure you want to delete this ward?');">
+
+                                                Delete
+
+                                            </asp:LinkButton>
+
+
+                                        </div>
+
+                                    </td>
+
+
+                                </tr>
+
+                            </ItemTemplate>
+
+                        </asp:Repeater>
 
 
 
                         <!-- EMPTY STATE -->
 
-                        <!--
+                        <asp:Panel
+                            ID="pnlEmpty"
+                            runat="server"
+                            Visible="false">
 
-                        <tr>
+                            <tr>
 
-                            <td colspan="6">
+                                <td colspan="6">
 
-                                <div class="wards-empty">
+                                    <div class="wards-empty">
 
-                                    <div>
-                                        ◇
+                                        <div>
+                                            ◇
+                                        </div>
+
+                                        <h4>
+                                            No Wards Found
+                                        </h4>
+
+                                        <p>
+                                            No wards match your current search or filter.
+                                        </p>
+
                                     </div>
 
-                                    <h4>
-                                        No Wards Found
-                                    </h4>
+                                </td>
 
-                                    <p>
-                                        Registered wards will appear here.
-                                    </p>
+                            </tr>
 
-                                </div>
-
-                            </td>
-
-                        </tr>
-
-                        -->
+                        </asp:Panel>
 
 
                     </tbody>
 
-
                 </table>
 
-
             </div>
-
 
         </div>
 
 
-    </div>
 
+        <!-- =====================================
+             ADD / EDIT WARD MODAL
+        ====================================== -->
+
+        <asp:Panel
+            ID="pnlWardModal"
+            runat="server"
+            CssClass="ward-modal-overlay"
+            Visible="false">
+
+
+            <div class="ward-modal">
+
+
+                <!-- HEADER -->
+
+                <div class="ward-modal-header">
+
+                    <div>
+
+                        <span>
+                            JANVOICE ADMINISTRATION
+                        </span>
+
+                        <h2>
+
+                            <asp:Label
+                                ID="lblModalTitle"
+                                runat="server"
+                                Text="Add New Ward">
+                            </asp:Label>
+
+                        </h2>
+
+                    </div>
+
+
+                    <asp:LinkButton
+                        ID="btnCloseModal"
+                        runat="server"
+                        CssClass="modal-close-btn"
+                        CausesValidation="false"
+                        OnClick="btnCloseModal_Click">
+
+                        ×
+
+                    </asp:LinkButton>
+
+                </div>
+
+
+
+                <!-- BODY -->
+
+                <div class="ward-modal-body">
+
+
+                    <asp:HiddenField
+                        ID="hfWardID"
+                        runat="server"
+                        Value="0" />
+
+
+
+                    <!-- WARD NUMBER -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Ward Number
+                            <span>*</span>
+                        </label>
+
+                        <asp:TextBox
+                            ID="txtWardNumber"
+                            runat="server"
+                            CssClass="ward-form-input"
+                            MaxLength="10"
+                            placeholder="e.g. 01">
+                        </asp:TextBox>
+
+                    </div>
+
+
+
+                    <!-- WARD NAME -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Ward Name
+                            <span>*</span>
+                        </label>
+
+                        <asp:TextBox
+                            ID="txtWardName"
+                            runat="server"
+                            CssClass="ward-form-input"
+                            MaxLength="100"
+                            placeholder="e.g. Central Ward">
+                        </asp:TextBox>
+
+                    </div>
+
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Description
+                        </label>
+
+                        <asp:TextBox
+                            ID="txtWardDescription"
+                            runat="server"
+                            CssClass="ward-form-input ward-textarea"
+                            TextMode="MultiLine"
+                            Rows="4"
+                            MaxLength="250"
+                            placeholder="Describe the administrative area covered by this ward...">
+                        </asp:TextBox>
+
+                    </div>
+
+
+
+                    <!-- STATUS -->
+
+                    <div
+                        id="wardStatusGroup"
+                        runat="server"
+                        class="form-group">
+
+                        <label>
+                            Status
+                        </label>
+
+                        <asp:DropDownList
+                            ID="ddlModalStatus"
+                            runat="server"
+                            CssClass="ward-form-input">
+
+                            <asp:ListItem
+                                Text="Active"
+                                Value="1" />
+
+                            <asp:ListItem
+                                Text="Inactive"
+                                Value="0" />
+
+                        </asp:DropDownList>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- FOOTER -->
+
+                <div class="ward-modal-footer">
+
+                    <asp:Button
+                        ID="btnCancelModal"
+                        runat="server"
+                        Text="Cancel"
+                        CssClass="modal-cancel-btn"
+                        CausesValidation="false"
+                        OnClick="btnCloseModal_Click" />
+
+
+                    <asp:Button
+                        ID="btnSaveWard"
+                        runat="server"
+                        Text="Save Ward"
+                        CssClass="modal-save-btn"
+                        CausesValidation="false"
+                        OnClick="btnSaveWard_Click" />
+
+                </div>
+
+
+            </div>
+
+        </asp:Panel>
+
+
+
+        <!-- =====================================
+             VIEW WARD MODAL
+        ====================================== -->
+
+        <asp:Panel
+            ID="pnlViewModal"
+            runat="server"
+            CssClass="ward-modal-overlay"
+            Visible="false">
+
+
+            <div class="ward-modal view-modal">
+
+
+                <!-- HEADER -->
+
+                <div class="ward-modal-header">
+
+                    <div>
+
+                        <span>
+                            WARD DETAILS
+                        </span>
+
+                        <h2>
+
+                            <asp:Label
+                                ID="lblViewWardName"
+                                runat="server">
+                            </asp:Label>
+
+                        </h2>
+
+                    </div>
+
+
+                    <asp:LinkButton
+                        ID="btnCloseViewModal"
+                        runat="server"
+                        CssClass="modal-close-btn"
+                        CausesValidation="false"
+                        OnClick="btnCloseViewModal_Click">
+
+                        ×
+
+                    </asp:LinkButton>
+
+                </div>
+
+
+
+                <!-- BODY -->
+
+                <div class="ward-view-body">
+
+
+                    <div class="view-ward-icon">
+
+                        <asp:Label
+                            ID="lblViewWardIcon"
+                            runat="server">
+                        </asp:Label>
+
+                    </div>
+
+
+
+                    <div class="view-ward-info">
+
+
+                        <!-- WARD ID -->
+
+                        <div class="view-info-item">
+
+                            <span>
+                                Ward ID
+                            </span>
+
+                            <strong>
+
+                                #<asp:Label
+                                    ID="lblViewWardID"
+                                    runat="server">
+                                </asp:Label>
+
+                            </strong>
+
+                        </div>
+
+
+
+                        <!-- WARD NUMBER -->
+
+                        <div class="view-info-item">
+
+                            <span>
+                                Ward Number
+                            </span>
+
+                            <strong>
+
+                                <asp:Label
+                                    ID="lblViewWardNumber"
+                                    runat="server">
+                                </asp:Label>
+
+                            </strong>
+
+                        </div>
+
+
+
+                        <!-- STATUS -->
+
+                        <div class="view-info-item">
+
+                            <span>
+                                Status
+                            </span>
+
+                            <strong>
+
+                                <asp:Label
+                                    ID="lblViewStatus"
+                                    runat="server">
+                                </asp:Label>
+
+                            </strong>
+
+                        </div>
+
+
+
+                        <!-- CREATED -->
+
+                        <div class="view-info-item">
+
+                            <span>
+                                Created
+                            </span>
+
+                            <strong>
+
+                                <asp:Label
+                                    ID="lblViewCreatedDate"
+                                    runat="server">
+                                </asp:Label>
+
+                            </strong>
+
+                        </div>
+
+
+
+                        <!-- OFFICERS -->
+
+                        <div class="view-info-item">
+
+                            <span>
+                                Assigned Officers
+                            </span>
+
+                            <strong>
+
+                                <asp:Label
+                                    ID="lblViewOfficerCount"
+                                    runat="server">
+                                </asp:Label>
+
+                            </strong>
+
+                        </div>
+
+
+
+                        <!-- COMPLAINTS -->
+
+                        <div class="view-info-item">
+
+                            <span>
+                                Total Complaints
+                            </span>
+
+                            <strong>
+
+                                <asp:Label
+                                    ID="lblViewComplaintCount"
+                                    runat="server">
+                                </asp:Label>
+
+                            </strong>
+
+                        </div>
+
+
+                    </div>
+
+
+
+                    <!-- DESCRIPTION -->
+
+                    <div class="view-description">
+
+                        <span>
+                            DESCRIPTION
+                        </span>
+
+                        <p>
+
+                            <asp:Label
+                                ID="lblViewDescription"
+                                runat="server">
+                            </asp:Label>
+
+                        </p>
+
+                    </div>
+
+
+                </div>
+
+
+
+                <!-- FOOTER -->
+
+                <div class="ward-modal-footer">
+
+                    <asp:Button
+                        ID="btnCloseView"
+                        runat="server"
+                        Text="Close"
+                        CssClass="modal-cancel-btn"
+                        CausesValidation="false"
+                        OnClick="btnCloseViewModal_Click" />
+
+                </div>
+
+
+            </div>
+
+        </asp:Panel>
+
+
+    </div>
 
 </asp:Content>
