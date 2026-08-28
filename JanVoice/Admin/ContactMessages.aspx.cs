@@ -47,34 +47,41 @@ namespace JanVoice.Admin
                 string query = @"
 
                     SELECT
+
                         COUNT(*) AS TotalMessages,
 
-                        SUM(
-                            CASE
-                                WHEN IsRead = 0
-                                THEN 1
-                                ELSE 0
-                            END
+                        COALESCE(
+                            SUM(
+                                CASE
+                                    WHEN IsRead = 0
+                                    THEN 1
+                                    ELSE 0
+                                END
+                            ),
+                            0
                         ) AS UnreadMessages,
 
-                        SUM(
-                            CASE
-                                WHEN IsRead = 1
-                                THEN 1
-                                ELSE 0
-                            END
+                        COALESCE(
+                            SUM(
+                                CASE
+                                    WHEN IsRead = 1
+                                    THEN 1
+                                    ELSE 0
+                                END
+                            ),
+                            0
                         ) AS ReadMessages
 
                     FROM ContactMessages;
 
 
                     SELECT
+
                         COUNT(*) AS MonthMessages
 
                     FROM ContactMessages
 
-                    WHERE
-                        SubmittedDate >=
+                    WHERE SubmittedDate >=
                         DATEFROMPARTS(
                             YEAR(GETDATE()),
                             MONTH(GETDATE()),
@@ -89,9 +96,12 @@ namespace JanVoice.Admin
                 {
                     con.Open();
 
+
                     using (SqlDataReader reader =
                            cmd.ExecuteReader())
                     {
+                        // FIRST RESULT
+
                         if (reader.Read())
                         {
                             lblTotalMessages.Text =
@@ -107,6 +117,8 @@ namespace JanVoice.Admin
                                 .ToString();
                         }
 
+
+                        // SECOND RESULT
 
                         if (reader.NextResult())
                         {
@@ -155,13 +167,13 @@ namespace JanVoice.Admin
                         @Search = ''
 
                         OR FullName LIKE
-                           '%' + @Search + '%'
+                            '%' + @Search + '%'
 
                         OR Email LIKE
-                           '%' + @Search + '%'
+                            '%' + @Search + '%'
 
                         OR Subject LIKE
-                           '%' + @Search + '%'
+                            '%' + @Search + '%'
                     )
 
                     AND
@@ -170,7 +182,7 @@ namespace JanVoice.Admin
                         @Status = ''
 
                         OR IsRead =
-                           CAST(@Status AS BIT)
+                            CAST(@Status AS BIT)
                     )
 
                     AND
@@ -181,9 +193,12 @@ namespace JanVoice.Admin
                         OR
                         (
                             @Time = 'Today'
+
                             AND CAST(
                                 SubmittedDate AS DATE
-                            ) = CAST(
+                            )
+                            =
+                            CAST(
                                 GETDATE() AS DATE
                             )
                         )
@@ -191,6 +206,7 @@ namespace JanVoice.Admin
                         OR
                         (
                             @Time = 'Week'
+
                             AND SubmittedDate >=
                                 DATEADD(
                                     DAY,
@@ -202,6 +218,7 @@ namespace JanVoice.Admin
                         OR
                         (
                             @Time = 'Month'
+
                             AND SubmittedDate >=
                                 DATEADD(
                                     MONTH,
@@ -220,6 +237,8 @@ namespace JanVoice.Admin
                 using (SqlCommand cmd =
                        new SqlCommand(query, con))
                 {
+                    // SEARCH
+
                     cmd.Parameters.Add(
                         "@Search",
                         SqlDbType.NVarChar,
@@ -228,6 +247,8 @@ namespace JanVoice.Admin
                         txtSearch.Text.Trim();
 
 
+                    // STATUS
+
                     cmd.Parameters.Add(
                         "@Status",
                         SqlDbType.NVarChar,
@@ -235,6 +256,8 @@ namespace JanVoice.Admin
                     ).Value =
                         ddlStatus.SelectedValue;
 
+
+                    // TIME
 
                     cmd.Parameters.Add(
                         "@Time",
@@ -256,14 +279,31 @@ namespace JanVoice.Admin
                         dt.Load(reader);
 
 
-                        rptMessages.DataSource =
-                            dt;
+                        // =================================
+                        // DYNAMIC TABLE / EMPTY STATE
+                        // =================================
+
+                        rptMessages.DataSource = dt;
 
                         rptMessages.DataBind();
 
 
                         lblRecordCount.Text =
                             dt.Rows.Count.ToString();
+
+
+                        if (dt.Rows.Count == 0)
+                        {
+                            rptMessages.Visible = false;
+
+                            pnlEmpty.Visible = true;
+                        }
+                        else
+                        {
+                            rptMessages.Visible = true;
+
+                            pnlEmpty.Visible = false;
+                        }
                     }
                 }
             }
@@ -272,7 +312,7 @@ namespace JanVoice.Admin
 
 
         // ==========================================
-        // MESSAGE COMMANDS
+        // REPEATER COMMAND
         // ==========================================
 
         protected void rptMessages_ItemCommand(
@@ -283,7 +323,9 @@ namespace JanVoice.Admin
 
 
             if (!int.TryParse(
-                e.CommandArgument.ToString(),
+                Convert.ToString(
+                    e.CommandArgument
+                ),
                 out messageID))
             {
                 return;
@@ -357,26 +399,47 @@ namespace JanVoice.Admin
                     {
                         if (reader.Read())
                         {
+                            // NAME
+
                             lblViewName.Text =
                                 reader["FullName"]
                                 .ToString();
+
+
+                            // EMAIL
 
                             lblViewEmail.Text =
                                 reader["Email"]
                                 .ToString();
 
+
+                            // MOBILE
+
                             lblViewMobile.Text =
                                 reader["Mobile"] == DBNull.Value
+                                ||
+                                string.IsNullOrWhiteSpace(
+                                    reader["Mobile"].ToString()
+                                )
                                 ? "Not provided"
                                 : reader["Mobile"].ToString();
+
+
+                            // SUBJECT
 
                             lblViewSubject.Text =
                                 reader["Subject"]
                                 .ToString();
 
+
+                            // MESSAGE
+
                             lblViewMessage.Text =
                                 reader["Message"]
                                 .ToString();
+
+
+                            // DATE
 
                             lblViewDate.Text =
                                 Convert.ToDateTime(
@@ -385,15 +448,28 @@ namespace JanVoice.Admin
                                     "dd MMM yyyy, hh:mm tt"
                                 );
 
+
+                            // MESSAGE ID
+
                             hfMessageID.Value =
                                 messageID.ToString();
 
-                            btnMarkReplied.Text =
+
+                            // REPLY BUTTON
+
+                            bool isReplied =
                                 Convert.ToBoolean(
                                     reader["IsReplied"]
-                                )
+                                );
+
+
+                            btnMarkReplied.Text =
+                                isReplied
                                 ? "Mark as Not Replied"
                                 : "Mark as Replied";
+
+
+                            // SHOW MODAL
 
                             pnlViewMessage.Visible =
                                 true;
@@ -403,12 +479,18 @@ namespace JanVoice.Admin
             }
 
 
-
-            // Automatically mark as read
+            // Automatically mark message as read
 
             MarkAsRead(messageID);
 
+
+            // Refresh statistics
+
             LoadStatistics();
+
+
+            // Refresh table
+
             LoadMessages();
         }
 
@@ -442,6 +524,7 @@ namespace JanVoice.Admin
                         SqlDbType.Int
                     ).Value =
                         messageID;
+
 
                     con.Open();
 
@@ -495,13 +578,14 @@ namespace JanVoice.Admin
 
 
             LoadStatistics();
+
             LoadMessages();
         }
 
 
 
         // ==========================================
-        // MARK REPLIED
+        // MARK AS REPLIED
         // ==========================================
 
         protected void btnMarkReplied_Click(
@@ -555,11 +639,16 @@ namespace JanVoice.Admin
             }
 
 
+            // Close modal
+
             pnlViewMessage.Visible =
                 false;
 
 
+            // Refresh everything
+
             LoadStatistics();
+
             LoadMessages();
         }
 
@@ -639,18 +728,25 @@ namespace JanVoice.Admin
 
 
             int hash =
-                Math.Abs(value.GetHashCode());
+                Math.Abs(
+                    value.GetHashCode()
+                );
 
 
             switch (hash % 3)
             {
                 case 1:
+
                     return "purple";
 
+
                 case 2:
+
                     return "green";
 
+
                 default:
+
                     return "";
             }
         }

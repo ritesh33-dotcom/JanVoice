@@ -5,20 +5,19 @@
     CodeBehind="Notifications.aspx.cs"
     Inherits="JanVoice.Admin.Notifications" %>
 
-
 <asp:Content ID="Content1"
     ContentPlaceHolderID="head"
     runat="server">
 
-   
-    <link href="../CSS/AdminNotifications.css" rel="stylesheet" />
+    <link href="../CSS/AdminNotifications.css"
+        rel="stylesheet" />
+
 </asp:Content>
 
 
 <asp:Content ID="Content2"
     ContentPlaceHolderID="ContentPlaceHolder1"
     runat="server">
-
 
     <div class="notifications-page">
 
@@ -28,7 +27,6 @@
         ====================================== -->
 
         <div class="notifications-header">
-
 
             <div>
 
@@ -49,19 +47,21 @@
 
             <div class="notification-header-actions">
 
-                <button type="button"
-                    class="mark-read-btn">
+                <asp:LinkButton
+                    ID="btnMarkAllRead"
+                    runat="server"
+                    CssClass="mark-all-btn"
+                    OnClick="btnMarkAllRead_Click">
 
-                    ✓
+                    <span class="mark-read-icon">✓</span>
 
                     <span>
                         Mark All as Read
                     </span>
 
-                </button>
+                </asp:LinkButton>
 
             </div>
-
 
         </div>
 
@@ -74,76 +74,79 @@
         <div class="notification-summary">
 
 
+            <!-- TOTAL -->
+
             <div class="notification-summary-card">
 
-
-                <div class="summary-icon">
+                <div class="summary-icon total-icon">
                     🔔
                 </div>
 
-
-                <div>
+                <div class="summary-info">
 
                     <span>
                         Total Notifications
                     </span>
 
-                    <strong>
-                        0
-                    </strong>
+                    <asp:Label
+                        ID="lblTotalNotifications"
+                        runat="server"
+                        Text="0">
+                    </asp:Label>
 
                 </div>
-
 
             </div>
 
 
 
-            <div class="notification-summary-card unread">
+            <!-- UNREAD -->
 
+            <div class="notification-summary-card">
 
                 <div class="summary-icon unread-icon">
                     ●
                 </div>
 
-
-                <div>
+                <div class="summary-info">
 
                     <span>
                         Unread
                     </span>
 
-                    <strong>
-                        0
-                    </strong>
+                    <asp:Label
+                        ID="lblUnreadNotifications"
+                        runat="server"
+                        Text="0">
+                    </asp:Label>
 
                 </div>
-
 
             </div>
 
 
 
-            <div class="notification-summary-card">
+            <!-- IMPORTANT -->
 
+            <div class="notification-summary-card">
 
                 <div class="summary-icon warning-icon">
                     ⚠
                 </div>
 
-
-                <div>
+                <div class="summary-info">
 
                     <span>
                         Important
                     </span>
 
-                    <strong>
-                        0
-                    </strong>
+                    <asp:Label
+                        ID="lblImportantNotifications"
+                        runat="server"
+                        Text="0">
+                    </asp:Label>
 
                 </div>
-
 
             </div>
 
@@ -159,72 +162,108 @@
         <div class="notifications-toolbar">
 
 
+            <!-- TABS -->
+
             <div class="notification-tabs">
 
-                <button type="button"
-                    class="notification-tab active">
+                <asp:LinkButton
+                    ID="btnAll"
+                    runat="server"
+                    CssClass="notification-tab active"
+                    CommandArgument="All"
+                    OnClick="NotificationTab_Click">
 
                     All
 
-                </button>
+                </asp:LinkButton>
 
 
-                <button type="button"
-                    class="notification-tab">
+                <asp:LinkButton
+                    ID="btnUnread"
+                    runat="server"
+                    CssClass="notification-tab"
+                    CommandArgument="Unread"
+                    OnClick="NotificationTab_Click">
 
                     Unread
 
-                </button>
+                </asp:LinkButton>
 
 
-                <button type="button"
-                    class="notification-tab">
+                <asp:LinkButton
+                    ID="btnImportant"
+                    runat="server"
+                    CssClass="notification-tab"
+                    CommandArgument="Important"
+                    OnClick="NotificationTab_Click">
 
                     Important
 
-                </button>
+                </asp:LinkButton>
 
             </div>
 
 
-            <select class="notification-filter">
 
-                <option>
-                    All Types
-                </option>
+            <!-- SEARCH -->
 
-                <option>
-                    Complaint
-                </option>
+            <div class="notification-search">
 
-                <option>
-                    User
-                </option>
+                <span>
+                    🔍
+                </span>
 
-                <option>
-                    Officer
-                </option>
+                <asp:TextBox
+                    ID="txtSearch"
+                    runat="server"
+                    CssClass="notification-search-input"
+                    placeholder="Search notifications..."
+                    MaxLength="100">
+                </asp:TextBox>
 
-                <option>
-                    System
-                </option>
+            </div>
 
-            </select>
 
+
+            <!-- TYPE -->
+
+            <asp:DropDownList
+                ID="ddlNotificationType"
+                runat="server"
+                CssClass="notification-filter">
+
+                <asp:ListItem
+                    Text="All Types"
+                    Value="">
+                </asp:ListItem>
+
+            </asp:DropDownList>
+
+
+
+            <!-- APPLY -->
+
+            <asp:Button
+                ID="btnApplyFilter"
+                runat="server"
+                Text="Apply Filters"
+                CssClass="filter-btn"
+                OnClick="btnApplyFilter_Click" />
 
         </div>
 
 
 
         <!-- =====================================
-             NOTIFICATIONS CARD
+             MAIN NOTIFICATIONS CARD
         ====================================== -->
 
         <div class="notifications-card">
 
 
-            <div class="notifications-card-header">
+            <!-- CARD HEADER -->
 
+            <div class="notifications-card-header">
 
                 <div>
 
@@ -233,333 +272,125 @@
                     </h3>
 
                     <p>
-                        Latest system and civic activity notifications.
+                        Latest activities and alerts relevant to your administration.
                     </p>
 
                 </div>
 
 
-                <span class="notification-count">
-                    0 Notifications
-                </span>
-
+                <asp:Label
+                    ID="lblNotificationCount"
+                    runat="server"
+                    CssClass="notification-count"
+                    Text="0 Notifications">
+                </asp:Label>
 
             </div>
 
 
 
             <!-- =====================================
-                 NOTIFICATION LIST
+                 DYNAMIC NOTIFICATION LIST
             ====================================== -->
 
-            <div class="notification-list">
+            <asp:Repeater
+                ID="rptNotifications"
+                runat="server"
+                OnItemDataBound="rptNotifications_ItemDataBound">
+
+                <HeaderTemplate>
+
+                    <div class="notification-list">
+
+                </HeaderTemplate>
 
 
+                <ItemTemplate>
 
-                <!-- NOTIFICATION 1 -->
-
-                <div class="notification-item unread-item">
-
-
-                    <div class="notification-icon complaint-notification">
-                        📋
-                    </div>
+                    <div class='<%# GetNotificationItemClass(Eval("IsRead")) %>'>
 
 
-                    <div class="notification-content">
+                        <!-- ICON -->
 
+                        <div class='<%# GetNotificationIconClass(Eval("NotificationType")) %>'>
 
-                        <div class="notification-title-row">
-
-                            <strong>
-                                New Complaint Reported
-                            </strong>
-
-                            <span class="unread-dot"></span>
+                            <%# GetNotificationIcon(Eval("NotificationType")) %>
 
                         </div>
 
 
-                        <p>
-                            A new civic complaint has been submitted by a citizen.
-                        </p>
+
+                        <!-- CONTENT -->
+
+                        <div class="notification-content">
+
+                            <div class="notification-title-row">
+
+                                <strong>
+                                    <%# Server.HtmlEncode(Convert.ToString(Eval("Title"))) %>
+                                </strong>
+
+                                <%# GetUnreadDot(Eval("IsRead")) %>
+
+                                <%# GetImportantBadge(
+                                        Eval("NotificationType"),
+                                        Eval("Title")) %>
+
+                            </div>
 
 
-                        <div class="notification-meta">
-
-                            <span>
-                                Complaint
-                            </span>
-
-                            <span>
-                                •
-                            </span>
-
-                            <span>
-                                10 minutes ago
-                            </span>
-
-                        </div>
+                            <p>
+                                <%# Server.HtmlEncode(Convert.ToString(Eval("Message"))) %>
+                            </p>
 
 
-                    </div>
+                            <div class="notification-meta">
 
+                                <span>
+                                    <%# Server.HtmlEncode(
+                                            Convert.ToString(
+                                                Eval("NotificationType"))) %>
+                                </span>
 
-                    <a href="ManageComplaints.aspx"
-                        class="notification-view-btn">
+                                <span>
+                                    •
+                                </span>
 
-                        View
+                                <span>
+                                    <%# GetTimeAgo(Eval("CreatedDate")) %>
+                                </span>
 
-                    </a>
-
-
-                </div>
-
-
-
-                <!-- NOTIFICATION 2 -->
-
-                <div class="notification-item unread-item">
-
-
-                    <div class="notification-icon user-notification">
-                        👤
-                    </div>
-
-
-                    <div class="notification-content">
-
-
-                        <div class="notification-title-row">
-
-                            <strong>
-                                New Citizen Registered
-                            </strong>
-
-                            <span class="unread-dot"></span>
+                            </div>
 
                         </div>
 
 
-                        <p>
-                            A new citizen account has been successfully registered.
-                        </p>
 
+                        <!-- VIEW -->
 
-                        <div class="notification-meta">
+                        <div class="notification-action">
 
-                            <span>
-                                User
-                            </span>
-
-                            <span>
-                                •
-                            </span>
-
-                            <span>
-                                35 minutes ago
-                            </span>
+                            <asp:HyperLink
+                                ID="lnkView"
+                                runat="server"
+                                CssClass="notification-view-btn"
+                                Text="View">
+                            </asp:HyperLink>
 
                         </div>
 
+                    </div>
+
+                </ItemTemplate>
+
+
+                <FooterTemplate>
 
                     </div>
 
+                </FooterTemplate>
 
-                    <a href="ManageUsers.aspx"
-                        class="notification-view-btn">
-
-                        View
-
-                    </a>
-
-
-                </div>
-
-
-
-                <!-- NOTIFICATION 3 -->
-
-                <div class="notification-item">
-
-
-                    <div class="notification-icon officer-notification">
-                        👨‍💼
-                    </div>
-
-
-                    <div class="notification-content">
-
-
-                        <div class="notification-title-row">
-
-                            <strong>
-                                Officer Updated Complaint
-                            </strong>
-
-                        </div>
-
-
-                        <p>
-                            An assigned officer has updated the status of a complaint.
-                        </p>
-
-
-                        <div class="notification-meta">
-
-                            <span>
-                                Officer Activity
-                            </span>
-
-                            <span>
-                                •
-                            </span>
-
-                            <span>
-                                1 hour ago
-                            </span>
-
-                        </div>
-
-
-                    </div>
-
-
-                    <a href="ManageComplaints.aspx"
-                        class="notification-view-btn">
-
-                        View
-
-                    </a>
-
-
-                </div>
-
-
-
-                <!-- NOTIFICATION 4 -->
-
-                <div class="notification-item">
-
-
-                    <div class="notification-icon success-notification">
-                        ✓
-                    </div>
-
-
-                    <div class="notification-content">
-
-
-                        <div class="notification-title-row">
-
-                            <strong>
-                                Complaint Resolved
-                            </strong>
-
-                        </div>
-
-
-                        <p>
-                            A reported civic issue has been marked as resolved.
-                        </p>
-
-
-                        <div class="notification-meta">
-
-                            <span>
-                                Complaint
-                            </span>
-
-                            <span>
-                                •
-                            </span>
-
-                            <span>
-                                2 hours ago
-                            </span>
-
-                        </div>
-
-
-                    </div>
-
-
-                    <a href="ManageComplaints.aspx"
-                        class="notification-view-btn">
-
-                        View
-
-                    </a>
-
-
-                </div>
-
-
-
-                <!-- NOTIFICATION 5 -->
-
-                <div class="notification-item important-item">
-
-
-                    <div class="notification-icon warning-notification">
-                        ⚠
-                    </div>
-
-
-                    <div class="notification-content">
-
-
-                        <div class="notification-title-row">
-
-                            <strong>
-                                High Priority Complaint
-                            </strong>
-
-                            <span class="important-badge">
-                                Important
-                            </span>
-
-                        </div>
-
-
-                        <p>
-                            A high-priority civic issue requires immediate attention.
-                        </p>
-
-
-                        <div class="notification-meta">
-
-                            <span>
-                                Priority Alert
-                            </span>
-
-                            <span>
-                                •
-                            </span>
-
-                            <span>
-                                3 hours ago
-                            </span>
-
-                        </div>
-
-
-                    </div>
-
-
-                    <a href="ManageComplaints.aspx"
-                        class="notification-view-btn">
-
-                        View
-
-                    </a>
-
-
-                </div>
-
-
-
-            </div>
+            </asp:Repeater>
 
 
 
@@ -567,11 +398,13 @@
                  EMPTY STATE
             ====================================== -->
 
-            <!--
+            <asp:Panel
+                ID="pnlEmpty"
+                runat="server"
+                CssClass="notifications-empty"
+                Visible="false">
 
-            <div class="notifications-empty">
-
-                <div class="empty-notification-icon">
+                <div class="notifications-empty-icon">
                     🔔
                 </div>
 
@@ -580,18 +413,14 @@
                 </h4>
 
                 <p>
-                    New system activities and alerts will appear here.
+                    There are no notifications matching your current filters.
                 </p>
 
-            </div>
-
-            -->
+            </asp:Panel>
 
 
         </div>
 
-
     </div>
-
 
 </asp:Content>
