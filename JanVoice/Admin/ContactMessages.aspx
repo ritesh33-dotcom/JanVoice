@@ -32,12 +32,10 @@
 
             <div>
 
-                <span class="page-label">
-                    JANVOICE ADMINISTRATION
+                <span class="page-label">JANVOICE ADMINISTRATION
                 </span>
 
-                <h1>
-                    Contact Messages
+                <h1>Contact Messages
                 </h1>
 
                 <p>
@@ -49,12 +47,10 @@
 
             <div class="messages-header-info">
 
-                <span>
-                    INBOX
+                <span>INBOX
                 </span>
 
-                <strong>
-                    Citizen Communication
+                <strong>Citizen Communication
                 </strong>
 
             </div>
@@ -67,10 +63,8 @@
              STATISTICS
         ====================================== -->
 
+
         <div class="message-stats">
-
-
-            <!-- TOTAL -->
 
             <div class="message-stat-card">
 
@@ -79,22 +73,17 @@
                 </div>
 
                 <div>
-
-                    <span>
-                        Total Messages
-                    </span>
+                    <span>Total Messages</span>
 
                     <strong>
-                        0
+                        <asp:Label ID="lblTotalMessages"
+                            runat="server"
+                            Text="0" />
                     </strong>
-
                 </div>
 
             </div>
 
-
-
-            <!-- UNREAD -->
 
             <div class="message-stat-card">
 
@@ -103,22 +92,17 @@
                 </div>
 
                 <div>
-
-                    <span>
-                        Unread
-                    </span>
+                    <span>Unread</span>
 
                     <strong>
-                        0
+                        <asp:Label ID="lblUnreadMessages"
+                            runat="server"
+                            Text="0" />
                     </strong>
-
                 </div>
 
             </div>
 
-
-
-            <!-- READ -->
 
             <div class="message-stat-card">
 
@@ -127,22 +111,17 @@
                 </div>
 
                 <div>
-
-                    <span>
-                        Read
-                    </span>
+                    <span>Read</span>
 
                     <strong>
-                        0
+                        <asp:Label ID="lblReadMessages"
+                            runat="server"
+                            Text="0" />
                     </strong>
-
                 </div>
 
             </div>
 
-
-
-            <!-- THIS MONTH -->
 
             <div class="message-stat-card">
 
@@ -151,23 +130,18 @@
                 </div>
 
                 <div>
-
-                    <span>
-                        This Month
-                    </span>
+                    <span>This Month</span>
 
                     <strong>
-                        0
+                        <asp:Label ID="lblMonthMessages"
+                            runat="server"
+                            Text="0" />
                     </strong>
-
                 </div>
 
             </div>
 
-
         </div>
-
-
 
         <!-- =====================================
              SEARCH / FILTER TOOLBAR
@@ -175,68 +149,59 @@
 
         <div class="messages-toolbar">
 
-
             <div class="message-search">
 
-                <span>
-                    🔍
-                </span>
+                <span>🔍</span>
 
-                <input
-                    type="text"
+                <asp:TextBox ID="txtSearch"
+                    runat="server"
                     placeholder="Search by name, email or subject..." />
 
             </div>
 
 
-            <select class="message-filter">
+            <asp:DropDownList ID="ddlStatus"
+                runat="server"
+                CssClass="message-filter">
 
-                <option value="">
-                    All Status
-                </option>
+                <asp:ListItem Text="All Status"
+                    Value="" />
 
-                <option value="Unread">
-                    Unread
-                </option>
+                <asp:ListItem Text="Unread"
+                    Value="0" />
 
-                <option value="Read">
-                    Read
-                </option>
+                <asp:ListItem Text="Read"
+                    Value="1" />
 
-            </select>
-
-
-            <select class="message-filter">
-
-                <option value="">
-                    All Time
-                </option>
-
-                <option value="Today">
-                    Today
-                </option>
-
-                <option value="Week">
-                    This Week
-                </option>
-
-                <option value="Month">
-                    This Month
-                </option>
-
-            </select>
+            </asp:DropDownList>
 
 
-            <button type="button"
-                class="filter-btn">
+            <asp:DropDownList ID="ddlTime"
+                runat="server"
+                CssClass="message-filter">
 
-                Apply Filters
+                <asp:ListItem Text="All Time"
+                    Value="" />
 
-            </button>
+                <asp:ListItem Text="Today"
+                    Value="Today" />
 
+                <asp:ListItem Text="This Week"
+                    Value="Week" />
+
+                <asp:ListItem Text="This Month"
+                    Value="Month" />
+
+            </asp:DropDownList>
+
+
+            <asp:Button ID="btnApplyFilters"
+                runat="server"
+                Text="Apply Filters"
+                CssClass="filter-btn"
+                OnClick="btnApplyFilters_Click" />
 
         </div>
-
 
 
         <!-- =====================================
@@ -245,15 +210,11 @@
 
         <div class="messages-card">
 
-
-            <!-- CARD HEADER -->
-
             <div class="messages-card-header">
 
                 <div>
 
-                    <h3>
-                        Received Messages
+                    <h3>Received Messages
                     </h3>
 
                     <p>
@@ -264,351 +225,277 @@
 
 
                 <span class="record-count">
-                    0 Messages
+
+                    <asp:Label ID="lblRecordCount"
+                        runat="server"
+                        Text="0" />
+
+                    Messages
+
                 </span>
 
             </div>
 
 
-
-            <!-- =================================
-                 TABLE
-            ================================== -->
-
             <div class="messages-table-wrapper">
 
-
                 <table class="messages-table">
-
 
                     <thead>
 
                         <tr>
 
-                            <th>
-                                SENDER
-                            </th>
+                            <th>SENDER</th>
 
-                            <th>
-                                SUBJECT
-                            </th>
+                            <th>SUBJECT</th>
 
-                            <th>
-                                EMAIL
-                            </th>
+                            <th>EMAIL</th>
 
-                            <th>
-                                RECEIVED
-                            </th>
+                            <th>RECEIVED</th>
 
-                            <th>
-                                STATUS
-                            </th>
+                            <th>STATUS</th>
 
-                            <th>
-                                ACTION
-                            </th>
+                            <th>ACTION</th>
 
                         </tr>
 
                     </thead>
 
 
-
                     <tbody>
 
+                        <asp:Repeater ID="rptMessages"
+                            runat="server">
 
-                        <!-- =========================
-                             DEMO MESSAGE 1
-                        ========================== -->
+                            <HeaderTemplate>
 
-                        <tr>
+                                <table class="messages-table">
 
+                                    <thead>
+                                        <tr>
+                                            <th>SENDER</th>
+                                            <th>SUBJECT</th>
+                                            <th>EMAIL</th>
+                                            <th>RECEIVED</th>
+                                            <th>STATUS</th>
+                                            <th>ACTION</th>
+                                        </tr>
+                                    </thead>
 
-                            <td>
+                                    <tbody>
+                            </HeaderTemplate>
 
-                                <div class="sender-cell">
 
-                                    <div class="sender-avatar">
-                                        R
-                                    </div>
+                            <ItemTemplate>
 
-                                    <div class="sender-info">
+                                <tr>
 
-                                        <strong>
-                                            Ritesh Jadhav
-                                        </strong>
+                                    <td>
+                                        <%# Eval("FullName") %>
+                                    </td>
 
-                                        <span>
-                                            Citizen
-                                        </span>
+                                    <td>
+                                        <%# Eval("Subject") %>
+                                    </td>
 
-                                    </div>
+                                    <td>
+                                        <%# Eval("Email") %>
+                                    </td>
 
-                                </div>
+                                    <td>
+                                        <%# Convert.ToDateTime(Eval("SubmittedDate"))
+                    .ToString("dd MMM yyyy") %>
+                                    </td>
 
-                            </td>
+                                    <td>
+                                        <%# Convert.ToBoolean(Eval("IsReplied"))
+                    ? "Read"
+                    : "Unread" %>
+                                    </td>
 
+                                    <td>
+                                        <asp:LinkButton
+                                            ID="btnView"
+                                            runat="server"
+                                            CommandName="ViewMessage"
+                                            CommandArgument='<%# Eval("MessageID") %>'
+                                            CssClass="view-message-btn">
 
+                    View
 
-                            <td>
+                                        </asp:LinkButton>
+                                    </td>
 
-                                <div class="subject-cell">
+                                </tr>
 
-                                    <strong>
-                                        Query regarding complaint status
-                                    </strong>
+                            </ItemTemplate>
 
-                                    <span>
-                                        I would like to know the current status...
-                                    </span>
 
-                                </div>
+                            <FooterTemplate>
+                                </tbody>
 
-                            </td>
+        </table>
 
+                            </FooterTemplate>
 
+                        </asp:Repeater>
 
-                            <td>
 
-                                <span class="email-text">
-                                    ritesh@example.com
-                                </span>
+                        <!-- EMPTY STATE -->
 
-                            </td>
+                        <asp:Panel ID="pnlEmpty"
+                            runat="server"
+                            CssClass="messages-empty"
+                            Visible="false">
 
+                            <div class="empty-icon">
+                                ✉
+                            </div>
 
+                            <h3>No Messages Found
+                            </h3>
 
-                            <td>
-                                25 Aug 2026
-                            </td>
+                            <p>
+                                There are no contact messages matching your current filters.
+                            </p>
 
-
-
-                            <td>
-
-                                <span class="message-status unread">
-                                    Unread
-                                </span>
-
-                            </td>
-
-
-
-                            <td>
-
-                                <a href="#"
-                                   class="view-message-btn">
-
-                                    View
-
-                                </a>
-
-                            </td>
-
-
-                        </tr>
-
-
-
-                        <!-- =========================
-                             DEMO MESSAGE 2
-                        ========================== -->
-
-                        <tr>
-
-
-                            <td>
-
-                                <div class="sender-cell">
-
-                                    <div class="sender-avatar purple">
-                                        A
-                                    </div>
-
-                                    <div class="sender-info">
-
-                                        <strong>
-                                            Amit Patil
-                                        </strong>
-
-                                        <span>
-                                            Citizen
-                                        </span>
-
-                                    </div>
-
-                                </div>
-
-                            </td>
-
-
-
-                            <td>
-
-                                <div class="subject-cell">
-
-                                    <strong>
-                                        Suggestion for Ward 1
-                                    </strong>
-
-                                    <span>
-                                        I have a suggestion regarding...
-                                    </span>
-
-                                </div>
-
-                            </td>
-
-
-
-                            <td>
-
-                                <span class="email-text">
-                                    amit@example.com
-                                </span>
-
-                            </td>
-
-
-
-                            <td>
-                                24 Aug 2026
-                            </td>
-
-
-
-                            <td>
-
-                                <span class="message-status read">
-                                    Read
-                                </span>
-
-                            </td>
-
-
-
-                            <td>
-
-                                <a href="#"
-                                   class="view-message-btn">
-
-                                    View
-
-                                </a>
-
-                            </td>
-
-
-                        </tr>
-
-
-
-                        <!-- =========================
-                             DEMO MESSAGE 3
-                        ========================== -->
-
-                        <tr>
-
-
-                            <td>
-
-                                <div class="sender-cell">
-
-                                    <div class="sender-avatar green">
-                                        S
-                                    </div>
-
-                                    <div class="sender-info">
-
-                                        <strong>
-                                            Sneha Deshmukh
-                                        </strong>
-
-                                        <span>
-                                            Citizen
-                                        </span>
-
-                                    </div>
-
-                                </div>
-
-                            </td>
-
-
-
-                            <td>
-
-                                <div class="subject-cell">
-
-                                    <strong>
-                                        Help regarding registration
-                                    </strong>
-
-                                    <span>
-                                        I am facing an issue while...
-                                    </span>
-
-                                </div>
-
-                            </td>
-
-
-
-                            <td>
-
-                                <span class="email-text">
-                                    sneha@example.com
-                                </span>
-
-                            </td>
-
-
-
-                            <td>
-                                23 Aug 2026
-                            </td>
-
-
-
-                            <td>
-
-                                <span class="message-status read">
-                                    Read
-                                </span>
-
-                            </td>
-
-
-
-                            <td>
-
-                                <a href="#"
-                                   class="view-message-btn">
-
-                                    View
-
-                                </a>
-
-                            </td>
-
-
-                        </tr>
-
+                        </asp:Panel>
 
                     </tbody>
 
-
                 </table>
-
 
             </div>
 
-
         </div>
 
+        <asp:Panel ID="pnlViewMessage"
+            runat="server"
+            Visible="false"
+            CssClass="message-modal-overlay">
 
+            <div class="message-modal">
+
+                <div class="message-modal-header">
+
+                    <div>
+
+                        <span class="page-label">CITIZEN MESSAGE
+                        </span>
+
+                        <h3>
+                            <asp:Label ID="lblViewSubject"
+                                runat="server" />
+                        </h3>
+
+                    </div>
+
+
+                    <asp:LinkButton
+                        ID="btnCloseMessage"
+                        runat="server"
+                        CssClass="modal-close-btn"
+                        OnClick="btnCloseMessage_Click">
+
+                ×
+
+                    </asp:LinkButton>
+
+                </div>
+
+
+                <div class="message-modal-body">
+
+
+                    <div class="message-detail-grid">
+
+                        <div>
+
+                            <span>FROM
+                            </span>
+
+                            <strong>
+                                <asp:Label ID="lblViewName"
+                                    runat="server" />
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>EMAIL
+                            </span>
+
+                            <strong>
+                                <asp:Label ID="lblViewEmail"
+                                    runat="server" />
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>MOBILE
+                            </span>
+
+                            <strong>
+                                <asp:Label ID="lblViewMobile"
+                                    runat="server" />
+                            </strong>
+
+                        </div>
+
+
+                        <div>
+
+                            <span>RECEIVED
+                            </span>
+
+                            <strong>
+                                <asp:Label ID="lblViewDate"
+                                    runat="server" />
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="message-content-box">
+
+                        <span>MESSAGE
+                        </span>
+
+                        <p>
+                            <asp:Label ID="lblViewMessage"
+                                runat="server" />
+                        </p>
+
+                    </div>
+
+
+                    <div class="message-modal-footer">
+
+                        <asp:Button
+                            ID="btnMarkReplied"
+                            runat="server"
+                            Text="Mark as Replied"
+                            CssClass="filter-btn"
+                            OnClick="btnMarkReplied_Click" />
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </asp:Panel>
     </div>
-
+    <asp:HiddenField
+        ID="hfMessageID"
+        runat="server"
+        Value="0" />
 
 </asp:Content>

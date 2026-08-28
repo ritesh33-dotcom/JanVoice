@@ -5,13 +5,12 @@
     CodeBehind="Reports.aspx.cs"
     Inherits="JanVoice.Admin.Reports" %>
 
-
 <asp:Content ID="Content1"
     ContentPlaceHolderID="head"
     runat="server">
 
-   
     <link href="../CSS/Reports.css" rel="stylesheet" />
+
 </asp:Content>
 
 
@@ -28,7 +27,6 @@
         ====================================== -->
 
         <div class="reports-header">
-
 
             <div>
 
@@ -50,7 +48,8 @@
             <div class="reports-header-actions">
 
                 <button type="button"
-                    class="report-action-btn">
+                    class="report-action-btn"
+                    onclick="window.print();">
 
                     ⬇
 
@@ -61,7 +60,6 @@
                 </button>
 
             </div>
-
 
         </div>
 
@@ -80,31 +78,30 @@
                     REPORT PERIOD
                 </label>
 
-                <select class="report-filter">
+                <asp:DropDownList
+                    ID="ddlPeriod"
+                    runat="server"
+                    CssClass="report-filter">
 
-                    <option>
-                        This Month
-                    </option>
+                    <asp:ListItem Text="This Month"
+                        Value="ThisMonth" />
 
-                    <option>
-                        Last Month
-                    </option>
+                    <asp:ListItem Text="Last Month"
+                        Value="LastMonth" />
 
-                    <option>
-                        Last 3 Months
-                    </option>
+                    <asp:ListItem Text="Last 3 Months"
+                        Value="Last3Months" />
 
-                    <option>
-                        This Year
-                    </option>
+                    <asp:ListItem Text="This Year"
+                        Value="ThisYear" />
 
-                    <option>
-                        All Time
-                    </option>
+                    <asp:ListItem Text="All Time"
+                        Value="AllTime" />
 
-                </select>
+                </asp:DropDownList>
 
             </div>
+
 
 
             <div class="filter-item">
@@ -113,27 +110,15 @@
                     WARD
                 </label>
 
-                <select class="report-filter">
+                <asp:DropDownList
+                    ID="ddlWard"
+                    runat="server"
+                    CssClass="report-filter">
 
-                    <option>
-                        All Wards
-                    </option>
-
-                    <option>
-                        Ward 1
-                    </option>
-
-                    <option>
-                        Ward 2
-                    </option>
-
-                    <option>
-                        Ward 3
-                    </option>
-
-                </select>
+                </asp:DropDownList>
 
             </div>
+
 
 
             <div class="filter-item">
@@ -142,39 +127,23 @@
                     CATEGORY
                 </label>
 
-                <select class="report-filter">
+                <asp:DropDownList
+                    ID="ddlCategory"
+                    runat="server"
+                    CssClass="report-filter">
 
-                    <option>
-                        All Categories
-                    </option>
-
-                    <option>
-                        Roads
-                    </option>
-
-                    <option>
-                        Water Supply
-                    </option>
-
-                    <option>
-                        Garbage
-                    </option>
-
-                    <option>
-                        Street Lights
-                    </option>
-
-                </select>
+                </asp:DropDownList>
 
             </div>
 
 
-            <button type="button"
-                class="apply-report-btn">
 
-                Apply Filters
-
-            </button>
+            <asp:Button
+                ID="btnApplyFilters"
+                runat="server"
+                Text="Apply Filters"
+                CssClass="apply-report-btn"
+                OnClick="btnApplyFilters_Click" />
 
 
         </div>
@@ -187,6 +156,8 @@
 
         <div class="report-stats">
 
+
+            <!-- TOTAL -->
 
             <div class="report-stat-card">
 
@@ -201,7 +172,10 @@
                     </span>
 
                     <strong>
-                        248
+                        <asp:Label
+                            ID="lblTotalComplaints"
+                            runat="server"
+                            Text="0" />
                     </strong>
 
                     <small>
@@ -212,6 +186,9 @@
 
             </div>
 
+
+
+            <!-- PENDING -->
 
             <div class="report-stat-card">
 
@@ -226,7 +203,10 @@
                     </span>
 
                     <strong>
-                        64
+                        <asp:Label
+                            ID="lblPending"
+                            runat="server"
+                            Text="0" />
                     </strong>
 
                     <small>
@@ -237,6 +217,9 @@
 
             </div>
 
+
+
+            <!-- IN PROGRESS -->
 
             <div class="report-stat-card">
 
@@ -251,7 +234,10 @@
                     </span>
 
                     <strong>
-                        51
+                        <asp:Label
+                            ID="lblInProgress"
+                            runat="server"
+                            Text="0" />
                     </strong>
 
                     <small>
@@ -262,6 +248,9 @@
 
             </div>
 
+
+
+            <!-- RESOLVED -->
 
             <div class="report-stat-card">
 
@@ -276,7 +265,10 @@
                     </span>
 
                     <strong>
-                        133
+                        <asp:Label
+                            ID="lblResolved"
+                            runat="server"
+                            Text="0" />
                     </strong>
 
                     <small>
@@ -299,7 +291,9 @@
         <div class="reports-grid">
 
 
-            <!-- COMPLAINT STATUS -->
+            <!-- =================================
+                 COMPLAINT STATUS
+            ================================== -->
 
             <div class="report-card">
 
@@ -319,138 +313,67 @@
                     </div>
 
                     <span class="report-period">
-                        This Month
+                        <asp:Label
+                            ID="lblSelectedPeriod"
+                            runat="server"
+                            Text="This Month" />
                     </span>
 
                 </div>
 
 
+
                 <div class="status-report">
 
 
-                    <div class="status-row">
+                    <asp:Repeater
+                        ID="rptStatusReport"
+                        runat="server">
 
-                        <div class="status-info">
+                        <ItemTemplate>
 
-                            <span class="status-dot pending-dot"></span>
+                            <div class="status-row">
 
-                            <strong>
-                                Pending
-                            </strong>
+                                <div class="status-info">
 
-                        </div>
+                                    <span class='<%# GetStatusDotClass(Eval("Status")) %>'>
+                                    </span>
 
-                        <span>
-                            64
-                        </span>
+                                    <strong>
+                                        <%# Eval("Status") %>
+                                    </strong>
 
-                    </div>
+                                </div>
 
+                                <span>
+                                    <%# Eval("Count") %>
+                                </span>
 
-                    <div class="status-bar">
-
-                        <div class="status-fill pending-fill"
-                            style="width:26%;">
-                        </div>
-
-                    </div>
+                            </div>
 
 
+                            <div class="status-bar">
 
-                    <div class="status-row">
+                                <div class='<%# GetStatusFillClass(Eval("Status")) %>'
+                                    style='<%# "width:" + Eval("Percentage") + "%;" %>'>
+                                </div>
 
-                        <div class="status-info">
+                            </div>
 
-                            <span class="status-dot accepted-dot"></span>
+                        </ItemTemplate>
 
-                            <strong>
-                                Accepted
-                            </strong>
-
-                        </div>
-
-                        <span>
-                            32
-                        </span>
-
-                    </div>
-
-
-                    <div class="status-bar">
-
-                        <div class="status-fill accepted-fill"
-                            style="width:13%;">
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="status-row">
-
-                        <div class="status-info">
-
-                            <span class="status-dot progress-dot"></span>
-
-                            <strong>
-                                In Progress
-                            </strong>
-
-                        </div>
-
-                        <span>
-                            51
-                        </span>
-
-                    </div>
-
-
-                    <div class="status-bar">
-
-                        <div class="status-fill progress-fill"
-                            style="width:21%;">
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="status-row">
-
-                        <div class="status-info">
-
-                            <span class="status-dot resolved-dot"></span>
-
-                            <strong>
-                                Resolved
-                            </strong>
-
-                        </div>
-
-                        <span>
-                            101
-                        </span>
-
-                    </div>
-
-
-                    <div class="status-bar">
-
-                        <div class="status-fill resolved-fill"
-                            style="width:41%;">
-                        </div>
-
-                    </div>
+                    </asp:Repeater>
 
 
                 </div>
-
 
             </div>
 
 
 
-            <!-- CATEGORY REPORT -->
+            <!-- =================================
+                 CATEGORY REPORT
+            ================================== -->
 
             <div class="report-card">
 
@@ -472,160 +395,53 @@
                 </div>
 
 
+
                 <div class="category-report">
 
 
-                    <div class="category-row">
+                    <asp:Repeater
+                        ID="rptCategoryReport"
+                        runat="server">
 
-                        <div class="category-name">
+                        <ItemTemplate>
 
-                            <span class="category-icon">
-                                🛣
-                            </span>
-
-                            <strong>
-                                Roads
-                            </strong>
-
-                        </div>
-
-                        <div class="category-value">
-
-                            <span>
-                                72
-                            </span>
-
-                            <small>
-                                29%
-                            </small>
-
-                        </div>
-
-                    </div>
+                            <div class="category-row">
 
 
+                                <div class="category-name">
 
-                    <div class="category-row">
+                                    <span class="category-icon">
+                                        📌
+                                    </span>
 
-                        <div class="category-name">
+                                    <strong>
+                                        <%# Eval("CategoryName") %>
+                                    </strong>
 
-                            <span class="category-icon">
-                                💧
-                            </span>
-
-                            <strong>
-                                Water Supply
-                            </strong>
-
-                        </div>
-
-                        <div class="category-value">
-
-                            <span>
-                                58
-                            </span>
-
-                            <small>
-                                23%
-                            </small>
-
-                        </div>
-
-                    </div>
+                                </div>
 
 
+                                <div class="category-value">
 
-                    <div class="category-row">
+                                    <span>
+                                        <%# Eval("ComplaintCount") %>
+                                    </span>
 
-                        <div class="category-name">
+                                    <small>
+                                        <%# Eval("Percentage") %>%
+                                    </small>
 
-                            <span class="category-icon">
-                                🗑
-                            </span>
-
-                            <strong>
-                                Garbage
-                            </strong>
-
-                        </div>
-
-                        <div class="category-value">
-
-                            <span>
-                                47
-                            </span>
-
-                            <small>
-                                19%
-                            </small>
-
-                        </div>
-
-                    </div>
+                                </div>
 
 
+                            </div>
 
-                    <div class="category-row">
+                        </ItemTemplate>
 
-                        <div class="category-name">
-
-                            <span class="category-icon">
-                                💡
-                            </span>
-
-                            <strong>
-                                Street Lights
-                            </strong>
-
-                        </div>
-
-                        <div class="category-value">
-
-                            <span>
-                                38
-                            </span>
-
-                            <small>
-                                15%
-                            </small>
-
-                        </div>
-
-                    </div>
-
-
-
-                    <div class="category-row">
-
-                        <div class="category-name">
-
-                            <span class="category-icon">
-                                📌
-                            </span>
-
-                            <strong>
-                                Other
-                            </strong>
-
-                        </div>
-
-                        <div class="category-value">
-
-                            <span>
-                                33
-                            </span>
-
-                            <small>
-                                14%
-                            </small>
-
-                        </div>
-
-                    </div>
+                    </asp:Repeater>
 
 
                 </div>
-
 
             </div>
 
@@ -656,6 +472,7 @@
                 </div>
 
             </div>
+
 
 
             <div class="ward-table-wrapper">
@@ -700,147 +517,58 @@
                     <tbody>
 
 
-                        <tr>
+                        <asp:Repeater
+                            ID="rptWardPerformance"
+                            runat="server">
 
-                            <td>
-                                <strong>
-                                    Ward 1
-                                </strong>
-                            </td>
+                            <ItemTemplate>
 
-                            <td>
-                                68
-                            </td>
+                                <tr>
 
-                            <td>
-                                17
-                            </td>
+                                    <td>
 
-                            <td>
-                                42
-                            </td>
+                                        <strong>
+                                            <%# Eval("WardName") %>
+                                        </strong>
 
-                            <td>
-                                62%
-                            </td>
-
-                            <td>
-
-                                <span class="performance good">
-                                    Good
-                                </span>
-
-                            </td>
-
-                        </tr>
+                                    </td>
 
 
-
-                        <tr>
-
-                            <td>
-                                <strong>
-                                    Ward 2
-                                </strong>
-                            </td>
-
-                            <td>
-                                74
-                            </td>
-
-                            <td>
-                                21
-                            </td>
-
-                            <td>
-                                39
-                            </td>
-
-                            <td>
-                                53%
-                            </td>
-
-                            <td>
-
-                                <span class="performance average">
-                                    Average
-                                </span>
-
-                            </td>
-
-                        </tr>
+                                    <td>
+                                        <%# Eval("TotalComplaints") %>
+                                    </td>
 
 
-
-                        <tr>
-
-                            <td>
-                                <strong>
-                                    Ward 3
-                                </strong>
-                            </td>
-
-                            <td>
-                                56
-                            </td>
-
-                            <td>
-                                13
-                            </td>
-
-                            <td>
-                                35
-                            </td>
-
-                            <td>
-                                63%
-                            </td>
-
-                            <td>
-
-                                <span class="performance good">
-                                    Good
-                                </span>
-
-                            </td>
-
-                        </tr>
+                                    <td>
+                                        <%# Eval("Pending") %>
+                                    </td>
 
 
+                                    <td>
+                                        <%# Eval("Resolved") %>
+                                    </td>
 
-                        <tr>
 
-                            <td>
-                                <strong>
-                                    Ward 4
-                                </strong>
-                            </td>
+                                    <td>
+                                        <%# Eval("ResolutionRate") %>%
+                                    </td>
 
-                            <td>
-                                50
-                            </td>
 
-                            <td>
-                                13
-                            </td>
+                                    <td>
 
-                            <td>
-                                30
-                            </td>
+                                        <span class='<%# GetPerformanceClass(Eval("ResolutionRate")) %>'>
 
-                            <td>
-                                60%
-                            </td>
+                                            <%# GetPerformanceText(Eval("ResolutionRate")) %>
 
-                            <td>
+                                        </span>
 
-                                <span class="performance good">
-                                    Good
-                                </span>
+                                    </td>
 
-                            </td>
+                                </tr>
 
-                        </tr>
+                            </ItemTemplate>
+
+                        </asp:Repeater>
 
 
                     </tbody>
@@ -863,6 +591,8 @@
         <div class="insights-grid">
 
 
+            <!-- ACTIVE CITIZENS -->
+
             <div class="insight-card">
 
                 <div class="insight-icon">
@@ -876,11 +606,14 @@
                     </span>
 
                     <strong>
-                        184
+                        <asp:Label
+                            ID="lblActiveCitizens"
+                            runat="server"
+                            Text="0" />
                     </strong>
 
                     <small>
-                        Citizens who interacted this month
+                        Citizens who reported complaints
                     </small>
 
                 </div>
@@ -888,6 +621,8 @@
             </div>
 
 
+
+            <!-- HIGH PRIORITY -->
 
             <div class="insight-card">
 
@@ -902,7 +637,10 @@
                     </span>
 
                     <strong>
-                        18
+                        <asp:Label
+                            ID="lblHighPriority"
+                            runat="server"
+                            Text="0" />
                     </strong>
 
                     <small>
@@ -914,6 +652,8 @@
             </div>
 
 
+
+            <!-- AVG RESOLUTION -->
 
             <div class="insight-card">
 
@@ -928,7 +668,10 @@
                     </span>
 
                     <strong>
-                        3.4 Days
+                        <asp:Label
+                            ID="lblAverageResolution"
+                            runat="server"
+                            Text="0 Days" />
                     </strong>
 
                     <small>
