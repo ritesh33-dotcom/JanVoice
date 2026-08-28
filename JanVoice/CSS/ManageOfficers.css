@@ -38,6 +38,15 @@
     font-size: 15px;
 }
 
+
+/* HEADER RIGHT */
+
+.officers-header-actions {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 .officers-header-info {
     display: flex;
     flex-direction: column;
@@ -57,6 +66,32 @@
     .officers-header-info strong {
         color: #4ADE80;
         font-size: 13px;
+    }
+
+
+
+/*==========================================
+        MESSAGE
+==========================================*/
+
+.officer-message {
+    margin-bottom: 20px;
+    padding: 13px 17px;
+    border-radius: 11px;
+    font-size: 13px;
+    border: 1px solid transparent;
+}
+
+    .officer-message.success {
+        color: #4ADE80;
+        background: rgba(34,197,94,.08);
+        border-color: rgba(34,197,94,.18);
+    }
+
+    .officer-message.error {
+        color: #F87171;
+        background: rgba(239,68,68,.08);
+        border-color: rgba(239,68,68,.18);
     }
 
 
@@ -138,7 +173,7 @@
 
 
 /*==========================================
-        SEARCH / FILTER TOOLBAR
+        SEARCH / FILTER
 ==========================================*/
 
 .officers-toolbar {
@@ -173,19 +208,21 @@
         font-size: 14px;
     }
 
-    .officer-search input {
-        width: 100%;
-        border: none;
-        outline: none;
-        background: transparent;
-        color: #E2E8F0;
-        font-family: inherit;
-        font-size: 13px;
-    }
+.officer-search-input {
+    width: 100%;
+    height: 100%;
+    padding: 0;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #E2E8F0;
+    font-family: inherit;
+    font-size: 13px;
+}
 
-        .officer-search input::placeholder {
-            color: #64748B;
-        }
+    .officer-search-input::placeholder {
+        color: #64748B;
+    }
 
 
 /* FILTER */
@@ -286,7 +323,7 @@
 
 .officers-table {
     width: 100%;
-    min-width: 950px;
+    min-width: 1050px;
     border-collapse: collapse;
 }
 
@@ -344,10 +381,6 @@
     font-size: 14px;
     font-weight: 700;
 }
-
-    .officer-avatar.purple {
-        background: linear-gradient( 135deg, #8B5CF6, #6366F1 );
-    }
 
 .officer-cell > div:last-child {
     display: flex;
@@ -428,31 +461,6 @@
 
 
 /*==========================================
-        VIEW BUTTON
-==========================================*/
-
-.view-officer-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 7px 13px;
-    border-radius: 8px;
-    background: rgba(59,130,246,.10);
-    border: 1px solid rgba(59,130,246,.12);
-    color: #60A5FA;
-    font-size: 11px;
-    font-weight: 600;
-    transition: .25s;
-}
-
-    .view-officer-btn:hover {
-        background: rgba(59,130,246,.18);
-        border-color: rgba(59,130,246,.30);
-        color: #93C5FD;
-    }
-
-
-/*==========================================
         EMPTY STATE
 ==========================================*/
 
@@ -490,10 +498,24 @@
         RESPONSIVE
 ==========================================*/
 
-@media(max-width: 1100px) {
+@media(max-width: 1200px) {
 
     .officer-stats {
         grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+@media(max-width: 900px) {
+
+    .officers-header {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .officers-header-actions {
+        width: 100%;
+        justify-content: space-between;
     }
 
     .officers-toolbar {
@@ -508,17 +530,12 @@
 
 @media(max-width: 700px) {
 
-    .officers-header {
-        flex-direction: column;
-        gap: 18px;
-    }
-
-    .officers-header-info {
-        align-items: flex-start;
-    }
-
     .officers-header h1 {
         font-size: 27px;
+    }
+
+    .officers-header p {
+        font-size: 13px;
     }
 
     .officer-stats {
@@ -537,6 +554,19 @@
     .officers-card-header {
         padding: 18px;
     }
+
+    .officers-header-actions {
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .officers-header-info {
+        align-items: flex-start;
+    }
+
+    .add-officer-btn {
+        justify-content: center;
+    }
 }
 
 
@@ -546,8 +576,8 @@
         font-size: 24px;
     }
 
-    .officers-header p {
-        font-size: 13px;
+    .officers-header-actions {
+        width: 100%;
     }
 
     .officer-filter {
@@ -555,6 +585,25 @@
     }
 
     .filter-btn {
+        width: 100%;
+    }
+
+    .officer-modal {
+        padding: 10px;
+    }
+
+    .officer-modal-header,
+    .officer-form {
+        padding-left: 18px;
+        padding-right: 18px;
+    }
+
+    .officer-form-actions {
+        flex-direction: column;
+    }
+
+    .modal-cancel-btn,
+    .modal-submit-btn {
         width: 100%;
     }
 }

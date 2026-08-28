@@ -299,10 +299,9 @@
 
 .users-table {
     width: 100%;
-    min-width: 900px;
+    min-width: 1150px;
     border-collapse: collapse;
 }
-
     .users-table thead {
         background: rgba(15,23,42,.55);
     }

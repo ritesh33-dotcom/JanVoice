@@ -44,13 +44,11 @@
 ==========================================*/
 
 .add-category-btn {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 11px 17px;
+    height: 42px;
+    padding: 0 18px;
     border: none;
     border-radius: 10px;
-    background: linear-gradient( 135deg, #3B82F6, #2563EB );
+    background: linear-gradient(135deg, #3B82F6, #2563EB);
     color: white;
     font-family: inherit;
     font-size: 13px;
@@ -59,14 +57,34 @@
     transition: .25s;
 }
 
-    .add-category-btn span {
-        font-size: 18px;
-        line-height: 1;
-    }
-
     .add-category-btn:hover {
         transform: translateY(-2px);
         box-shadow: 0 10px 25px rgba(59,130,246,.25);
+    }
+
+
+/*==========================================
+        MESSAGE
+==========================================*/
+
+.category-message {
+    margin-bottom: 20px;
+    padding: 13px 17px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+    .category-message.success {
+        background: rgba(34,197,94,.10);
+        border: 1px solid rgba(34,197,94,.20);
+        color: #4ADE80;
+    }
+
+    .category-message.error {
+        background: rgba(239,68,68,.10);
+        border: 1px solid rgba(239,68,68,.20);
+        color: #F87171;
     }
 
 
@@ -185,19 +203,19 @@
         font-size: 14px;
     }
 
-    .category-search input {
-        width: 100%;
-        border: none;
-        outline: none;
-        background: transparent;
-        color: #E2E8F0;
-        font-family: inherit;
-        font-size: 13px;
-    }
+.category-search-input {
+    width: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: #E2E8F0;
+    font-family: inherit;
+    font-size: 13px;
+}
 
-        .category-search input::placeholder {
-            color: #64748B;
-        }
+    .category-search-input::placeholder {
+        color: #64748B;
+    }
 
 
 /* FILTER */
@@ -228,7 +246,7 @@
     padding: 0 18px;
     border: none;
     border-radius: 10px;
-    background: linear-gradient( 135deg, #3B82F6, #2563EB );
+    background: linear-gradient(135deg, #3B82F6, #2563EB);
     color: white;
     font-family: inherit;
     font-size: 13px;
@@ -244,7 +262,7 @@
 
 
 /*==========================================
-        CATEGORIES CARD
+        CATEGORY CARD
 ==========================================*/
 
 .categories-card {
@@ -298,7 +316,7 @@
 
 .categories-table {
     width: 100%;
-    min-width: 900px;
+    min-width: 1200px;
     border-collapse: collapse;
 }
 
@@ -321,6 +339,7 @@
         color: #CBD5E1;
         font-size: 13px;
         border-top: 1px solid rgba(255,255,255,.05);
+        vertical-align: middle;
     }
 
     .categories-table tbody tr {
@@ -362,6 +381,14 @@
         background: rgba(34,197,94,.12);
     }
 
+    .category-icon.cyan {
+        background: rgba(6,182,212,.12);
+    }
+
+    .category-icon.emerald {
+        background: rgba(16,185,129,.12);
+    }
+
 .category-cell > div:last-child {
     display: flex;
     flex-direction: column;
@@ -385,7 +412,7 @@
 
 .category-description {
     display: inline-block;
-    max-width: 260px;
+    max-width: 280px;
     color: #94A3B8;
     line-height: 1.5;
 }
@@ -433,96 +460,13 @@
 
 
 /*==========================================
-        ACTIONS
-==========================================*/
-
-.category-actions {
-    display: flex;
-    align-items: center;
-    gap: 7px;
-}
-
-.edit-category-btn,
-.view-category-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 7px 12px;
-    border-radius: 8px;
-    font-size: 11px;
-    font-weight: 600;
-    transition: .25s;
-}
-
-.edit-category-btn {
-    background: rgba(245,158,11,.10);
-    border: 1px solid rgba(245,158,11,.12);
-    color: #FBBF24;
-}
-
-    .edit-category-btn:hover {
-        background: rgba(245,158,11,.18);
-        border-color: rgba(245,158,11,.28);
-        color: #FCD34D;
-    }
-
-.view-category-btn {
-    background: rgba(59,130,246,.10);
-    border: 1px solid rgba(59,130,246,.12);
-    color: #60A5FA;
-}
-
-    .view-category-btn:hover {
-        background: rgba(59,130,246,.18);
-        border-color: rgba(59,130,246,.30);
-        color: #93C5FD;
-    }
-
-
-/*==========================================
-        EMPTY STATE
-==========================================*/
-
-.categories-empty {
-    padding: 55px 20px;
-    text-align: center;
-}
-
-    .categories-empty > div {
-        width: 58px;
-        height: 58px;
-        margin: 0 auto 15px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border-radius: 15px;
-        background: rgba(59,130,246,.08);
-        color: #38BDF8;
-        font-size: 24px;
-        font-weight: 700;
-    }
-
-    .categories-empty h4 {
-        margin: 0 0 7px;
-        color: #E2E8F0;
-        font-size: 15px;
-    }
-
-    .categories-empty p {
-        margin: 0;
-        color: #64748B;
-        font-size: 12px;
-    }
-
-
-/*==========================================
         RESPONSIVE
 ==========================================*/
 
-@media(max-width: 1100px) {
+@media(max-width:1100px) {
 
     .category-stats {
-        grid-template-columns: repeat(2, 1fr);
+        grid-template-columns: repeat(2,1fr);
     }
 
     .categories-toolbar {
@@ -535,7 +479,7 @@
 }
 
 
-@media(max-width: 700px) {
+@media(max-width:700px) {
 
     .categories-header {
         flex-direction: column;
@@ -548,7 +492,6 @@
 
     .add-category-btn {
         width: 100%;
-        justify-content: center;
     }
 
     .category-stats {
@@ -567,10 +510,14 @@
     .categories-card-header {
         padding: 18px;
     }
+
+    .category-actions {
+        flex-wrap: wrap;
+    }
 }
 
 
-@media(max-width: 500px) {
+@media(max-width:500px) {
 
     .categories-header h1 {
         font-size: 24px;
@@ -580,11 +527,30 @@
         font-size: 13px;
     }
 
-    .category-filter {
+    .category-filter,
+    .filter-btn {
+        width: 100%;
         min-width: 100%;
     }
 
-    .filter-btn {
+    .category-modal-overlay {
+        padding: 10px;
+    }
+
+    .category-modal {
+        max-height: 94vh;
+    }
+
+    .view-category-info {
+        grid-template-columns: 1fr;
+    }
+
+    .category-modal-footer {
+        flex-direction: column;
+    }
+
+    .modal-cancel-btn,
+    .modal-save-btn {
         width: 100%;
     }
 }

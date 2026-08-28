@@ -9,7 +9,127 @@
     ContentPlaceHolderID="head"
     runat="server">
     <link href="../CSS/ManageUsers.css" rel="stylesheet" />
-    
+    <style>
+        
+/*==========================================
+        USER ACTIONS
+==========================================*/
+
+.user-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+
+
+/*==========================================
+        DEACTIVATE BUTTON
+==========================================*/
+
+.deactivate-user-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 12px;
+    border-radius: 8px;
+    background: rgba(245,158,11,.10);
+    border: 1px solid rgba(245,158,11,.18);
+    color: #FBBF24;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: .25s;
+}
+
+    .deactivate-user-btn:hover {
+        background: #D97706;
+        border-color: #D97706;
+        color: white;
+    }
+
+
+/*==========================================
+        ACTIVATE BUTTON
+==========================================*/
+
+.activate-user-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 12px;
+    border-radius: 8px;
+    background: rgba(34,197,94,.10);
+    border: 1px solid rgba(34,197,94,.18);
+    color: #4ADE80;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: .25s;
+}
+
+    .activate-user-btn:hover {
+        background: #16A34A;
+        border-color: #16A34A;
+        color: white;
+    }
+
+
+/*==========================================
+        DELETE BUTTON
+==========================================*/
+
+.delete-user-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 12px;
+    border-radius: 8px;
+    background: rgba(239,68,68,.10);
+    border: 1px solid rgba(239,68,68,.18);
+    color: #F87171;
+    font-size: 11px;
+    font-weight: 600;
+    text-decoration: none;
+    transition: .25s;
+}
+
+    .delete-user-btn:hover {
+        background: #DC2626;
+        border-color: #DC2626;
+        color: white;
+    }
+
+
+/*==========================================
+        MESSAGE
+==========================================*/
+
+.users-message {
+    display: block;
+    margin-bottom: 20px;
+    padding: 12px 16px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+
+    .users-message.success {
+        background: rgba(34,197,94,.10);
+        border: 1px solid rgba(34,197,94,.20);
+        color: #4ADE80;
+    }
+
+
+    .users-message.error {
+        background: rgba(239,68,68,.10);
+        border: 1px solid rgba(239,68,68,.20);
+        color: #F87171;
+    }
+    </style>
+
 </asp:Content>
 
 
@@ -29,12 +149,10 @@
 
             <div>
 
-                <span class="page-label">
-                    JANVOICE ADMINISTRATION
+                <span class="page-label">JANVOICE ADMINISTRATION
                 </span>
 
-                <h1>
-                    Manage Users
+                <h1>Manage Users
                 </h1>
 
                 <p>
@@ -46,12 +164,10 @@
 
             <div class="users-header-info">
 
-                <span>
-                    Citizen Accounts
+                <span>Citizen Accounts
                 </span>
 
-                <strong>
-                    Active
+                <strong>Active
                 </strong>
 
             </div>
@@ -75,13 +191,12 @@
 
                 <div>
 
-                    <span>
-                        Total Users
+                    <span>Total Users
                     </span>
 
-                  <strong>
-    <asp:Label ID="lblTotalUsers" runat="server" Text="0"></asp:Label>
-</strong>
+                    <strong>
+                        <asp:Label ID="lblTotalUsers" runat="server" Text="0"></asp:Label>
+                    </strong>
                 </div>
 
             </div>
@@ -95,13 +210,12 @@
 
                 <div>
 
-                    <span>
-                        Active Users
+                    <span>Active Users
                     </span>
 
                     <strong>
-    <asp:Label ID="lblActiveUsers" runat="server" Text="0"></asp:Label>
-</strong>
+                        <asp:Label ID="lblActiveUsers" runat="server" Text="0"></asp:Label>
+                    </strong>
 
                 </div>
 
@@ -116,13 +230,12 @@
 
                 <div>
 
-                    <span>
-                        Inactive Users
+                    <span>Inactive Users
                     </span>
 
-                   <strong>
-    <asp:Label ID="lblInactiveUsers" runat="server" Text="0"></asp:Label>
-</strong>
+                    <strong>
+                        <asp:Label ID="lblInactiveUsers" runat="server" Text="0"></asp:Label>
+                    </strong>
 
                 </div>
 
@@ -137,13 +250,12 @@
 
                 <div>
 
-                    <span>
-                        Registered This Month
+                    <span>Registered This Month
                     </span>
 
-                   <strong>
-    <asp:Label ID="lblRegisteredThisMonth" runat="server" Text="0"></asp:Label>
-</strong>
+                    <strong>
+                        <asp:Label ID="lblRegisteredThisMonth" runat="server" Text="0"></asp:Label>
+                    </strong>
 
                 </div>
 
@@ -163,52 +275,56 @@
 
             <div class="user-search">
 
-                <span>
-                    🔍
+                <span>🔍
                 </span>
 
-               <asp:TextBox
-    ID="txtSearch"
-    runat="server"
-    CssClass="user-search-input"
-    placeholder="Search by name or email...">
-</asp:TextBox>
+                <asp:TextBox
+                    ID="txtSearch"
+                    runat="server"
+                    CssClass="user-search-input"
+                    placeholder="Search by name or email...">
+                </asp:TextBox>
 
             </div>
 
 
             <asp:DropDownList
-    ID="ddlWard"
-    runat="server"
-    CssClass="user-filter">
-</asp:DropDownList>
-
-                
+                ID="ddlWard"
+                runat="server"
+                CssClass="user-filter">
+            </asp:DropDownList>
 
 
-           <asp:DropDownList
-    ID="ddlStatus"
-    runat="server"
-    CssClass="user-filter">
 
-    <asp:ListItem Text="All Status" Value="" />
-    <asp:ListItem Text="Active" Value="1" />
-    <asp:ListItem Text="Inactive" Value="0" />
 
-</asp:DropDownList>
+            <asp:DropDownList
+                ID="ddlStatus"
+                runat="server"
+                CssClass="user-filter">
+
+                <asp:ListItem Text="All Status" Value="" />
+                <asp:ListItem Text="Active" Value="1" />
+                <asp:ListItem Text="Inactive" Value="0" />
+
+            </asp:DropDownList>
 
 
             <asp:Button
-    ID="btnApplyFilters"
-    runat="server"
-    Text="Apply Filters"
-    CssClass="filter-btn"
-    OnClick="btnApplyFilters_Click" />
+                ID="btnApplyFilters"
+                runat="server"
+                Text="Apply Filters"
+                CssClass="filter-btn"
+                OnClick="btnApplyFilters_Click" />
 
 
         </div>
 
-
+        <asp:Label
+            ID="lblMessage"
+            runat="server"
+            CssClass="users-message"
+            Visible="false">
+        </asp:Label>
 
         <!-- =====================================
              USERS TABLE
@@ -221,8 +337,7 @@
 
                 <div>
 
-                    <h3>
-                        Registered Citizens
+                    <h3>Registered Citizens
                     </h3>
 
                     <p>
@@ -232,10 +347,10 @@
                 </div>
 
 
-               <span class="record-count">
-    <asp:Label ID="lblRecordCount" runat="server" Text="0"></asp:Label>
-    Users
-</span>
+                <span class="record-count">
+                    <asp:Label ID="lblRecordCount" runat="server" Text="0"></asp:Label>
+                    Users
+                </span>
 
             </div>
 
@@ -249,32 +364,25 @@
 
                         <tr>
 
-                            <th>
-                                USER
+                            <th>USER
                             </th>
 
-                            <th>
-                                CONTACT
+                            <th>CONTACT
                             </th>
 
-                            <th>
-                                WARD
+                            <th>WARD
                             </th>
 
-                            <th>
-                                COMPLAINTS
+                            <th>COMPLAINTS
                             </th>
 
-                            <th>
-                                REGISTERED
+                            <th>REGISTERED
                             </th>
 
-                            <th>
-                                STATUS
+                            <th>STATUS
                             </th>
 
-                            <th>
-                                ACTION
+                            <th>ACTION
                             </th>
 
                         </tr>
@@ -283,115 +391,154 @@
 
 
                     <tbody>
-<asp:Repeater ID="rptUsers" runat="server">
+                        <asp:Repeater ID="rptUsers" runat="server">
 
-    <ItemTemplate>
+                            <ItemTemplate>
 
-        <tr>
+                                <tr>
 
-            <!-- USER -->
+                                    <!-- USER -->
 
-            <td>
+                                    <td>
 
-                <div class="user-cell">
+                                        <div class="user-cell">
 
-                    <div class="user-avatar">
-                        <%# GetInitials(Eval("FullName").ToString()) %>
-                    </div>
+                                            <div class="user-avatar">
+                                                <%# GetInitials(Eval("FullName").ToString()) %>
+                                            </div>
 
-                    <div>
+                                            <div>
 
-                        <strong>
-                            <%# Eval("FullName") %>
-                        </strong>
+                                                <strong>
+                                                    <%# Eval("FullName") %>
+                                                </strong>
 
-                        <span>
-                            User ID: #<%# Eval("UserID") %>
-                        </span>
+                                                <span>User ID: #<%# Eval("UserID") %>
+                                                </span>
 
-                    </div>
+                                            </div>
 
-                </div>
+                                        </div>
 
-            </td>
-
-
-            <!-- CONTACT -->
-
-            <td>
-
-                <div class="contact-cell">
-
-                    <span>
-                        <%# Eval("Email") %>
-                    </span>
-
-                    <small>
-                        +91 <%# Eval("Mobile") %>
-                    </small>
-
-                </div>
-
-            </td>
+                                    </td>
 
 
-            <!-- WARD -->
+                                    <!-- CONTACT -->
 
-            <td>
-                <%# Eval("WardName") %>
-            </td>
+                                    <td>
 
+                                        <div class="contact-cell">
 
-            <!-- COMPLAINTS -->
+                                            <span>
+                                                <%# Eval("Email") %>
+                                            </span>
 
-            <td>
+                                            <small>+91 <%# Eval("Mobile") %>
+                                            </small>
 
-                <strong class="complaint-count">
-                    <%# Eval("ComplaintCount") %>
-                </strong>
+                                        </div>
 
-            </td>
-
-
-            <!-- REGISTERED -->
-
-            <td>
-                <%# Convert.ToDateTime(Eval("CreatedDate")).ToString("dd MMM yyyy") %>
-            </td>
+                                    </td>
 
 
-            <!-- STATUS -->
+                                    <!-- WARD -->
 
-            <td>
-
-                <span class='user-status <%# Convert.ToBoolean(Eval("IsActive")) ? "active" : "inactive" %>'>
-
-                    <%# Convert.ToBoolean(Eval("IsActive")) ? "Active" : "Inactive" %>
-
-                </span>
-
-            </td>
+                                    <td>
+                                        <%# Eval("WardName") %>
+                                    </td>
 
 
-            <!-- ACTION -->
+                                    <!-- COMPLAINTS -->
 
-            <td>
+                                    <td>
 
-                <asp:HyperLink
-                    ID="lnkViewUser"
-                    runat="server"
-                    CssClass="view-user-btn"
-                    NavigateUrl='<%# "UserDetails.aspx?UserID=" + Eval("UserID") %>'
-                    Text="View">
-                </asp:HyperLink>
+                                        <strong class="complaint-count">
+                                            <%# Eval("ComplaintCount") %>
+                                        </strong>
 
-            </td>
+                                    </td>
 
-        </tr>
 
-    </ItemTemplate>
+                                    <!-- REGISTERED -->
 
-</asp:Repeater>
+                                    <td>
+                                        <%# Convert.ToDateTime(Eval("CreatedDate")).ToString("dd MMM yyyy") %>
+                                    </td>
+
+
+                                    <!-- STATUS -->
+
+                                    <td>
+
+                                        <span class='user-status <%# Convert.ToBoolean(Eval("IsActive")) ? "active" : "inactive" %>'>
+
+                                            <%# Convert.ToBoolean(Eval("IsActive")) ? "Active" : "Inactive" %>
+
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- ACTION -->
+
+                                    <!-- ACTION -->
+
+                                    <td>
+
+                                        <div class="user-actions">
+
+                                            <!-- VIEW -->
+
+                                            <asp:HyperLink
+                                                ID="lnkViewUser"
+                                                runat="server"
+                                                CssClass="view-user-btn"
+                                                NavigateUrl='<%# "UserDetails.aspx?UserID=" + Eval("UserID") %>'
+                                                Text="View">
+                                            </asp:HyperLink>
+
+
+                                            <!-- EDIT -->
+
+                                        
+
+
+                                            <!-- ACTIVATE / DEACTIVATE -->
+
+                                            <asp:LinkButton
+                                                ID="btnToggleStatus"
+                                                runat="server"
+                                                CssClass='<%# Convert.ToBoolean(Eval("IsActive")) ? "deactivate-user-btn" : "activate-user-btn" %>'
+                                                CommandArgument='<%# Eval("UserID") %>'
+                                                CommandName="ToggleStatus"
+                                                Text='<%# Convert.ToBoolean(Eval("IsActive")) ? "Deactivate" : "Activate" %>'
+                                                OnCommand="UserAction_Command"
+                                                OnClientClick='<%# Convert.ToBoolean(Eval("IsActive")) ? "return confirm(\"Are you sure you want to deactivate this user?\");" : "return confirm(\"Activate this user?\");" %>'>
+                                            </asp:LinkButton>
+
+
+                                            <!-- DELETE -->
+
+                                            <asp:LinkButton
+                                                ID="btnDeleteUser"
+                                                runat="server"
+                                                CssClass="delete-user-btn"
+                                                CommandArgument='<%# Eval("UserID") %>'
+                                                CommandName="DeleteUser"
+                                                Text="Delete"
+                                                OnCommand="UserAction_Command"
+                                                OnClientClick="return confirm('Are you sure you want to permanently delete this user? This action cannot be undone.');">
+                                            </asp:LinkButton>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                            </ItemTemplate>
+
+                        </asp:Repeater>
 
                     </tbody>
 
