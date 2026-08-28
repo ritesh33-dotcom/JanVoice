@@ -12,457 +12,719 @@ namespace JanVoice.Citizen
 {
     public partial class Profile : System.Web.UI.Page
     {
-        string connectionString =
-    ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
+        // =========================================================
+        // DATABASE CONNECTION
+        // =========================================================
+
+        private readonly string connectionString =
+            ConfigurationManager.ConnectionStrings["JanVoiceDB"].ConnectionString;
+
+
+        // =========================================================
+        // PAGE LOAD
+        // =========================================================
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (Session["UserID"] == null)
+            if (!IsUserLoggedIn())
             {
                 Response.Redirect("~/Login.aspx");
+                return;
             }
 
             if (!IsPostBack)
             {
-                LoadWards();
                 LoadProfile();
-                LoadStatistics();
             }
-
         }
+
+
+        // =========================================================
+        // CHECK LOGIN
+        // =========================================================
+
+        private bool IsUserLoggedIn()
+        {
+            return Session["UserID"] != null;
+        }
+
+
+        // =========================================================
+        // GET CURRENT USER ID
+        // =========================================================
+
+        private int GetCurrentUserID()
+        {
+            return Convert.ToInt32(Session["UserID"]);
+        }
+
+
+        // =========================================================
+        // LOAD PROFILE
+        // =========================================================
+
         private void LoadProfile()
         {
+            int userID = GetCurrentUserID();
+
+            string query = @"
+                SELECT
+                    UserID,
+                    FullName,
+                    Email,
+                    Mobile,
+                    Address,
+                    ProfilePhoto,
+                    IsActive,
+                    CreatedDate
+                FROM Users
+                WHERE UserID = @UserID";
+
+
             using (SqlConnection con =
                 new SqlConnection(connectionString))
+            using (SqlCommand cmd =
+                new SqlCommand(query, con))
             {
-                string query = @"
-
-                            SELECT
-
-                            U.FullName,
-                            U.Email,
-                            U.Mobile,
-                            U.Address,
-                            U.ProfilePhoto,
-                            U.IsActive,
-                            U.CreatedDate,
-                            U.WardID,
-
-                            R.RoleName,
-                            W.WardName
-
-                            FROM Users U
-
-                            INNER JOIN Roles R
-                            ON U.RoleID = R.RoleID
-
-                            LEFT JOIN Wards W
-                            ON U.WardID = W.WardID
-
-                            WHERE U.UserID=@UserID";
-
-                SqlCommand cmd =
-                    new SqlCommand(query, con);
-
-                cmd.Parameters.AddWithValue(
-                    "@UserID",
-                    Session["UserID"]);
+                cmd.Parameters.AddWithValue("@UserID", userID);
 
                 con.Open();
 
-                SqlDataReader dr =
-                    cmd.ExecuteReader();
-
-                if (dr.Read())
+                using (SqlDataReader reader =
+                    cmd.ExecuteReader())
                 {
-                    lblFullName.Text =
-                        dr["FullName"].ToString();
-
-                    lblName.Text =
-                        dr["FullName"].ToString();
-
-                    lblEmail.Text =
-                        dr["Email"].ToString();
-
-                    lblMobile.Text =
-                        dr["Mobile"].ToString();
-
-                    lblWard.Text =
-                        dr["WardName"].ToString();
-
-                    lblAddress.Text =
-                        dr["Address"].ToString();
-
-                    lblRole.Text =
-                        dr["RoleName"].ToString();
-
-                    lblRole2.Text =
-                        dr["RoleName"].ToString();
-
-                    lblCreatedDate.Text =
-                        Convert.ToDateTime(dr["CreatedDate"])
-                        .ToString("dd MMM yyyy");
-
-                    lblRegistered.Text =
-                        Convert.ToDateTime(dr["CreatedDate"])
-                        .ToString("dd MMM yyyy");
-
-                    lblStatus.Text =
-                        Convert.ToBoolean(dr["IsActive"])
-                        ? "Active"
-                        : "Inactive";
-
-                    if (dr["ProfilePhoto"] != DBNull.Value &&
-                        dr["ProfilePhoto"].ToString() != "")
+                    if (reader.Read())
                     {
-                        imgProfile.ImageUrl =
-                            dr["ProfilePhoto"].ToString();
+                        // =================================================
+                        // BASIC INFORMATION
+                        // =================================================
+
+                        string fullName =
+                            reader["FullName"] == DBNull.Value
+                                ? ""
+                                : reader["FullName"].ToString();
+
+                        string email =
+                            reader["Email"] == DBNull.Value
+                                ? ""
+                                : reader["Email"].ToString();
+
+                        string mobile =
+                            reader["Mobile"] == DBNull.Value
+                                ? ""
+                                : reader["Mobile"].ToString();
+
+                        string address =
+                            reader["Address"] == DBNull.Value
+                                ? ""
+                                : reader["Address"].ToString();
+
+
+                        // =================================================
+                        // PROFILE SUMMARY
+                        // =================================================
+
+                        lblSummaryName.Text = fullName;
+
+                        // Database mein separate Username column nahi hai.
+                        // Isliye email ko username/display identifier ke
+                        // roop mein show kar rahe hain.
+
+                        lblSummaryUsername.Text = email;
+
+                        lblCitizenID.Text =
+                            reader["UserID"].ToString();
+
+
+                        // =================================================
+                        // PERSONAL DETAILS
+                        // =================================================
+
+                        lblFullName.Text = fullName;
+
+                        lblEmail.Text = email;
+
+                        lblMobile.Text = mobile;
+
+                        lblAddress.Text =
+                            string.IsNullOrWhiteSpace(address)
+                                ? "Not Available"
+                                : address;
+
+
+                        // =================================================
+                        // ACCOUNT INFORMATION
+                        // =================================================
+
+                        lblAccountCitizenID.Text =
+                            reader["UserID"].ToString();
+
+
+                        // =================================================
+                        // JOINED DATE
+                        // =================================================
+
+                        if (reader["CreatedDate"] != DBNull.Value)
+                        {
+                            DateTime createdDate =
+                                Convert.ToDateTime(
+                                    reader["CreatedDate"]);
+
+                            lblJoinedDate.Text =
+                                createdDate.ToString("dd MMM yyyy");
+                        }
+                        else
+                        {
+                            lblJoinedDate.Text =
+                                "Not Available";
+                        }
+
+
+                        // =================================================
+                        // ACCOUNT STATUS
+                        // =================================================
+
+                        bool isActive =
+                            reader["IsActive"] != DBNull.Value &&
+                            Convert.ToBoolean(
+                                reader["IsActive"]);
+
+                        lblAccountStatus.Text =
+                            isActive
+                                ? "Active"
+                                : "Inactive";
+
+
+                        // =================================================
+                        // PROFILE PHOTO
+                        // =================================================
+
+                        if (reader["ProfilePhoto"] != DBNull.Value &&
+                            !string.IsNullOrWhiteSpace(
+                                reader["ProfilePhoto"].ToString()))
+                        {
+                            string photoPath =
+                                reader["ProfilePhoto"].ToString();
+
+                            imgCitizenProfile.ImageUrl =
+                                photoPath;
+                        }
+                        else
+                        {
+                            imgCitizenProfile.ImageUrl =
+                                "../Images/default-user.png";
+                        }
+
+
+                        // =================================================
+                        // LOAD EDIT FIELDS
+                        // =================================================
+
+                        LoadEditFields(
+                            fullName,
+                            email,
+                            mobile,
+                            address
+                        );
+                    }
+                }
+            }
+        }
+
+
+        // =========================================================
+        // LOAD EDIT FIELDS
+        // =========================================================
+
+        private void LoadEditFields(
+            string fullName,
+            string email,
+            string mobile,
+            string address)
+        {
+            txtEditFullName.Text = fullName;
+
+            txtEditEmail.Text = email;
+
+            txtEditMobile.Text = mobile;
+
+            txtEditAddress.Text = address;
+        }
+
+
+        // =========================================================
+        // EDIT PROFILE BUTTON
+        // =========================================================
+
+        protected void btnEditProfile_Click(
+            object sender,
+            EventArgs e)
+        {
+            pnlPersonalView.Visible = false;
+
+            pnlPersonalEdit.Visible = true;
+
+            pnlChangePassword.Visible = false;
+
+            lblPersonalMessage.Text = "";
+
+            // Latest database values edit form mein load karenge.
+            LoadProfile();
+        }
+
+
+        // =========================================================
+        // CANCEL EDIT
+        // =========================================================
+
+        protected void btnCancelPersonalEdit_Click(
+            object sender,
+            EventArgs e)
+        {
+            pnlPersonalEdit.Visible = false;
+
+            pnlPersonalView.Visible = true;
+
+            lblPersonalMessage.Text = "";
+
+            LoadProfile();
+        }
+
+
+        // =========================================================
+        // SAVE PERSONAL DETAILS
+        // =========================================================
+
+        protected void btnSavePersonalDetails_Click(
+            object sender,
+            EventArgs e)
+        {
+            string fullName =
+                txtEditFullName.Text.Trim();
+
+            string email =
+                txtEditEmail.Text.Trim();
+
+            string mobile =
+                txtEditMobile.Text.Trim();
+
+            string address =
+                txtEditAddress.Text.Trim();
+
+
+            // =====================================================
+            // VALIDATION
+            // =====================================================
+
+            if (string.IsNullOrWhiteSpace(fullName))
+            {
+                ShowPersonalError(
+                    "Please enter your full name.");
+
+                return;
+            }
+
+
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                ShowPersonalError(
+                    "Please enter your email address.");
+
+                return;
+            }
+
+
+            int userID = GetCurrentUserID();
+
+
+            // =====================================================
+            // UPDATE QUERY
+            // =====================================================
+
+            string query = @"
+                UPDATE Users
+                SET
+                    FullName = @FullName,
+                    Email = @Email,
+                    Mobile = @Mobile,
+                    Address = @Address
+                WHERE UserID = @UserID";
+
+
+            try
+            {
+                using (SqlConnection con =
+                    new SqlConnection(connectionString))
+                using (SqlCommand cmd =
+                    new SqlCommand(query, con))
+                {
+                    cmd.Parameters.AddWithValue(
+                        "@FullName",
+                        fullName);
+
+
+                    cmd.Parameters.AddWithValue(
+                        "@Email",
+                        email);
+
+
+                    cmd.Parameters.AddWithValue(
+                        "@Mobile",
+                        string.IsNullOrWhiteSpace(mobile)
+                            ? (object)DBNull.Value
+                            : mobile);
+
+
+                    cmd.Parameters.AddWithValue(
+                        "@Address",
+                        string.IsNullOrWhiteSpace(address)
+                            ? (object)DBNull.Value
+                            : address);
+
+
+                    cmd.Parameters.AddWithValue(
+                        "@UserID",
+                        userID);
+
+
+                    con.Open();
+
+
+                    int rowsAffected =
+                        cmd.ExecuteNonQuery();
+
+
+                    // =================================================
+                    // SUCCESS
+                    // =================================================
+
+                    if (rowsAffected > 0)
+                    {
+                        pnlPersonalEdit.Visible = false;
+
+                        pnlPersonalView.Visible = true;
+
+                        lblPersonalMessage.Text =
+                            "Profile updated successfully.";
+
+                        lblPersonalMessage.CssClass =
+                            "profile-message profile-success";
+
+
+                        // Updated values screen par load karenge.
+                        LoadProfile();
                     }
                     else
                     {
-                        imgProfile.ImageUrl =
-                            "~/Images/default-user.png";
+                        ShowPersonalError(
+                            "Profile could not be updated.");
                     }
                 }
-
-                txtFullName.Text =
-                         dr["FullName"].ToString();
-
-                txtMobile.Text =
-                    dr["Mobile"].ToString();
-
-                txtAddress.Text =
-                    dr["Address"].ToString();
-
-                ddlWard.SelectedValue =
-                    dr["WardID"].ToString();
-
-                dr.Close();
             }
-            
-
-        }
-
-        private void LoadStatistics()
-        {
-            using (SqlConnection con =
-                new SqlConnection(connectionString))
+            catch (Exception ex)
             {
-                string query = @"
+                ShowPersonalError(
+                    "An error occurred while updating your profile.");
 
-                            SELECT
-
-                            COUNT(*) AS TotalComplaints,
-
-                            SUM(CASE
-                            WHEN Status='Pending'
-                            THEN 1 ELSE 0 END) AS Pending,
-
-                            SUM(CASE
-                            WHEN Status='In Progress'
-                            THEN 1 ELSE 0 END) AS InProgress,
-
-                            SUM(CASE
-                            WHEN Status='Resolved'
-                            THEN 1 ELSE 0 END) AS Resolved
-
-                            FROM Complaints
-
-                            WHERE UserID=@UserID";
-
-                SqlCommand cmd =
-                    new SqlCommand(query, con);
-
-                cmd.Parameters.AddWithValue(
-                    "@UserID",
-                    Session["UserID"]);
-
-                con.Open();
-
-                SqlDataReader dr =
-                    cmd.ExecuteReader();
-
-                if (dr.Read())
-                {
-                    lblTotal.Text =
-                        dr["TotalComplaints"].ToString();
-
-                    lblPending.Text =
-                        dr["Pending"] == DBNull.Value
-                        ? "0"
-                        : dr["Pending"].ToString();
-
-                    lblProgress.Text =
-                        dr["InProgress"] == DBNull.Value
-                        ? "0"
-                        : dr["InProgress"].ToString();
-
-                    lblResolved.Text =
-                        dr["Resolved"] == DBNull.Value
-                        ? "0"
-                        : dr["Resolved"].ToString();
-                }
-
-                dr.Close();
+                System.Diagnostics.Debug.WriteLine(
+                    ex.ToString());
             }
         }
 
-        private void LoadWards()
+
+        // =========================================================
+        // PERSONAL SUCCESS / ERROR
+        // =========================================================
+
+        private void ShowPersonalError(
+            string message)
         {
-            using (SqlConnection con =
-                new SqlConnection(connectionString))
-            {
-                string query =
-                    "SELECT WardID, WardName FROM Wards";
+            lblPersonalMessage.Text =
+                message;
 
-                SqlCommand cmd =
-                    new SqlCommand(query, con);
-
-                con.Open();
-
-                ddlWard.DataSource =
-                    cmd.ExecuteReader();
-
-                ddlWard.DataTextField = "WardName";
-                ddlWard.DataValueField = "WardID";
-                ddlWard.DataBind();
-            }
+            lblPersonalMessage.CssClass =
+                "profile-message profile-error";
         }
 
-        protected void btnSaveProfile_Click(object sender, EventArgs e)
+
+        // =========================================================
+        // PROFILE PHOTO UPLOAD
+        // =========================================================
+
+        protected void btnUploadPhoto_Click(
+            object sender,
+            EventArgs e)
         {
-            if (txtFullName.Text.Trim() == "")
+            if (!fuProfilePhoto.HasFile)
             {
-                ClientScript.RegisterStartupScript(
-                    this.GetType(),
-                    "alert",
-                    "alert('Please enter Full Name.');",
-                    true);
+                ShowPhotoError(
+                    "Please select a profile photo.");
 
                 return;
             }
 
-            if (txtMobile.Text.Trim() == "")
+
+            // =====================================================
+            // FILE EXTENSION
+            // =====================================================
+
+            string extension =
+                Path.GetExtension(
+                    fuProfilePhoto.FileName)
+                .ToLower();
+
+
+            string[] allowedExtensions =
             {
-                ClientScript.RegisterStartupScript(
-                    this.GetType(),
-                    "alert",
-                    "alert('Please enter Mobile Number.');",
-                    true);
+                ".jpg",
+                ".jpeg",
+                ".png",
+                ".webp"
+            };
 
-                return;
-            }
 
-            if (txtAddress.Text.Trim() == "")
+            bool validExtension = false;
+
+
+            foreach (string allowed in allowedExtensions)
             {
-                ClientScript.RegisterStartupScript(
-                    this.GetType(),
-                    "alert",
-                    "alert('Please enter Address.');",
-                    true);
-
-                return;
-            }
-
-            if (ddlWard.SelectedIndex == -1)
-            {
-                ClientScript.RegisterStartupScript(
-                    this.GetType(),
-                    "alert",
-                    "alert('Please select Ward.');",
-                    true);
-
-                return;
-            }
-
-            string photoPath = imgProfile.ImageUrl;
-
-            if (fuProfile.HasFile)
-            {
-                string extension =
-                    Path.GetExtension(fuProfile.FileName).ToLower();
-
-                string[] allowed =
+                if (extension == allowed)
                 {
-        ".jpg",
-        ".jpeg",
-        ".png"
-    };
+                    validExtension = true;
 
-                if (!allowed.Contains(extension))
+                    break;
+                }
+            }
+
+
+            if (!validExtension)
+            {
+                ShowPhotoError(
+                    "Only JPG, JPEG, PNG or WEBP images are allowed.");
+
+                return;
+            }
+
+
+            // =====================================================
+            // FILE SIZE
+            // =====================================================
+
+            if (fuProfilePhoto.PostedFile.ContentLength >
+                2 * 1024 * 1024)
+            {
+                ShowPhotoError(
+                    "Profile photo must be smaller than 2 MB.");
+
+                return;
+            }
+
+
+            try
+            {
+                int userID =
+                    GetCurrentUserID();
+
+
+                // =================================================
+                // UPLOAD FOLDER
+                // =================================================
+
+                string folderPath =
+                    Server.MapPath(
+                        "~/Uploads/ProfilePhotos/");
+
+
+                if (!Directory.Exists(folderPath))
                 {
-                    ClientScript.RegisterStartupScript(
-                        this.GetType(),
-                        "alert",
-                        "alert('Only JPG, JPEG and PNG files are allowed.');",
-                        true);
-
-                    return;
+                    Directory.CreateDirectory(
+                        folderPath);
                 }
 
-                if (fuProfile.PostedFile.ContentLength > 2 * 1024 * 1024)
-                {
-                    ClientScript.RegisterStartupScript(
-                        this.GetType(),
-                        "alert",
-                        "alert('Maximum image size is 2 MB.');",
-                        true);
 
-                    return;
-                }
+                // =================================================
+                // FILE NAME
+                // =================================================
 
                 string fileName =
-                    Guid.NewGuid().ToString() + extension;
+                    "Citizen_" +
+                    userID +
+                    "_" +
+                    DateTime.Now.ToString(
+                        "yyyyMMddHHmmss") +
+                    extension;
 
-                string folder =
-                    Server.MapPath("~/Uploads/ProfileImages/");
 
-                if (!Directory.Exists(folder))
+                string fullPath =
+                    Path.Combine(
+                        folderPath,
+                        fileName);
+
+
+                // =================================================
+                // SAVE FILE
+                // =================================================
+
+                fuProfilePhoto.SaveAs(
+                    fullPath);
+
+
+                // =================================================
+                // DATABASE PATH
+                // =================================================
+
+                string databasePath =
+                    "~/Uploads/ProfilePhotos/" +
+                    fileName;
+
+
+                // =================================================
+                // UPDATE DATABASE
+                // =================================================
+
+                string query = @"
+                    UPDATE Users
+                    SET ProfilePhoto = @ProfilePhoto
+                    WHERE UserID = @UserID";
+
+
+                using (SqlConnection con =
+                    new SqlConnection(connectionString))
+                using (SqlCommand cmd =
+                    new SqlCommand(query, con))
                 {
-                    Directory.CreateDirectory(folder);
+                    cmd.Parameters.AddWithValue(
+                        "@ProfilePhoto",
+                        databasePath);
+
+
+                    cmd.Parameters.AddWithValue(
+                        "@UserID",
+                        userID);
+
+
+                    con.Open();
+
+
+                    int rowsAffected =
+                        cmd.ExecuteNonQuery();
+
+
+                    if (rowsAffected > 0)
+                    {
+                        imgCitizenProfile.ImageUrl =
+                            databasePath;
+
+
+                        ShowPhotoSuccess(
+                            "Profile photo updated successfully.");
+                    }
+                    else
+                    {
+                        ShowPhotoError(
+                            "Profile photo could not be updated.");
+                    }
                 }
-
-                fuProfile.SaveAs(Path.Combine(folder, fileName));
-
-                photoPath =
-                    "~/Uploads/ProfileImages/" + fileName;
-
-                using (SqlConnection con = new SqlConnection(connectionString))
-                {
-                    string query = @"
-
-                            UPDATE Users
-
-                            SET
-
-                            FullName = @FullName,
-                            Mobile = @Mobile,
-                            Address = @Address,
-                            WardID = @WardID,
-                            ProfilePhoto = @ProfilePhoto
-
-                            WHERE UserID = @UserID";
-
-                                SqlCommand cmd = new SqlCommand(query, con);
-
-                                cmd.Parameters.AddWithValue("@FullName", txtFullName.Text.Trim());
-
-                                cmd.Parameters.AddWithValue("@Mobile", txtMobile.Text.Trim());
-
-                                cmd.Parameters.AddWithValue("@Address", txtAddress.Text.Trim());
-
-                                cmd.Parameters.AddWithValue("@WardID", ddlWard.SelectedValue);
-
-                                cmd.Parameters.AddWithValue("@ProfilePhoto", photoPath);
-
-                                cmd.Parameters.AddWithValue("@UserID", Session["UserID"]);
-
-                                con.Open();
-
-                                cmd.ExecuteNonQuery();
-                    ClientScript.RegisterStartupScript(
-                           this.GetType(),
-                           "success",
-                           "alert('Profile updated successfully.');",
-                           true);
-                }
-
-                LoadProfile();
-
-               
             }
+            catch (Exception ex)
+            {
+                ShowPhotoError(
+                    "An error occurred while uploading the photo.");
 
+                System.Diagnostics.Debug.WriteLine(
+                    ex.ToString());
+            }
         }
 
-        protected void btnChangePassword_Click(object sender, EventArgs e)
+
+        // =========================================================
+        // PHOTO SUCCESS MESSAGE
+        // =========================================================
+
+        private void ShowPhotoSuccess(
+            string message)
         {
-            if (string.IsNullOrWhiteSpace(txtCurrentPassword.Text) ||
-    string.IsNullOrWhiteSpace(txtNewPassword.Text) ||
-    string.IsNullOrWhiteSpace(txtConfirmPassword.Text))
-            {
-                ClientScript.RegisterStartupScript(
-                    this.GetType(),
-                    "alert",
-                    "alert('Please fill all password fields.');",
-                    true);
+            lblPhotoMessage.Text =
+                message;
 
-                return;
-            }
-            if (txtNewPassword.Text != txtConfirmPassword.Text)
-            {
-                ClientScript.RegisterStartupScript(
-                    this.GetType(),
-                    "alert",
-                    "alert('New Password and Confirm Password do not match.');",
-                    true);
+            lblPhotoMessage.CssClass =
+                "profile-message profile-success";
+        }
 
-                return;
-            }
-            if (txtCurrentPassword.Text == txtNewPassword.Text)
-            {
-                ClientScript.RegisterStartupScript(
-                    this.GetType(),
-                    "alert",
-                    "alert('New password must be different from current password.');",
-                    true);
 
-                return;
-            }
-            using (SqlConnection con = new SqlConnection(connectionString))
-            {
-                string query = @"
+        // =========================================================
+        // PHOTO ERROR MESSAGE
+        // =========================================================
 
-        SELECT PasswordHash
+        private void ShowPhotoError(
+            string message)
+        {
+            lblPhotoMessage.Text =
+                message;
 
-        FROM Users
+            lblPhotoMessage.CssClass =
+                "profile-message profile-error";
+        }
 
-        WHERE UserID=@UserID";
 
-                SqlCommand cmd = new SqlCommand(query, con);
+        // =========================================================
+        // CHANGE PASSWORD BUTTON
+        // =========================================================
 
-                cmd.Parameters.AddWithValue("@UserID", Session["UserID"]);
+        protected void btnChangePassword_Click(
+            object sender,
+            EventArgs e)
+        {
+            pnlPersonalEdit.Visible = false;
 
-                con.Open();
+            pnlPersonalView.Visible = true;
 
-                string currentPassword =
-                    Convert.ToString(cmd.ExecuteScalar());
+            pnlChangePassword.Visible = true;
 
-                if (currentPassword != txtCurrentPassword.Text)
-                {
-                    ClientScript.RegisterStartupScript(
-                        this.GetType(),
-                        "alert",
-                        "alert('Current password is incorrect.');",
-                        true);
+            lblPasswordMessage.Text = "";
 
-                    return;
-                }
-                query = @"
+            // Old password fields clear.
+            txtCurrentPassword.Text = "";
 
-                            UPDATE Users
+            txtNewPassword.Text = "";
 
-                            SET PasswordHash=@Password
+            txtConfirmPassword.Text = "";
+        }
 
-                            WHERE UserID=@UserID";
 
-                cmd = new SqlCommand(query, con);
+        // =========================================================
+        // CANCEL PASSWORD
+        // =========================================================
 
-                cmd.Parameters.AddWithValue("@Password", txtNewPassword.Text);
-
-                cmd.Parameters.AddWithValue("@UserID", Session["UserID"]);
-
-                cmd.ExecuteNonQuery();
-            }
+        protected void btnCancelPassword_Click(
+            object sender,
+            EventArgs e)
+        {
+            pnlChangePassword.Visible = false;
 
             txtCurrentPassword.Text = "";
+
             txtNewPassword.Text = "";
+
             txtConfirmPassword.Text = "";
 
-            ClientScript.RegisterStartupScript(
-                this.GetType(),
-                "success",
-                "alert('Password updated successfully.');",
-                true);
+            lblPasswordMessage.Text = "";
+        }
+
+
+        // =========================================================
+        // SAVE PASSWORD
+        // =========================================================
+
+        protected void btnSavePassword_Click(
+            object sender,
+            EventArgs e)
+        {
+            lblPasswordMessage.Text =
+                "Password functionality will be connected after verifying your existing password hashing system.";
+
+            lblPasswordMessage.CssClass =
+                "profile-message profile-error";
         }
     }
 }
