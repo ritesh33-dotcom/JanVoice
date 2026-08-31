@@ -3,164 +3,180 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-
-    <!--==================================
+ <!--==================================
             LOGIN SECTION
-===================================-->
+    ===================================-->
 
-<section class="login-section">
+    <section class="login-section">
 
-    <div class="container">
+        <div class="container">
 
-        <div class="login-wrapper">
+            <div class="login-wrapper">
 
-            <!-- LEFT SIDE -->
+                <!--==================================
+                        LEFT SIDE
+                ===================================-->
 
-            <div class="login-left">
+                <div class="login-left">
 
-                <span class="section-badge">
+                    <span class="section-badge">
+                        🔐 Welcome Back
+                    </span>
 
-                    🔐 Welcome Back
+                    <h1>
+                        Login to Continue
+                        <span>Your Civic Journey</span>
+                    </h1>
 
-                </span>
+                    <p>
+                        Access your JanVoice account to report civic
+                        issues, support your community and track
+                        complaint progress in real time.
+                    </p>
 
-                <h1>
-
-                    Login to Continue
-                    <span>Your Civic Journey</span>
-
-                </h1>
-
-                <p>
-
-                    Access your JanVoice account to report civic
-                    issues, support your community and track
-                    complaint progress in real time.
-
-                </p>
-
-                <img src="Assets/Images/login-hero.png"
-                    alt="Login Illustration"
-                    class="login-image"/>
-
-            </div>
-
-            <!-- RIGHT SIDE -->
-
-            <div class="login-card">
-
-                <h2>
-
-                    Sign In
-
-                </h2>
-
-                <p>
-
-                    Welcome back! Please login to your account.
-
-                </p>
-
-                <!-- Email -->
-
-            <div class="input-group">
-
-    <label>Email Address</label>
-
-    <div class="input-wrapper">
-
-        <i class="fa-solid fa-envelope input-icon"></i>
-
-        <asp:TextBox
-            ID="txtEmail"
-            runat="server"
-            CssClass="input-box"
-            TextMode="Email"
-            placeholder="      Enter your email">
-        </asp:TextBox>
-
-        <i class="fa-solid fa-circle-check success-icon"></i>
-
-    </div>
-
-    <small class="error-text" id="emailError">
-
-    </small>
-
-</div>
-
-                <!-- Password -->
-
-<div class="input-group">
-
-    <label>Password</label>
-
-    <div class="input-wrapper">
-
-        <i class="fa-solid fa-lock input-icon"></i>
-
-        <asp:TextBox
-            ID="txtPassword"
-            runat="server"
-            CssClass="input-box"
-            TextMode="Password"
-            placeholder="      Enter your password">
-        </asp:TextBox>
-
-        <i class="fa-solid fa-eye toggle-password"
-           id="togglePassword">
-        </i>
-
-    </div>
-
-    <small class="error-text" id="passwordError">
-
-    </small>
-
-</div>
-
-                <!-- Remember -->
-
-                <div class="login-options">
-
-                    <label>
-
-                        <asp:CheckBox
-                            ID="chkRemember"
-                            runat="server"/>
-
-                        Remember Me
-
-                    </label>
-
-                    <a href="ForgotPassword.aspx">
-
-                        Forgot Password?
-
-                    </a>
+                    <img src="Assets/Images/login-hero.png"
+                         alt="Login Illustration"
+                         class="login-image" />
 
                 </div>
 
-                <!-- Login Button -->
-<asp:Button
-    ID="loginButton"
-    runat="server"
-    CssClass="login-btn"
-    Text="Sign In"
-    OnClick="loginButton_Click"
-/>
 
-                <!-- Register -->
+                <!--==================================
+                        RIGHT SIDE
+                ===================================-->
 
-                <div class="register-link">
+                <div class="login-card">
 
-                    Don't have an account?
+                    <h2>
+                        Sign In
+                    </h2>
 
-                    <a href="Register.aspx">
+                    <p>
+                        Welcome back! Please login to your account.
+                    </p>
 
-                        Create Account
 
-                    </a>
+                    <!--==================================
+                            EMAIL
+                    ===================================-->
+
+                    <div class="input-group">
+
+                        <label for="<%= txtEmail.ClientID %>">
+                            Email Address
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-envelope input-icon"></i>
+
+                            <asp:TextBox
+                                ID="txtEmail"
+                                runat="server"
+                                CssClass="input-box"
+                                TextMode="Email"
+                                placeholder="Enter your email">
+                            </asp:TextBox>
+
+                            <i class="fa-solid fa-circle-check success-icon"
+                               id="emailSuccess">
+                            </i>
+
+                        </div>
+
+                        <small class="error-text"
+                               id="emailError">
+                        </small>
+
+                    </div>
+
+
+                    <!--==================================
+                            PASSWORD
+                    ===================================-->
+
+                    <div class="input-group">
+
+                        <label for="<%= txtPassword.ClientID %>">
+                            Password
+                        </label>
+
+                        <div class="input-wrapper">
+
+                            <i class="fa-solid fa-lock input-icon"></i>
+
+                            <asp:TextBox
+                                ID="txtPassword"
+                                runat="server"
+                                CssClass="input-box"
+                                TextMode="Password"
+                                placeholder="Enter your password">
+                            </asp:TextBox>
+
+                            <!-- Show / Hide Password -->
+
+                            <i class="fa-solid fa-eye toggle-password"
+                               id="togglePassword"
+                               title="Show password">
+                            </i>
+
+                        </div>
+
+                        <small class="error-text"
+                               id="passwordError">
+                        </small>
+
+                    </div>
+
+
+                    <!--==================================
+                            REMEMBER + FORGOT PASSWORD
+                    ===================================-->
+
+                    <div class="login-options">
+
+                        <label>
+
+                            <asp:CheckBox
+                                ID="chkRemember"
+                                runat="server" />
+
+                            Remember Me
+
+                        </label>
+
+                        <a href="ForgotPassword.aspx">
+                            Forgot Password?
+                        </a>
+
+                    </div>
+
+
+                    <!--==================================
+                            LOGIN BUTTON
+                    ===================================-->
+
+                    <asp:Button
+                        ID="loginButton"
+                        runat="server"
+                        CssClass="login-btn"
+                        Text="Sign In"
+                        OnClick="loginButton_Click" />
+
+
+                    <!--==================================
+                            REGISTER LINK
+                    ===================================-->
+
+                    <div class="register-link">
+
+                        Don't have an account?
+
+                        <a href="Register.aspx">
+                            Create Account
+                        </a>
+
+                    </div>
 
                 </div>
 
@@ -168,114 +184,182 @@
 
         </div>
 
-    </div>
-
-</section>
+    </section>
 
 
-
-
+    <!--==================================
+            LOGIN JAVASCRIPT
+    ===================================-->
 
     <script>
 
-document.addEventListener("DOMContentLoaded",function(){
+        document.addEventListener("DOMContentLoaded", function () {
 
-const txtEmail=document.getElementById("<%= txtEmail.ClientID %>");
+            /* ==========================================
+               GET ELEMENTS
+            ========================================== */
 
-const txtPassword=document.getElementById("<%= txtPassword.ClientID %>");
+            const txtEmail =
+                document.getElementById("<%= txtEmail.ClientID %>");
 
-const emailError=document.getElementById("emailError");
+            const txtPassword =
+                document.getElementById("<%= txtPassword.ClientID %>");
 
-const passwordError=document.getElementById("passwordError");
+            const togglePassword =
+                document.getElementById("togglePassword");
 
-const toggle=document.getElementById("togglePassword");
+            const emailError =
+                document.getElementById("emailError");
 
-const loader=document.getElementById("loader");
+            const passwordError =
+                document.getElementById("passwordError");
 
-const button=document.getElementById("loginButton");
-
-const buttonText=document.getElementById("buttonText");
-
-/* Show / Hide Password */
-
-toggle.onclick=function(){
-
-if(txtPassword.type==="password"){
-
-txtPassword.type="text";
-
-toggle.classList.replace("fa-eye","fa-eye-slash");
-
-}
-else{
-
-txtPassword.type="password";
-
-toggle.classList.replace("fa-eye-slash","fa-eye");
-
-}
-
-};
-
-/* Validation */
-
-function validate(){
-
-let valid=true;
-
-emailError.textContent="";
-
-passwordError.textContent="";
-
-if(txtEmail.value.trim()===""){
-
-emailError.textContent="Please enter your email.";
-
-valid=false;
-
-}
-
-if(txtPassword.value.trim()===""){
-
-passwordError.textContent="Please enter your password.";
-
-valid=false;
-
-}
-
-return valid;
-
-}
-
-/* Enter Key */
-
-document.addEventListener("keydown",function(e){
-
-if(e.key==="Enter"){
-
-button.click();
-
-}
-
-});
+            const loginButton =
+                document.getElementById("<%= loginButton.ClientID %>");
 
 
-/* Temporary demo */
+            /* ==========================================
+               SHOW / HIDE PASSWORD
+            ========================================== */
 
-setTimeout(function(){
+            if (togglePassword) {
 
-loader.style.display="none";
+                togglePassword.addEventListener("click", function () {
 
-buttonText.style.display="inline";
+                    if (txtPassword.type === "password") {
 
-button.disabled=false;
+                        /* Show password */
 
-},2000);
+                        txtPassword.type = "text";
 
-};
+                        togglePassword.classList.remove("fa-eye");
 
-});
+                        togglePassword.classList.add("fa-eye-slash");
 
-</script>
+                        togglePassword.setAttribute(
+                            "title",
+                            "Hide password"
+                        );
+
+                    }
+
+                    else {
+
+                        /* Hide password */
+
+                        txtPassword.type = "password";
+
+                        togglePassword.classList.remove("fa-eye-slash");
+
+                        togglePassword.classList.add("fa-eye");
+
+                        togglePassword.setAttribute(
+                            "title",
+                            "Show password"
+                        );
+
+                    }
+
+                });
+
+            }
+
+
+            /* ==========================================
+               EMAIL VALIDATION
+            ========================================== */
+
+            txtEmail.addEventListener("input", function () {
+
+                if (txtEmail.value.trim() === "") {
+
+                    emailError.textContent =
+                        "Please enter your email.";
+
+                }
+
+                else {
+
+                    const emailPattern =
+                        /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+                    if (!emailPattern.test(txtEmail.value.trim())) {
+
+                        emailError.textContent =
+                            "Please enter a valid email address.";
+
+                    }
+
+                    else {
+
+                        emailError.textContent = "";
+
+                    }
+
+                }
+
+            });
+
+
+            /* ==========================================
+               PASSWORD VALIDATION
+            ========================================== */
+
+            txtPassword.addEventListener("input", function () {
+
+                if (txtPassword.value.trim() === "") {
+
+                    passwordError.textContent =
+                        "Please enter your password.";
+
+                }
+
+                else {
+
+                    passwordError.textContent = "";
+
+                }
+
+            });
+
+
+            /* ==========================================
+               ENTER KEY
+            ========================================== */
+
+            document.addEventListener("keydown", function (e) {
+
+                if (e.key === "Enter") {
+
+                    /*
+                       Prevent accidental double submission
+                       if the button is already disabled.
+                    */
+
+                    if (!loginButton.disabled) {
+
+                        loginButton.click();
+
+                    }
+
+                }
+
+            });
+
+
+            /* ==========================================
+               INITIAL STATE
+            ========================================== */
+
+            if (txtPassword) {
+
+                txtPassword.type = "password";
+
+            }
+
+        });
+
+    </script>
+
 
 </asp:Content>
