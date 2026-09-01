@@ -45,12 +45,7 @@
             </div>
 
 
-            <div class="hero-right">
 
-                <img src="Images/Logo/logoIllustration.png"
-                     alt="JanVoice Logo" />
-
-            </div>
 
         </div>
 

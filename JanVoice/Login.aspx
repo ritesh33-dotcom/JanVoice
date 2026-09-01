@@ -34,9 +34,7 @@
                         complaint progress in real time.
                     </p>
 
-                    <img src="Assets/Images/login-hero.png"
-                         alt="Login Illustration"
-                         class="login-image" />
+                   
 
                 </div>
 
