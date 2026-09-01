@@ -1,8 +1,8 @@
 ﻿/* =========================================================
    RESOLUTION DETAILS
    JanVoice - Officer Panel
-   PART 2 : PREMIUM MAIN CSS
-========================================================= */
+   LIGHT THEME
+   ========================================================= */
 
 
 /* =========================================================
@@ -12,8 +12,8 @@
 .resolution-details-page {
     min-height: 100vh;
     padding: 35px 25px 60px;
-    background: #0b1120;
-    color: #e5e7eb;
+    background: #f5f7fb;
+    color: #35425b;
 }
 
 
@@ -39,10 +39,10 @@
     gap: 25px;
     margin-bottom: 30px;
     padding: 30px;
-    border: 1px solid rgba(148, 163, 184, 0.10);
+    border: 1px solid #e3e8f2;
     border-radius: 20px;
-    background: linear-gradient( 145deg, #111827, #0f172a );
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.25);
+    background: #ffffff;
+    box-shadow: 0 12px 32px rgba(21, 38, 74, 0.06);
 }
 
 
@@ -56,10 +56,10 @@
     align-items: center;
     gap: 8px;
     padding: 7px 14px;
-    border: 1px solid rgba(59, 130, 246, 0.30);
+    border: 1px solid #dbe7ff;
     border-radius: 30px;
-    background: rgba(59, 130, 246, 0.08);
-    color: #60a5fa;
+    background: #edf4ff;
+    color: #3478ef;
     font-size: 12px;
     font-weight: 600;
 }
@@ -67,7 +67,7 @@
 
 .resolution-page-header h1 {
     margin: 15px 0 8px;
-    color: #f8fafc;
+    color: #17233d;
     font-size: 34px;
     font-weight: 700;
     line-height: 1.2;
@@ -76,7 +76,7 @@
 
 .resolution-page-header p {
     margin: 0;
-    color: #94a3b8;
+    color: #7d899e;
     font-size: 14px;
     line-height: 1.6;
 }
@@ -89,10 +89,10 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    border: 1px solid rgba(59, 130, 246, 0.18);
+    border: 1px solid #dbe7ff;
     border-radius: 18px;
-    background: rgba(59, 130, 246, 0.08);
-    color: #60a5fa;
+    background: #edf4ff;
+    color: #3478ef;
     font-size: 28px;
 }
 
@@ -104,10 +104,10 @@
 .resolution-card {
     margin-top: 25px;
     overflow: hidden;
-    border: 1px solid rgba(148, 163, 184, 0.10);
+    border: 1px solid #e3e8f2;
     border-radius: 18px;
-    background: #111827;
-    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.18);
+    background: #ffffff;
+    box-shadow: 0 12px 32px rgba(21, 38, 74, 0.06);
 }
 
 
@@ -121,7 +121,7 @@
     justify-content: space-between;
     gap: 20px;
     padding: 23px 25px;
-    border-bottom: 1px solid rgba(148, 163, 184, 0.10);
+    border-bottom: 1px solid #edf0f5;
 }
 
 
@@ -129,20 +129,20 @@
     display: flex;
     align-items: center;
     gap: 10px;
-    color: #f8fafc;
+    color: #17233d;
     font-size: 18px;
     font-weight: 650;
 }
 
 
     .resolution-card-title i {
-        color: #60a5fa;
+        color: #3478ef;
     }
 
 
 .resolution-card-header p {
     margin: 7px 0 0;
-    color: #64748b;
+    color: #7d899e;
     font-size: 13px;
     line-height: 1.5;
 }
@@ -156,8 +156,8 @@
     align-items: center;
     justify-content: center;
     border-radius: 12px;
-    background: rgba(59, 130, 246, 0.08);
-    color: #60a5fa;
+    background: #edf4ff;
+    color: #3478ef;
     font-size: 17px;
 }
 
@@ -170,21 +170,21 @@
     display: grid;
     grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 1px;
-    background: rgba(148, 163, 184, 0.08);
+    background: #edf0f5;
 }
 
 
 .resolution-info-item {
     min-width: 0;
     padding: 20px;
-    background: #111827;
+    background: #ffffff;
 }
 
 
 .resolution-info-label {
     display: block;
     margin-bottom: 8px;
-    color: #64748b;
+    color: #929caf;
     font-size: 11px;
     font-weight: 600;
     text-transform: uppercase;
@@ -195,7 +195,7 @@
 .resolution-info-item strong {
     display: block;
     overflow: hidden;
-    color: #e2e8f0;
+    color: #26334c;
     font-size: 14px;
     font-weight: 600;
     line-height: 1.5;
@@ -212,10 +212,10 @@
     align-items: center;
     min-height: 27px;
     padding: 5px 10px;
-    border: 1px solid rgba(245, 158, 11, 0.25);
+    border: 1px solid #f7dca8;
     border-radius: 20px;
-    background: rgba(245, 158, 11, 0.10);
-    color: #fbbf24;
+    background: #fff6e8;
+    color: #ed9000;
     font-size: 11px;
     font-weight: 600;
 }
@@ -228,7 +228,7 @@
 .complaint-description-box {
     min-height: 120px;
     padding: 25px;
-    color: #cbd5e1;
+    color: #536078;
     font-size: 14px;
     line-height: 1.8;
     white-space: pre-line;
@@ -245,7 +245,7 @@
     justify-content: center;
     min-height: 250px;
     padding: 25px;
-    background: #0f172a;
+    background: #f6f8fc;
 }
 
 
@@ -253,15 +253,15 @@
     display: block;
     max-width: 100%;
     max-height: 500px;
-    border: 1px solid rgba(148, 163, 184, 0.12);
+    border: 1px solid #e3e8f2;
     border-radius: 14px;
     object-fit: contain;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 12px 30px rgba(21, 38, 74, 0.10);
 }
 
 
 .no-image-message {
-    color: #64748b;
+    color: #929caf;
     font-size: 13px;
 }
 
@@ -271,12 +271,12 @@
 ========================================================= */
 
 .resolution-action-card {
-    border-color: rgba(34, 197, 94, 0.12);
+    border-color: #dcefe5;
 }
 
 
     .resolution-action-card .resolution-card-title i {
-        color: #22c55e;
+        color: #0ba56c;
     }
 
 
@@ -292,7 +292,7 @@
     .resolution-form-group label {
         display: block;
         margin-bottom: 8px;
-        color: #cbd5e1;
+        color: #536078;
         font-size: 13px;
         font-weight: 600;
     }
@@ -302,11 +302,11 @@
 .resolution-textarea {
     width: 100%;
     box-sizing: border-box;
-    border: 1px solid #263244;
+    border: 1px solid #dfe5ef;
     border-radius: 10px;
     outline: none;
-    background: #0b1120;
-    color: #e5e7eb;
+    background: #ffffff;
+    color: #35425b;
     font-family: inherit;
     font-size: 13px;
     transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
@@ -329,16 +329,16 @@
 
     .resolution-input::placeholder,
     .resolution-textarea::placeholder {
-        color: #64748b;
+        color: #929caf;
     }
 
 
     .resolution-input:focus,
     .resolution-textarea:focus {
-        border-color: #22c55e;
-        background: #0b1120;
-        color: #f8fafc;
-        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.10);
+        border-color: #3478ef;
+        background: #ffffff;
+        color: #26334c;
+        box-shadow: 0 0 0 3px rgba(52, 120, 239, 0.10);
     }
 
 
@@ -368,35 +368,39 @@
 }
 
 
-/* RESOLVE */
+/* =========================================================
+   RESOLVE BUTTON
+========================================================= */
 
 .btn-mark-resolved {
-    border: 1px solid rgba(34, 197, 94, 0.30);
-    background: linear-gradient( 135deg, #16a34a, #22c55e );
+    border: 1px solid #0ba56c;
+    background: linear-gradient(135deg, #0ba56c, #16b978);
     color: #ffffff;
 }
 
 
     .btn-mark-resolved:hover {
         transform: translateY(-1px);
-        box-shadow: 0 8px 22px rgba(34, 197, 94, 0.22);
+        box-shadow: 0 8px 22px rgba(11, 165, 108, 0.20);
     }
 
 
-/* CANCEL */
+/* =========================================================
+   CANCEL BUTTON
+========================================================= */
 
 .btn-cancel {
-    border: 1px solid #334155;
-    background: transparent;
-    color: #cbd5e1;
+    border: 1px solid #d5dce8;
+    background: #ffffff;
+    color: #536078;
 }
 
 
     .btn-cancel:hover {
         transform: translateY(-1px);
-        border-color: #475569;
-        background: #1e293b;
-        color: #ffffff;
+        border-color: #c4cedd;
+        background: #f6f8fc;
+        color: #26334c;
     }
 
 
@@ -416,15 +420,15 @@
     border-collapse: separate;
     border-spacing: 0;
     background: transparent;
-    color: #cbd5e1;
+    color: #536078;
 }
 
 
     .status-history-table th {
         padding: 15px;
-        border-bottom: 1px solid #263244;
-        background: #0f172a;
-        color: #94a3b8;
+        border-bottom: 1px solid #e5e9f1;
+        background: #f6f8fc;
+        color: #66738a;
         font-size: 11px;
         font-weight: 650;
         text-align: left;
@@ -436,9 +440,9 @@
 
     .status-history-table td {
         padding: 15px;
-        border-bottom: 1px solid rgba(148, 163, 184, 0.08);
-        background: transparent;
-        color: #cbd5e1;
+        border-bottom: 1px solid #edf0f5;
+        background: #ffffff;
+        color: #536078;
         font-size: 13px;
         vertical-align: middle;
     }
@@ -450,7 +454,7 @@
 
 
     .status-history-table tbody tr:hover td {
-        background: rgba(59, 130, 246, 0.045);
+        background: #f8faff;
     }
 
 
@@ -465,11 +469,12 @@
     gap: 15px;
     margin-top: 20px;
     padding: 14px 18px;
-    border: 1px solid rgba(148, 163, 184, 0.08);
+    border: 1px solid #e3e8f2;
     border-radius: 12px;
-    background: rgba(15, 23, 42, 0.70);
-    color: #64748b;
+    background: #ffffff;
+    color: #7d899e;
     font-size: 12px;
+    box-shadow: 0 8px 20px rgba(21, 38, 74, 0.04);
 }
 
 
@@ -481,7 +486,7 @@
 
 
     .resolution-page-information i {
-        color: #60a5fa;
+        color: #3478ef;
     }
 
 
@@ -496,32 +501,29 @@
 
 
 .resolution-details-page ::-webkit-scrollbar-track {
-    background: #0b1120;
+    background: #f5f7fb;
 }
 
 
 .resolution-details-page ::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: #334155;
+    background: #c9d9f5;
 }
 
 
     .resolution-details-page ::-webkit-scrollbar-thumb:hover {
-        background: #475569;
+        background: #a9c2ed;
     }
-
-
 
 
 /* =========================================================
    RESOLUTION DETAILS - RESPONSIVE DESIGN
-   PART 3
-   ========================================================= */
+========================================================= */
 
 
 /* =========================================================
    TABLET
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 1100px) {
 
@@ -553,7 +555,7 @@
 
 /* =========================================================
    TABLET / SMALL LAPTOP
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 900px) {
 
@@ -594,7 +596,7 @@
 
 /* =========================================================
    MOBILE
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 600px) {
 
@@ -605,7 +607,7 @@
 
     /* -------------------------
        HEADER
-       ------------------------- */
+    ------------------------- */
 
     .resolution-header {
         padding: 20px;
@@ -625,7 +627,7 @@
 
     /* -------------------------
        SUMMARY CARDS
-       ------------------------- */
+    ------------------------- */
 
     .complaint-summary {
         grid-template-columns: 1fr;
@@ -648,7 +650,7 @@
 
     /* -------------------------
        MAIN CARDS
-       ------------------------- */
+    ------------------------- */
 
     .resolution-card {
         padding: 18px;
@@ -662,7 +664,7 @@
 
     /* -------------------------
        FORM
-       ------------------------- */
+    ------------------------- */
 
     .form-group {
         margin-bottom: 16px;
@@ -686,7 +688,7 @@
 
     /* -------------------------
        LOCATION
-       ------------------------- */
+    ------------------------- */
 
     .location-grid {
         grid-template-columns: 1fr;
@@ -696,7 +698,7 @@
 
     /* -------------------------
        IMAGE / EVIDENCE
-       ------------------------- */
+    ------------------------- */
 
     .evidence-image {
         width: 100%;
@@ -708,7 +710,7 @@
 
     /* -------------------------
        BUTTONS
-       ------------------------- */
+    ------------------------- */
 
     .resolution-actions {
         display: flex;
@@ -725,7 +727,7 @@
 
     /* -------------------------
        STATUS HISTORY
-       ------------------------- */
+    ------------------------- */
 
     .status-history {
         overflow-x: auto;
@@ -739,7 +741,7 @@
 
     /* -------------------------
        GRIDVIEW
-       ------------------------- */
+    ------------------------- */
 
     .table-responsive {
         overflow-x: auto;
@@ -754,7 +756,7 @@
 
 /* =========================================================
    VERY SMALL MOBILE
-   ========================================================= */
+========================================================= */
 
 @media (max-width: 400px) {
 
@@ -791,3 +793,8 @@
         padding: 10px;
     }
 }
+
+
+/* =========================================================
+   END OF RESOLUTION DETAILS CSS
+========================================================= */
