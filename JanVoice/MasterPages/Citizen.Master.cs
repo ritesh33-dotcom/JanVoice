@@ -1,4 +1,5 @@
-﻿using System;
+﻿using JanVoice.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -11,16 +12,16 @@ namespace JanVoice.MasterPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
-            if (Session["UserID"] == null)
+            if (!AuthenticationHelper.IsLoggedIn())
             {
                 Response.Redirect("~/Login.aspx");
+                return;
             }
 
-            if (!IsPostBack)
+            if (!AuthenticationHelper.IsCitizen())
             {
-                lblUserName.Text =
-                    Session["FullName"].ToString();
+                Response.Redirect("~/Login.aspx");
+                return;
             }
         }
 

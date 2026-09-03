@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using JanVoice.Helpers;
 
 namespace JanVoice.MasterPages
 {
@@ -15,10 +16,16 @@ namespace JanVoice.MasterPages
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
+            if (!AuthenticationHelper.IsLoggedIn())
             {
-                CheckOfficerLogin();
-                LoadOfficerInfo();
+                Response.Redirect("~/Login.aspx");
+                return;
+            }
+
+            if (!AuthenticationHelper.IsOfficer())
+            {
+                Response.Redirect("~/Login.aspx");
+                return;
             }
         }
 
