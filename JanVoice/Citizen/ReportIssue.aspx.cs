@@ -614,7 +614,7 @@ namespace JanVoice.Citizen
                    new SqlConnection(connectionString))
             {
                 string query =
-                    "SELECT WardID, WardName FROM Wards";
+                    "SELECT WardID, WardName FROM Wards ";
 
 
                 SqlDataAdapter da =

@@ -45,9 +45,9 @@
                 </p>
 
                 <div class="hero-buttons">
-
-                    <a href="ReportIssue.aspx"
-                        class="btn-primary">
+                    <a href="Citizen/ReportIssue.aspx" class="btn-primary">
+                    
+                        
 
                         <i class="fa-solid fa-triangle-exclamation"></i>
 
@@ -70,12 +70,7 @@
 
             <!-- Right Side -->
 
-            <div class="about-right">
-
-                <img src="Assets/Images/about-hero.png"
-                    alt="JanVoice About" />
-
-            </div>
+            
 
         </div>
 
@@ -97,11 +92,7 @@
 
             <!-- Left -->
 
-            <div class="vision-image">
-                <img src="Images/Logo/About1.jpeg" alt="Our Vision" />
-
-
-            </div>
+           
 
             <!-- Right -->
 
@@ -749,8 +740,8 @@
 
                 </a>
 
-                <a href="ReportIssue.aspx" class="btn-primary">
-
+                
+                    <a href="Citizen/ReportIssue.aspx" class="btn-primary">
                     <i class="fa-solid fa-user-plus"></i>
 
                     Report an Issue
@@ -759,33 +750,7 @@
 
             </div>
 
-            <div class="cta-stats">
-
-                <div>
-
-                    <h3>5000+</h3>
-
-                    <span>Citizens Connected</span>
-
-                </div>
-
-                <div>
-
-                    <h3>2500+</h3>
-
-                    <span>Issues Resolved</span>
-
-                </div>
-
-                <div>
-
-                    <h3>50+</h3>
-
-                    <span>Communities</span>
-
-                </div>
-
-            </div>
+            
 
         </div>
 

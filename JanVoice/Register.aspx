@@ -169,6 +169,8 @@
                             <asp:ListItem Value="1">Ward 1</asp:ListItem>
                             <asp:ListItem Value="2">Ward 2</asp:ListItem>
                             <asp:ListItem Value="3">Ward 3</asp:ListItem>
+                            <asp:ListItem Value="3">Ward 4</asp:ListItem>
+                            <asp:ListItem Value="3">Ward 5</asp:ListItem>
 
                         </asp:DropDownList>
 

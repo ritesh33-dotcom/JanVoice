@@ -73,42 +73,49 @@
                         <a href="../Citizen/Dashboard.aspx">
                             <i class="fa-solid fa-house"></i>
                             Dashboard
-                </a>
+                        </a>
                     </li>
 
                     <li>
                         <a href="../Citizen/ReportIssue.aspx">
                             <i class="fa-solid fa-bullhorn"></i>
                             Report Issue
-                </a>
+                        </a>
                     </li>
 
                     <li>
                         <a href="../Citizen/MyComplaints.aspx">
                             <i class="fa-solid fa-list"></i>
                             My Complaints
-                </a>
+                        </a>
                     </li>
 
                     <li>
                         <a href="../Citizen/ComplaintDetails.aspx">
                             <i class="fa-solid fa-file-lines"></i>
                             Complaint Details
-                </a>
-                    </li>
-
-                    <li>
-                        <a href="../Citizen/Notifications.aspx">
-                            <i class="fa-solid fa-bell"></i>
-                            Notifications
-                </a>
+                        </a>
                     </li>
 
                     <li>
                         <a href="../Citizen/Profile.aspx">
                             <i class="fa-solid fa-user"></i>
                             Profile
-                </a>
+                        </a>
+                    </li>
+                    <li>
+                        <asp:LinkButton
+                            ID="btnLogout"
+                            runat="server"
+                            CssClass="logout-link"
+                            style="color:red"
+                            OnClick="btnLogout_Click">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+Logout
+
+                        </asp:LinkButton>
                     </li>
 
                 </ul>
@@ -123,81 +130,57 @@
 
                 <header class="top-header">
 
-    <div class="header-left">
+                    <div class="header-left">
 
-        <button
-            type="button"
-            id="menuToggle"
-            class="menu-btn">
+                        <button
+                            type="button"
+                            id="menuToggle"
+                            class="menu-btn">
 
-            <i class="fa-solid fa-bars"></i>
+                            <i class="fa-solid fa-bars"></i>
 
-        </button>
+                        </button>
 
-        <h4>Citizen Dashboard</h4>
+                        <h4>Citizen Dashboard</h4>
 
-    </div>
+                    </div>
 
-    <div class="header-right">
+                    <div class="header-right">
 
-        <!-- Notification -->
+                        <!-- Notification -->
 
-        <div class="notification-icon">
+                        <div class="notification-icon">
+                            <a href="../Citizen/Notifications.aspx">
+                                <i class="fa-solid fa-bell"></i>
+                            </a>
+                        </div>
 
-            <i class="fa-solid fa-bell"></i>
+                        <!-- Profile -->
 
-        </div>
+                        <div class="profile-dropdown">
 
-        <!-- Profile -->
+                            <div class="profile-info">
+                                <a href="../Citizen/Profile.aspx">
+                                    <i class="fa-solid fa-user-circle"></i>
+                                </a>
+                                <span>
 
-        <div class="profile-dropdown">
+                                    <asp:Label
+                                        ID="lblUserName"
+                                        runat="server">
+                                    </asp:Label>
 
-            <div class="profile-info">
+                                </span>
 
-                <i class="fa-solid fa-user-circle"></i>
+                           
 
-                <span>
 
-                    <asp:Label
-                        ID="lblUserName"
-                        runat="server">
-                    </asp:Label>
 
-                </span>
+                            </div>
 
-                <i class="fa-solid fa-chevron-down"></i>
-
-            </div>
-
-            <div class="dropdown-menu-custom">
-
-                <a href="../Citizen/Profile.aspx">
-
-                    <i class="fa-solid fa-user"></i>
-
-                    My Profile
-
-                </a>
-
-                <asp:LinkButton
-                    ID="btnLogout"
-                    runat="server"
-                    CssClass="logout-link"
-                    OnClick="btnLogout_Click">
-
-                    <i class="fa-solid fa-right-from-bracket"></i>
-
-                    Logout
-
-                </asp:LinkButton>
-
-            </div>
-
-        </div>
-
-    </div>
-
-</header>
+                        </div>
+                        
+                </header>
                 <!-- Page Content -->
 
                 <main class="page-content">

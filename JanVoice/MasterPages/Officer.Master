@@ -43,6 +43,7 @@
 
     <link href="../CSS/officer.css"
         rel="stylesheet" />
+    
 
     <asp:ContentPlaceHolder
         ID="head"
@@ -81,7 +82,7 @@
 
                             Dashboard
 
-</a>
+                        </a>
 
                     </li>
 
@@ -93,7 +94,7 @@
 
                             Assigned Complaints
 
-</a>
+                        </a>
 
                     </li>
 
@@ -105,7 +106,7 @@
 
                             Resolution Details
 
-</a>
+                        </a>
 
                     </li>
 
@@ -117,7 +118,7 @@
 
                             Trending Issues
 
-</a>
+                        </a>
 
                     </li>
 
@@ -129,7 +130,7 @@
 
                             Community Leaderboard
 
-</a>
+                        </a>
 
                     </li>
 
@@ -141,7 +142,7 @@
 
                             Emergency Contacts
 
-</a>
+                        </a>
 
                     </li>
 
@@ -153,7 +154,7 @@
 
                             Feedback
 
-</a>
+                        </a>
 
                     </li>
 
@@ -165,7 +166,23 @@
 
                             Profile
 
-</a>
+                        </a>
+
+                    </li>
+                    <li>
+
+                        <asp:LinkButton
+                            ID="btnLogout"
+                            runat="server"
+                            CssClass="logout-link"
+                            style="color:red"
+                            OnClick="btnLogout_Click">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+Logout
+
+                        </asp:LinkButton>
 
                     </li>
 
@@ -209,53 +226,36 @@
                         <div class="profile-dropdown">
 
                             <div class="profile-info">
+                                <a href="../Officer/Profile.aspx">
 
-                                <i class="fa-solid fa-user-circle"></i>
-
+                                    <i class="fa-solid fa-user-circle"></i>
+                                </a>
                                 <span>
 
                                     <asp:Label
                                         ID="lblOfficerName"
                                         runat="server">
-</asp:Label>
+                                    </asp:Label>
 
                                 </span>
 
-                                <i class="fa-solid fa-chevron-down"></i>
+
 
                             </div>
 
-                            <div class="dropdown-menu-custom">
 
-                                <a href="../Officer/Profile.aspx">
 
-                                    <i class="fa-solid fa-user"></i>
 
-                                    My Profile
-
-</a>
-
-                                <asp:LinkButton
-                                    ID="btnLogout"
-                                    runat="server"
-                                    CssClass="logout-link"
-                                    OnClick="btnLogout_Click">
-
-<i class="fa-solid fa-right-from-bracket"></i>
-
-Logout
-
-</asp:LinkButton>
-
-                            </div>
 
                         </div>
+
+
 
                     </div>
 
 
                 </header>
-<!-- ======================
+                <!-- ======================
                      PAGE CONTENT
                 ====================== -->
 
@@ -264,7 +264,6 @@ Logout
                     <asp:ContentPlaceHolder
                         ID="ContentPlaceHolder1"
                         runat="server">
-
                     </asp:ContentPlaceHolder>
 
                 </main>
@@ -274,7 +273,6 @@ Logout
                 ====================== -->
 
                 <footer class="footer">
-
                     © 2026 JanVoice. All Rights Reserved.
 
                 </footer>
@@ -293,26 +291,25 @@ Logout
 
     <script src="../JS/officer.js"></script>
 
-</body>
-
-</html>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 
-    <script>
 
-        const menuBtn = document.getElementById("menuBtn");
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-        const sidebar = document.querySelector(".sidebar");
 
-        menuBtn.addEventListener("click", function () {
+<script>
 
-            sidebar.classList.toggle("active");
+    const menuBtn = document.getElementById("menuBtn");
 
-        });
+    const sidebar = document.querySelector(".sidebar");
 
-    </script>
+    menuBtn.addEventListener("click", function () {
+
+        sidebar.classList.toggle("active");
+
+    });
+
+</script>
 
 </body>
 </html>

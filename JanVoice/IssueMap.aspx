@@ -43,8 +43,8 @@
                 </div>
 
                 <div class="header-buttons">
-
-                    <a href="ReportIssue.aspx" class="primary-btn">+ Report Issue
+                   
+                    <a href="Citizen/ReportIssue.aspx" class="primary-btn">+ Report Issue
 
                 </a>
 

@@ -142,8 +142,8 @@ href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
 
                             <li><a href="CommunityFeed.aspx">Community Feed</a></li>
 
-                            <li><a href="ReportIssue.aspx">Report Issue</a></li>
-
+                            <li><a href="../Citizen/ReportIssue.aspx">Report Issue</a></li>
+                            
                             <li><a href="Contact.aspx">Contact</a></li>
 
                         </ul>
