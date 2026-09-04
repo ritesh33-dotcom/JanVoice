@@ -65,18 +65,22 @@
 
                 <!-- Ward -->
 
+                <!-- Ward -->
+
                 <div class="form-group">
 
-                    <label>Ward</label>
+                   <label>Your Ward</label>
 
-                    <asp:DropDownList
-                        ID="ddlWard"
-                        runat="server"
-                        CssClass="form-control">
+<asp:DropDownList
+    ID="ddlWard"
+    runat="server"
+    CssClass="form-control"
+    Enabled="false">
+</asp:DropDownList>
 
-                        <asp:ListItem Value="">-- Select Ward --</asp:ListItem>
-
-                    </asp:DropDownList>
+<small>
+    This ward is automatically assigned from your account.
+</small>
 
                 </div>
 
@@ -221,13 +225,14 @@
                     OnClick="btnSubmitComplaint_Click"
                     OnClientClick="return validateComplaint();" />
 
-                <asp:Button
-                    ID="btnReset"
-                    runat="server"
-                    Text="Reset"
-                    CssClass="btn-reset"
-                    CausesValidation="false"
-                    />
+               <asp:Button
+    ID="btnReset"
+    runat="server"
+    Text="Reset"
+    CssClass="btn-reset"
+    CausesValidation="false"
+    OnClick="btnReset_Click"
+/>
 
             </div>
 
@@ -254,6 +259,7 @@
             longitude: "<%= hfLongitude.ClientID %>"
 
         };
+
 
     </script>
 

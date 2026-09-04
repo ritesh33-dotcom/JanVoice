@@ -1,13 +1,10 @@
 ﻿using JanVoice.Helpers;
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using System.Linq;
-using System.Web;
-using System.Web.UI;
 using System.Web.UI.WebControls;
 
 namespace JanVoice.Citizen
@@ -24,15 +21,18 @@ namespace JanVoice.Citizen
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            // User must be logged in
             if (Session["UserID"] == null)
             {
                 Response.Redirect("~/Login.aspx");
+                return;
             }
 
+            // Load data only first time
             if (!IsPostBack)
             {
                 LoadCategories();
-                LoadWards();
+                LoadUserWard();
             }
         }
 
@@ -43,57 +43,106 @@ namespace JanVoice.Citizen
 
         protected void btnSubmitComplaint_Click(object sender, EventArgs e)
         {
-            using (SqlConnection con = new SqlConnection(connectionString))
+            // =====================================================
+            // 1. CHECK USER LOGIN
+            // =====================================================
+
+            if (Session["UserID"] == null)
             {
-                con.Open();
+                Response.Redirect("~/Login.aspx");
+                return;
+            }
 
 
-                // =====================================================
-                // FIND OFFICER FOR SELECTED WARD
-                // =====================================================
+            // =====================================================
+            // 2. GET USER'S WARD FROM SESSION
+            // =====================================================
 
-                int assignedOfficerID = 0;
+            int userWardID;
 
-                string officerQuery = @"
-                    SELECT TOP 1 UserID
-                    FROM Users
-                    WHERE WardID = @WardID
-                    AND RoleID = 2
-                    ORDER BY UserID;
-                ";
+            if (Session["WardID"] == null ||
+                !int.TryParse(
+                    Session["WardID"].ToString(),
+                    out userWardID))
+            {
+                ClientScript.RegisterStartupScript(
+                    this.GetType(),
+                    "wardError",
+                    "alert('Your ward is not assigned to your account. Please contact the administrator.');",
+                    true
+                );
 
-                using (SqlCommand officerCmd =
-                       new SqlCommand(officerQuery, con))
-                {
-                    officerCmd.Parameters.Add("@WardID", SqlDbType.Int)
-                        .Value = Convert.ToInt32(ddlWard.SelectedValue);
-
-                    object result = officerCmd.ExecuteScalar();
-
-                    if (result == null || result == DBNull.Value)
-                    {
-                        ClientScript.RegisterStartupScript(
-                            this.GetType(),
-                            "officerError",
-                            "alert('No officer is assigned to the selected ward.');",
-                            true);
-
-                        return;
-                    }
-
-                    assignedOfficerID = Convert.ToInt32(result);
-                }
+                return;
+            }
 
 
-                // =====================================================
-                // IMAGE VALIDATION
-                // =====================================================
+            // =====================================================
+            // 3. BASIC VALIDATION
+            // =====================================================
 
-                string extension = Path.GetExtension(
-                    fuComplaintImage.FileName
-                ).ToLower();
+            if (string.IsNullOrWhiteSpace(txtTitle.Text))
+            {
+                ClientScript.RegisterStartupScript(
+                    this.GetType(),
+                    "titleError",
+                    "alert('Please enter complaint title.');",
+                    true
+                );
 
-                string[] allowed =
+                return;
+            }
+
+
+            if (ddlCategory.SelectedValue == "")
+            {
+                ClientScript.RegisterStartupScript(
+                    this.GetType(),
+                    "categoryError",
+                    "alert('Please select a category.');",
+                    true
+                );
+
+                return;
+            }
+
+
+            if (string.IsNullOrWhiteSpace(txtDescription.Text))
+            {
+                ClientScript.RegisterStartupScript(
+                    this.GetType(),
+                    "descriptionError",
+                    "alert('Please describe the complaint.');",
+                    true
+                );
+
+                return;
+            }
+
+
+            // =====================================================
+            // 4. OPTIONAL IMAGE
+            // =====================================================
+
+            string extension = "";
+            string imagePath = "";
+
+            bool hasImage = fuComplaintImage.HasFile;
+
+
+            // =====================================================
+            // 5. IMAGE VALIDATION
+            //    ONLY IF USER UPLOADED IMAGE
+            // =====================================================
+
+            if (hasImage)
+            {
+                extension =
+                    Path.GetExtension(
+                        fuComplaintImage.FileName
+                    ).ToLower();
+
+
+                string[] allowedExtensions =
                 {
                     ".jpg",
                     ".jpeg",
@@ -101,73 +150,67 @@ namespace JanVoice.Citizen
                 };
 
 
-                if (!allowed.Contains(extension))
+                // Check extension
+                if (!allowedExtensions.Contains(extension))
                 {
                     ClientScript.RegisterStartupScript(
                         this.GetType(),
-                        "alert",
+                        "imageTypeError",
                         "alert('Only JPG, JPEG and PNG files are allowed.');",
-                        true);
+                        true
+                    );
 
                     return;
                 }
 
 
+                // Check file size
                 if (fuComplaintImage.PostedFile.ContentLength >
                     2 * 1024 * 1024)
                 {
                     ClientScript.RegisterStartupScript(
                         this.GetType(),
-                        "alert",
-                        "alert('Maximum file size is 2 MB.');",
-                        true);
+                        "imageSizeError",
+                        "alert('Maximum image size is 2 MB.');",
+                        true
+                    );
 
                     return;
                 }
+            }
 
 
-                // =====================================================
-                // SAVE IMAGE
-                // =====================================================
+            // =====================================================
+            // 6. AUTOMATIC PRIORITY DETECTION
+            // =====================================================
 
-                string fileName =
-                    Guid.NewGuid().ToString() + extension;
-
-                string imagePath =
-                    "~/Uploads/ComplaintImages/" + fileName;
-
-                string folderPath =
-                    Server.MapPath("~/Uploads/ComplaintImages/");
+            string complaintPriority =
+                DeterminePriority(
+                    txtTitle.Text.Trim(),
+                    txtDescription.Text.Trim(),
+                    ddlCategory.SelectedItem.Text.Trim()
+                );
 
 
-                if (!Directory.Exists(folderPath))
-                {
-                    Directory.CreateDirectory(folderPath);
-                }
+            // =====================================================
+            // 7. DATABASE CONNECTION
+            // =====================================================
+
+            using (SqlConnection con =
+                   new SqlConnection(connectionString))
+            {
+                con.Open();
 
 
-                string fullPath =
-                    Path.Combine(folderPath, fileName);
-
-
-                fuComplaintImage.SaveAs(fullPath);
-
-
-                // =====================================================
-                // AUTOMATIC PRIORITY DETECTION
-                // =====================================================
-
-                string complaintPriority =
-                    DeterminePriority(
-                        txtTitle.Text.Trim(),
-                        txtDescription.Text.Trim(),
-                        ddlCategory.SelectedItem.Text.Trim()
-                    );
-
-
-                // =====================================================
-                // INSERT COMPLAINT
-                // =====================================================
+                // =================================================
+                // 8. INSERT COMPLAINT
+                // =================================================
+                // IMPORTANT:
+                // AssignedOfficerID = NULL
+                //
+                // Citizen does NOT select officer.
+                // Admin will assign officer later.
+                // =================================================
 
                 string query = @"
                     INSERT INTO Complaints
@@ -190,7 +233,7 @@ namespace JanVoice.Citizen
                         @UserID,
                         @CategoryID,
                         @WardID,
-                        @AssignedOfficerID,
+                        NULL,
                         @Title,
                         @Description,
                         @Latitude,
@@ -211,65 +254,106 @@ namespace JanVoice.Citizen
                 using (SqlCommand cmd =
                        new SqlCommand(query, con))
                 {
-                    cmd.Parameters.Add("@UserID", SqlDbType.Int)
-                        .Value =
-                        Convert.ToInt32(Session["UserID"]);
+                    // User
+                    cmd.Parameters.Add(
+                        "@UserID",
+                        SqlDbType.Int
+                    ).Value =
+                        Convert.ToInt32(
+                            Session["UserID"]
+                        );
 
 
-                    cmd.Parameters.Add("@CategoryID", SqlDbType.Int)
-                        .Value =
-                        Convert.ToInt32(ddlCategory.SelectedValue);
+                    // Category
+                    cmd.Parameters.Add(
+                        "@CategoryID",
+                        SqlDbType.Int
+                    ).Value =
+                        Convert.ToInt32(
+                            ddlCategory.SelectedValue
+                        );
 
 
-                    cmd.Parameters.Add("@WardID", SqlDbType.Int)
-                        .Value =
-                        Convert.ToInt32(ddlWard.SelectedValue);
+                    // IMPORTANT:
+                    // Ward comes from logged-in user's account
+                    cmd.Parameters.Add(
+                        "@WardID",
+                        SqlDbType.Int
+                    ).Value = userWardID;
 
 
-                    cmd.Parameters.Add("@AssignedOfficerID", SqlDbType.Int)
-                        .Value =
-                        assignedOfficerID;
-
-
-                    cmd.Parameters.Add("@Title", SqlDbType.NVarChar, 200)
-                        .Value =
+                    // Complaint title
+                    cmd.Parameters.Add(
+                        "@Title",
+                        SqlDbType.NVarChar,
+                        200
+                    ).Value =
                         txtTitle.Text.Trim();
 
 
-                    cmd.Parameters.Add("@Description", SqlDbType.NVarChar)
-                        .Value =
+                    // Description
+                    cmd.Parameters.Add(
+                        "@Description",
+                        SqlDbType.NVarChar
+                    ).Value =
                         txtDescription.Text.Trim();
 
 
-                    cmd.Parameters.Add("@Latitude", SqlDbType.NVarChar, 50)
-                        .Value =
-                        hfLatitude.Value;
+                    // Latitude
+                    cmd.Parameters.Add(
+                        "@Latitude",
+                        SqlDbType.NVarChar,
+                        50
+                    ).Value =
+                        string.IsNullOrWhiteSpace(
+                            hfLatitude.Value)
+                            ? (object)DBNull.Value
+                            : hfLatitude.Value;
 
 
-                    cmd.Parameters.Add("@Longitude", SqlDbType.NVarChar, 50)
-                        .Value =
-                        hfLongitude.Value;
+                    // Longitude
+                    cmd.Parameters.Add(
+                        "@Longitude",
+                        SqlDbType.NVarChar,
+                        50
+                    ).Value =
+                        string.IsNullOrWhiteSpace(
+                            hfLongitude.Value)
+                            ? (object)DBNull.Value
+                            : hfLongitude.Value;
 
 
-                    cmd.Parameters.Add("@Landmark", SqlDbType.NVarChar, 250)
-                        .Value =
-                        txtLandmark.Text.Trim();
+                    // Landmark
+                    cmd.Parameters.Add(
+                        "@Landmark",
+                        SqlDbType.NVarChar,
+                        250
+                    ).Value =
+                        string.IsNullOrWhiteSpace(
+                            txtLandmark.Text)
+                            ? (object)DBNull.Value
+                            : txtLandmark.Text.Trim();
 
 
-                    // =================================================
-                    // AUTOMATIC PRIORITY
-                    // =================================================
-
-                    cmd.Parameters.Add("@Priority", SqlDbType.NVarChar, 50)
-                        .Value =
+                    // Priority
+                    cmd.Parameters.Add(
+                        "@Priority",
+                        SqlDbType.NVarChar,
+                        50
+                    ).Value =
                         complaintPriority;
 
 
-                    cmd.Parameters.Add("@Status", SqlDbType.NVarChar, 50)
-                        .Value =
+                    // Status
+                    cmd.Parameters.Add(
+                        "@Status",
+                        SqlDbType.NVarChar,
+                        50
+                    ).Value =
                         "Pending";
 
 
+                    // Execute complaint insert
                     complaintID =
                         Convert.ToInt32(
                             cmd.ExecuteScalar()
@@ -277,59 +361,116 @@ namespace JanVoice.Citizen
                 }
 
 
-                // =====================================================
-                // SAVE COMPLAINT IMAGE
-                // =====================================================
+                // =================================================
+                // 9. SAVE IMAGE ONLY IF USER PROVIDED IMAGE
+                // =================================================
 
-                string imageQuery = @"
-                    INSERT INTO ComplaintImages
-                    (
-                        ComplaintID,
-                        UploadedBy,
-                        ImagePath,
-                        ImageType,
-                        UploadDate
-                    )
-                    VALUES
-                    (
-                        @ComplaintID,
-                        @UploadedBy,
-                        @ImagePath,
-                        @ImageType,
-                        GETDATE()
-                    );
-                ";
-
-
-                using (SqlCommand imageCmd =
-                       new SqlCommand(imageQuery, con))
+                if (hasImage)
                 {
-                    imageCmd.Parameters.Add("@ComplaintID", SqlDbType.Int)
-                        .Value = complaintID;
+                    // Generate unique filename
+                    string fileName =
+                        Guid.NewGuid().ToString()
+                        + extension;
 
 
-                    imageCmd.Parameters.Add("@UploadedBy", SqlDbType.Int)
-                        .Value =
-                        Convert.ToInt32(Session["UserID"]);
+                    imagePath =
+                        "~/Uploads/ComplaintImages/"
+                        + fileName;
 
 
-                    imageCmd.Parameters.Add("@ImagePath", SqlDbType.NVarChar, 500)
-                        .Value =
-                        imagePath;
+                    string folderPath =
+                        Server.MapPath(
+                            "~/Uploads/ComplaintImages/"
+                        );
 
 
-                    imageCmd.Parameters.Add("@ImageType", SqlDbType.NVarChar, 50)
-                        .Value =
-                        extension;
+                    // Create folder if it does not exist
+                    if (!Directory.Exists(folderPath))
+                    {
+                        Directory.CreateDirectory(folderPath);
+                    }
 
 
-                    imageCmd.ExecuteNonQuery();
+                    // Full physical path
+                    string fullPath =
+                        Path.Combine(
+                            folderPath,
+                            fileName
+                        );
+
+
+                    // Save image to server
+                    fuComplaintImage.SaveAs(
+                        fullPath
+                    );
+
+
+                    // Insert image information into database
+                    string imageQuery = @"
+                        INSERT INTO ComplaintImages
+                        (
+                            ComplaintID,
+                            UploadedBy,
+                            ImagePath,
+                            ImageType,
+                            UploadDate
+                        )
+                        VALUES
+                        (
+                            @ComplaintID,
+                            @UploadedBy,
+                            @ImagePath,
+                            @ImageType,
+                            GETDATE()
+                        );
+                    ";
+
+
+                    using (SqlCommand imageCmd =
+                           new SqlCommand(
+                               imageQuery,
+                               con))
+                    {
+                        imageCmd.Parameters.Add(
+                            "@ComplaintID",
+                            SqlDbType.Int
+                        ).Value =
+                            complaintID;
+
+
+                        imageCmd.Parameters.Add(
+                            "@UploadedBy",
+                            SqlDbType.Int
+                        ).Value =
+                            Convert.ToInt32(
+                                Session["UserID"]
+                            );
+
+
+                        imageCmd.Parameters.Add(
+                            "@ImagePath",
+                            SqlDbType.NVarChar,
+                            500
+                        ).Value =
+                            imagePath;
+
+
+                        imageCmd.Parameters.Add(
+                            "@ImageType",
+                            SqlDbType.NVarChar,
+                            50
+                        ).Value =
+                            extension;
+
+
+                        imageCmd.ExecuteNonQuery();
+                    }
                 }
 
 
-                // =====================================================
-                // SAVE STATUS HISTORY
-                // =====================================================
+                // =================================================
+                // 10. SAVE STATUS HISTORY
+                // =================================================
 
                 string historyQuery = @"
                     INSERT INTO StatusHistory
@@ -354,27 +495,47 @@ namespace JanVoice.Citizen
 
 
                 using (SqlCommand historyCmd =
-                       new SqlCommand(historyQuery, con))
+                       new SqlCommand(
+                           historyQuery,
+                           con))
                 {
-                    historyCmd.Parameters.Add("@ComplaintID", SqlDbType.Int)
-                        .Value = complaintID;
+                    historyCmd.Parameters.Add(
+                        "@ComplaintID",
+                        SqlDbType.Int
+                    ).Value =
+                        complaintID;
 
 
-                    historyCmd.Parameters.Add("@OldStatus", SqlDbType.NVarChar, 50)
-                        .Value = DBNull.Value;
+                    historyCmd.Parameters.Add(
+                        "@OldStatus",
+                        SqlDbType.NVarChar,
+                        50
+                    ).Value =
+                        DBNull.Value;
 
 
-                    historyCmd.Parameters.Add("@NewStatus", SqlDbType.NVarChar, 50)
-                        .Value = "Pending";
+                    historyCmd.Parameters.Add(
+                        "@NewStatus",
+                        SqlDbType.NVarChar,
+                        50
+                    ).Value =
+                        "Pending";
 
 
-                    historyCmd.Parameters.Add("@ChangedBy", SqlDbType.Int)
-                        .Value =
-                        Convert.ToInt32(Session["UserID"]);
+                    historyCmd.Parameters.Add(
+                        "@ChangedBy",
+                        SqlDbType.Int
+                    ).Value =
+                        Convert.ToInt32(
+                            Session["UserID"]
+                        );
 
 
-                    historyCmd.Parameters.Add("@Remarks", SqlDbType.NVarChar, 500)
-                        .Value =
+                    historyCmd.Parameters.Add(
+                        "@Remarks",
+                        SqlDbType.NVarChar,
+                        500
+                    ).Value =
                         "Complaint submitted successfully.";
 
 
@@ -382,12 +543,14 @@ namespace JanVoice.Citizen
                 }
 
 
-                // =====================================================
-                // NOTIFICATIONS
-                // =====================================================
+                // =================================================
+                // 11. CITIZEN NOTIFICATION
+                // =================================================
 
                 NotificationHelper.AddNotification(
-                    Convert.ToInt32(Session["UserID"]),
+                    Convert.ToInt32(
+                        Session["UserID"]
+                    ),
                     complaintID,
                     "Complaint Submitted",
                     "Your complaint has been submitted successfully.",
@@ -395,18 +558,19 @@ namespace JanVoice.Citizen
                 );
 
 
-                NotificationHelper.AddNotification(
-                    assignedOfficerID,
-                    complaintID,
-                    "New Complaint Assigned",
-                    "You have received a new complaint.",
-                    "Complaint"
-                );
+                // =================================================
+                // IMPORTANT:
+                // NO OFFICER NOTIFICATION HERE
+                //
+                // Because admin has NOT assigned an officer yet.
+                // Officer notification will happen when Admin assigns
+                // the complaint.
+                // =================================================
 
 
-                // =====================================================
-                // SUCCESS MESSAGE
-                // =====================================================
+                // =================================================
+                // 12. SUCCESS MESSAGE
+                // =================================================
 
                 ClientScript.RegisterStartupScript(
                     this.GetType(),
@@ -416,19 +580,25 @@ namespace JanVoice.Citizen
                 );
 
 
-                // =====================================================
-                // CLEAR FORM
-                // =====================================================
+                // =================================================
+                // 13. CLEAR FORM
+                // =================================================
 
                 txtTitle.Text = "";
+
                 txtDescription.Text = "";
+
                 txtLandmark.Text = "";
 
                 ddlCategory.SelectedIndex = 0;
-                ddlWard.SelectedIndex = 0;
 
                 hfLatitude.Value = "";
+
                 hfLongitude.Value = "";
+
+
+                // Restore user's ward
+                LoadUserWard();
             }
         }
 
@@ -553,8 +723,11 @@ namespace JanVoice.Citizen
             // =====================================================
             // DEFAULT PRIORITY
             // =====================================================
+            // If no keyword is detected,
+            // default priority is MEDIUM.
+            // =====================================================
 
-            return "Low";
+            return "Medium";
         }
 
 
@@ -567,14 +740,21 @@ namespace JanVoice.Citizen
             using (SqlConnection con =
                    new SqlConnection(connectionString))
             {
-                string query =
-                    "SELECT CategoryID, CategoryName " +
-                    "FROM Categories " +
-                    "WHERE IsActive=1";
+                string query = @"
+                    SELECT
+                        CategoryID,
+                        CategoryName
+                    FROM Categories
+                    WHERE IsActive = 1
+                    ORDER BY CategoryName;
+                ";
 
 
                 SqlDataAdapter da =
-                    new SqlDataAdapter(query, con);
+                    new SqlDataAdapter(
+                        query,
+                        con
+                    );
 
 
                 DataTable dt =
@@ -584,10 +764,13 @@ namespace JanVoice.Citizen
                 da.Fill(dt);
 
 
-                ddlCategory.DataSource = dt;
+                ddlCategory.DataSource =
+                    dt;
+
 
                 ddlCategory.DataTextField =
                     "CategoryName";
+
 
                 ddlCategory.DataValueField =
                     "CategoryID";
@@ -598,55 +781,143 @@ namespace JanVoice.Citizen
 
                 ddlCategory.Items.Insert(
                     0,
-                    "-- Select Category --"
+                    new ListItem(
+                        "-- Select Category --",
+                        ""
+                    )
                 );
             }
         }
 
 
         // =========================================================
-        // LOAD WARDS
+        // LOAD USER'S WARD
         // =========================================================
 
-        private void LoadWards()
+        private void LoadUserWard()
         {
+            // =====================================================
+            // CHECK SESSION WARD
+            // =====================================================
+
+            if (Session["WardID"] == null ||
+                Session["WardID"] == DBNull.Value)
+            {
+                ddlWard.Items.Clear();
+
+
+                ddlWard.Items.Add(
+                    new ListItem(
+                        "Ward not assigned",
+                        ""
+                    )
+                );
+
+
+                ddlWard.Enabled = false;
+
+
+                return;
+            }
+
+
+            // =====================================================
+            // CONVERT WARD ID
+            // =====================================================
+
+            int wardID;
+
+
+            if (!int.TryParse(
+                Session["WardID"].ToString(),
+                out wardID))
+            {
+                ddlWard.Items.Clear();
+
+
+                ddlWard.Items.Add(
+                    new ListItem(
+                        "Ward not assigned",
+                        ""
+                    )
+                );
+
+
+                ddlWard.Enabled = false;
+
+
+                return;
+            }
+
+
+            // =====================================================
+            // GET WARD NAME
+            // =====================================================
+
             using (SqlConnection con =
                    new SqlConnection(connectionString))
             {
-                string query =
-                    "SELECT WardID, WardName FROM Wards ";
+                string query = @"
+                    SELECT
+                        WardID,
+                        WardName
+                    FROM Wards
+                    WHERE WardID = @WardID;
+                ";
 
 
-                SqlDataAdapter da =
-                    new SqlDataAdapter(query, con);
+                using (SqlCommand cmd =
+                       new SqlCommand(
+                           query,
+                           con))
+                {
+                    cmd.Parameters.Add(
+                        "@WardID",
+                        SqlDbType.Int
+                    ).Value =
+                        wardID;
 
 
-                DataTable dt =
-                    new DataTable();
+                    con.Open();
 
 
-                da.Fill(dt);
+                    using (SqlDataReader reader =
+                           cmd.ExecuteReader())
+                    {
+                        ddlWard.Items.Clear();
 
 
-                ddlWard.DataSource =
-                    dt;
+                        if (reader.Read())
+                        {
+                            ddlWard.Items.Add(
+                                new ListItem(
+                                    reader["WardName"].ToString(),
+                                    reader["WardID"].ToString()
+                                )
+                            );
 
 
-                ddlWard.DataTextField =
-                    "WardName";
+                            ddlWard.SelectedValue =
+                                reader["WardID"].ToString();
 
 
-                ddlWard.DataValueField =
-                    "WardID";
+                            // Citizen cannot change ward
+                            ddlWard.Enabled = false;
+                        }
+                        else
+                        {
+                            ddlWard.Items.Add(
+                                new ListItem(
+                                    "Ward not found",
+                                    ""
+                                )
+                            );
 
 
-                ddlWard.DataBind();
-
-
-                ddlWard.Items.Insert(
-                    0,
-                    "-- Select Ward --"
-                );
+                            ddlWard.Enabled = false;
+                        }
+                    }
+                }
             }
         }
 
@@ -659,20 +930,19 @@ namespace JanVoice.Citizen
             object sender,
             EventArgs e)
         {
-        }
+            txtTitle.Text = "";
 
+            txtDescription.Text = "";
 
-        protected void btnReset_Click1(
-            object sender,
-            EventArgs e)
-        {
-        }
+            txtLandmark.Text = "";
 
+            hfLatitude.Value = "";
 
-        protected void btnReset_Click2(
-            object sender,
-            EventArgs e)
-        {
+            hfLongitude.Value = "";
+
+            ddlCategory.SelectedIndex = 0;
+
+            LoadUserWard();
         }
     }
 }
