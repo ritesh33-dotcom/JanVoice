@@ -63,26 +63,7 @@
 
                 </div>
 
-                <!-- Ward -->
-
-                <!-- Ward -->
-
-                <div class="form-group">
-
-                   <label>Your Ward</label>
-
-<asp:DropDownList
-    ID="ddlWard"
-    runat="server"
-    CssClass="form-control"
-    Enabled="false">
-</asp:DropDownList>
-
-<small>
-    This ward is automatically assigned from your account.
-</small>
-
-                </div>
+               
 
                 <!-- Landmark -->
 
@@ -225,14 +206,13 @@
                     OnClick="btnSubmitComplaint_Click"
                     OnClientClick="return validateComplaint();" />
 
-               <asp:Button
-    ID="btnReset"
-    runat="server"
-    Text="Reset"
-    CssClass="btn-reset"
-    CausesValidation="false"
-    OnClick="btnReset_Click"
-/>
+                <asp:Button
+                    ID="btnReset"
+                    runat="server"
+                    Text="Reset"
+                    CssClass="btn-reset"
+                    CausesValidation="false"
+                    />
 
             </div>
 
@@ -248,7 +228,7 @@
 
             category: "<%= ddlCategory.ClientID %>",
 
-            ward: "<%= ddlWard.ClientID %>",
+            
 
             description: "<%= txtDescription.ClientID %>",
 
@@ -259,7 +239,6 @@
             longitude: "<%= hfLongitude.ClientID %>"
 
         };
-
 
     </script>
 
